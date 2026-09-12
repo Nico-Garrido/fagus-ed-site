@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Source+Sans+3:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; color: #17365B; font-family: "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #17365B; text-decoration: none; }
+  a:hover { color: #2E4057; }
+  @keyframes fu { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden">
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:0 24px;min-height:74px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <img src="assets/fagus-mark.png" alt="" style="height:36px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
+        <a href="index.html" style="color:#2E4057">Inicio</a>
+        <a href="programas.html" style="color:#2E4057">Programas</a>
+        <a href="asignaturas.html" style="color:#2E4057">Asignaturas</a>
+        <a href="material.html" style="color:#2E4057">Material</a>
+      </nav>
+      <a href="index.html#contacto" style="margin-left:auto;background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">Agendar reunión</a>
+    </div>
+  </header>
+
+  <section style="max-width:1140px;margin:0 auto;padding:76px 24px 40px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">Tutoría privada</div>
+    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">Clases uno a uno, con valores por sesión</h1>
+    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">Selecciona la asignatura y el programa bajo el cual quieres trabajar. El valor depende del nivel de exigencia del currículum, no del número de estudiantes: siempre es una sesión individual de 60 minutos.</p>
+  </section>
+
+  <section style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:44px 24px 52px;display:grid;gap:26px">
+      <div>
+        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:12px">Asignatura</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ subs }}" as="s" hint-placeholder-count="5">
+            <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:12px">Programa</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ progs }}" as="p" hint-placeholder-count="4">
+            <button onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1140px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:30px">
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0">{{ selectionTitle }}</h2>
+      <div style="font-size:15px;color:#7F8996">{{ selectionNote }}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+      <sc-for list="{{ plans }}" as="pl" hint-placeholder-count="3">
+        <div style="{{ pl.cardStyle }}">
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ pl.tag }}</div>
+          <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:20px;margin-top:14px;color:#17365B">{{ pl.name }}</div>
+          <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:34px;letter-spacing:-.02em;margin-top:16px;color:#17365B">{{ pl.price }}</div>
+          <div style="font-size:14px;color:#7F8996;margin-top:6px">{{ pl.unit }}</div>
+          <p style="font-size:15px;line-height:1.6;color:#5A6675;margin:18px 0 0;text-wrap:pretty">{{ pl.body }}</p>
+          <a href="{{ pl.href }}" style="display:inline-block;margin-top:24px;border:1px solid #17365B;padding:12px 20px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9">Reservar</a>
+        </div>
+      </sc-for>
+    </div>
+    <p style="font-size:14px;color:#A3ABB6;margin:20px 0 0">Valores en pesos chilenos, por sesión de 60 minutos. Se pagan por adelantado y se agendan según disponibilidad del tutor.</p>
+  </section>
+
+  <section style="max-width:1140px;margin:0 auto;padding:56px 24px 76px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+      <sc-for list="{{ includes }}" as="i" hint-placeholder-count="4">
+        <div style="background:#FFFFFF;padding:26px">
+          <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:16px;color:#17365B">{{ i.title }}</div>
+          <p style="font-size:15px;line-height:1.6;color:#7F8996;margin:8px 0 0;text-wrap:pretty">{{ i.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#17365B;color:#FFFFFF">
+    <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
+      <div>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">Primera sesión de diagnóstico sin costo</h2>
+        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">Treinta minutos para ubicar el nivel actual y proponer un plan antes de contratar cualquier pack.</p>
+      </div>
+      <a href="agendar.html?s=tutoria" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">Agendar diagnóstico</a>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <a href="index.html" style="display:flex;align-items:center;gap:12px">
+        <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <div style="font-size:14px;color:#A3ABB6">100% online, en Chile y en el extranjero.</div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { prog: 'igcse', subj: 'fisica' };
+
+  PROG = [
+    { slug: 'plan-nacional', label: 'Plan Nacional', base: 18000 },
+    { slug: 'igcse', label: 'IGCSE', base: 22000 },
+    { slug: 'a-level', label: 'A-Level', base: 28000 },
+    { slug: 'ib-dp', label: 'IB DP', base: 28000 }
+  ];
+  SUBJ = [
+    { slug: 'biologia', label: 'Biología' },
+    { slug: 'quimica', label: 'Química' },
+    { slug: 'fisica', label: 'Física' },
+    { slug: 'matematicas', label: 'Matemáticas' },
+    { slug: 'ingles', label: 'Inglés' }
+  ];
+
+  INCLUDES = [
+    { title: 'Sesión individual', body: 'Sesenta minutos por videollamada, uno a uno con el tutor de la asignatura.' },
+    { title: 'Material incluido', body: 'Guías y ejercicios del programa correspondiente, enviados antes de cada sesión.' },
+    { title: 'Reporte a la familia', body: 'Resumen de avance y próximos objetivos después de cada bloque de sesiones.' },
+    { title: 'Reagendamiento', body: 'Cambios sin costo avisando con 24 horas de anticipación.' }
+  ];
+
+  clp(n) { return '$' + n.toLocaleString('es-CL'); }
+
+  btn(active) {
+    return `border:1px solid ${active ? '#17365B' : '#E7E9EC'};background:${active ? '#17365B' : '#FFFFFF'};color:${active ? '#FFFFFF' : '#2E4057'};padding:10px 17px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`;
+  }
+
+  renderVals() {
+    const { prog, subj } = this.state;
+    const p = this.PROG.find(x => x.slug === prog);
+    const s = this.SUBJ.find(x => x.slug === subj);
+    const href = 'agendar.html?s=tutoria';
+    const card = (hl) => `background:${hl ? '#F9F9F9' : '#FFFFFF'};padding:32px 28px;display:flex;flex-direction:column`;
+    return {
+      subs: this.SUBJ.map(x => ({ label: x.label, onClick: () => this.setState({ subj: x.slug }), style: this.btn(subj === x.slug) })),
+      progs: this.PROG.map(x => ({ label: x.label, onClick: () => this.setState({ prog: x.slug }), style: this.btn(prog === x.slug) })),
+      selectionTitle: s.label + ' · ' + p.label,
+      selectionNote: 'Sesiones de 60 minutos, 100% online',
+      plans: [
+        { tag: 'Sin compromiso', name: 'Sesión única', price: this.clp(p.base), unit: 'por sesión', body: 'Ideal para resolver una unidad puntual o preparar una prueba específica.', href, cardStyle: card(false) },
+        { tag: 'Más elegido', name: 'Pack 4 sesiones', price: this.clp(Math.round(p.base * 0.92)), unit: 'por sesión · ' + this.clp(Math.round(p.base * 0.92) * 4) + ' total', body: 'Un mes de trabajo continuo sobre un objetivo definido en el diagnóstico.', href, cardStyle: card(true) },
+        { tag: 'Preparación de examen', name: 'Pack 8 sesiones', price: this.clp(Math.round(p.base * 0.85)), unit: 'por sesión · ' + this.clp(Math.round(p.base * 0.85) * 8) + ' total', body: 'Dos meses de preparación con ensayos y corrección de past papers incluidos.', href, cardStyle: card(false) }
+      ],
+      includes: this.INCLUDES
+    };
+  }
+}
+
+</script>
+</body>
+</html>

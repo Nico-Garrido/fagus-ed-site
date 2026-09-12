@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Source+Sans+3:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; color: #17365B; font-family: "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+  a { color: #17365B; text-decoration: none; }
+  a:hover { color: #2E4057; }
+  [id] { scroll-margin-top: 96px; }
+  @keyframes fu { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden">
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:0 24px;min-height:74px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <img src="assets/fagus-mark.png" alt="" style="height:36px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
+        <a href="index.html" style="color:#2E4057">Inicio</a>
+        <a href="programas.html" style="color:#2E4057">Programas</a>
+        <a href="recursos.html" style="color:#2E4057">Recursos</a>
+      </nav>
+      <a href="index.html#contacto" style="margin-left:auto;background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">Agendar reunión</a>
+    </div>
+  </header>
+
+  <section style="max-width:1140px;margin:0 auto;padding:80px 24px 52px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">Asignaturas</div>
+    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">Qué cubrimos en cada asignatura, programa por programa</h1>
+    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">La misma asignatura cambia de contenido, de nivel y de forma de evaluación según el currículum. Aquí está el detalle por combinación.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:36px">
+      <sc-for list="{{ index }}" as="n" hint-placeholder-count="5">
+        <a href="{{ n.href }}" style="border:1px solid #E7E9EC;padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;color:#2E4057" style-hover="background:#F9F9F9;border-color:#17365B">{{ n.label }}</a>
+      </sc-for>
+    </div>
+  </section>
+
+  <sc-for list="{{ subjects }}" as="s" hint-placeholder-count="5">
+    <section id="{{ s.slug }}" style="{{ s.sectionStyle }}">
+      <div style="max-width:1140px;margin:0 auto;padding:68px 24px">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:26px;border-bottom:1px solid #E7E9EC">
+          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);letter-spacing:-.02em;margin:0">{{ s.name }}</h2>
+          <div style="font-size:16px;color:#7F8996;max-width:56ch;text-wrap:pretty">{{ s.blurb }}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC;border-top:0">
+          <sc-for list="{{ s.entries }}" as="e" hint-placeholder-count="4">
+            <div id="{{ e.id }}" style="background:#FFFFFF;padding:30px 26px;display:flex;flex-direction:column">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                <div style="font-family:Figtree,sans-serif;font-size:17px;font-weight:600;color:#17365B">{{ e.program }}</div>
+                <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#A3ABB6">{{ e.code }}</div>
+              </div>
+              <p style="font-size:15px;line-height:1.6;color:#5A6675;margin:14px 0 0;text-wrap:pretty">{{ e.desc }}</p>
+              <div style="margin-top:auto;padding-top:20px">
+                <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:10px">Contenidos clave</div>
+                <ul style="margin:0;padding-left:18px;font-size:15px;line-height:1.7;color:#2E4057">
+                  <sc-for list="{{ e.topics }}" as="tp" hint-placeholder-count="4">
+                    <li>{{ tp }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </sc-for>
+
+  <section style="background:#17365B;color:#FFFFFF">
+    <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
+      <div>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">Tutoría por asignatura, 100% online</h2>
+        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">Cuéntanos la asignatura, el programa y la fecha del examen. Armamos el plan desde ahí.</p>
+      </div>
+      <a href="index.html#contacto" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">Agendar reunión gratuita</a>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <a href="index.html" style="display:flex;align-items:center;gap:12px">
+        <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <div style="font-size:14px;color:#A3ABB6">100% online, en Chile y en el extranjero.</div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  PROG = [
+    { slug: 'plan-nacional', name: 'Plan Nacional' },
+    { slug: 'igcse', name: 'IGCSE' },
+    { slug: 'a-level', name: 'A-Level' },
+    { slug: 'ib-dp', name: 'IB DP' }
+  ];
+
+  S = [
+    {
+      slug: 'biologia', name: 'Biología',
+      blurb: 'Desde los ejes del currículum nacional hasta los papers de Cambridge y la evaluación interna del IB.',
+      data: {
+        'plan-nacional': { code: 'Ciencias PAES', desc: 'Contenidos de biología de 1° a 4° medio y el eje de Biología de la prueba de Ciencias de la PAES.', topics: ['Célula y procesos metabólicos', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología y organismo-ambiente'] },
+        'igcse': { code: '0610', desc: 'Veintiún temas del syllabus de Cambridge, con papers teóricos y componente práctico alternativo.', topics: ['Características de los seres vivos', 'Nutrición y transporte', 'Reproducción y herencia', 'Organismos y su ambiente'] },
+        'a-level': { code: '9700', desc: 'AS y A2 con mayor profundidad experimental y análisis de datos en los papers 3 a 5.', topics: ['Estructura celular y biomoléculas', 'Fisiología y transporte', 'Genética molecular y control génico', 'Selección natural y biodiversidad'] },
+        'ib-dp': { code: 'SL / HL', desc: 'Currículum por temas más la evaluación interna y el trabajo de conceptos transversales.', topics: ['Unidad y diversidad', 'Forma y función', 'Interacción e interdependencia', 'Continuidad y cambio'] }
+      }
+    },
+    {
+      slug: 'quimica', name: 'Química',
+      blurb: 'Cálculo estequiométrico, química orgánica y trabajo de laboratorio según el programa.',
+      data: {
+        'plan-nacional': { code: 'Ciencias PAES', desc: 'Eje de Química del currículum nacional y su versión en la prueba de Ciencias.', topics: ['Estructura atómica y enlace', 'Estequiometría y disoluciones', 'Reacciones químicas', 'Química orgánica básica'] },
+        'igcse': { code: '0620', desc: 'Syllabus de Cambridge con niveles Core y Extended, más el paper práctico o alternativo.', topics: ['Partículas y enlace químico', 'Estequiometría', 'Electroquímica y energía', 'Química orgánica e industrial'] },
+        'a-level': { code: '9701', desc: 'Química física, inorgánica y orgánica en dos años, con énfasis en mecanismos y análisis.', topics: ['Equilibrio y cinética', 'Termodinámica y electroquímica', 'Química inorgánica de los grupos', 'Mecanismos orgánicos y espectroscopía'] },
+        'ib-dp': { code: 'SL / HL', desc: 'Estructura y reactividad como ejes, con la evaluación interna como componente central.', topics: ['Modelos de estructura', 'Enlace y propiedades', 'Cambio químico y energía', 'Reactividad orgánica'] }
+      }
+    },
+    {
+      slug: 'fisica', name: 'Física',
+      blurb: 'Mecánica, ondas y electricidad, con el nivel de formalismo matemático que exige cada currículum.',
+      data: {
+        'plan-nacional': { code: 'Ciencias PAES', desc: 'Eje de Física del currículum nacional y su presencia en la prueba de Ciencias.', topics: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'] },
+        'igcse': { code: '0625', desc: 'Seis temas del syllabus de Cambridge, con papers teóricos y práctico alternativo.', topics: ['Movimiento, fuerzas y energía', 'Fenómenos térmicos', 'Ondas y luz', 'Electricidad, magnetismo y física nuclear'] },
+        'a-level': { code: '9702', desc: 'AS y A2 con tratamiento formal, incertidumbres experimentales y el paper práctico avanzado.', topics: ['Mecánica y materiales', 'Campos gravitacional, eléctrico y magnético', 'Oscilaciones y ondas', 'Física cuántica y nuclear'] },
+        'ib-dp': { code: 'SL / HL', desc: 'Temas del programa con la evaluación interna y el trabajo con datos experimentales.', topics: ['Espacio, tiempo y movimiento', 'Partículas y transferencia de energía', 'Campos y ondas', 'Física nuclear y cuántica'] }
+      }
+    },
+    {
+      slug: 'matematicas', name: 'Matemáticas',
+      blurb: 'Álgebra, funciones y cálculo, con la variante de nivel que corresponda al programa.',
+      data: {
+        'plan-nacional': { code: 'M1 / M2 PAES', desc: 'Contenidos de enseñanza media y preparación por eje para Competencia Matemática M1 y M2.', topics: ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'] },
+        'igcse': { code: '0580', desc: 'Mathematics de Cambridge en niveles Core y Extended; también trabajamos Additional Mathematics 0606.', topics: ['Número y álgebra', 'Ecuaciones y funciones', 'Geometría y trigonometría', 'Estadística y probabilidad'] },
+        'a-level': { code: '9709', desc: 'Pure Mathematics más los componentes de Mechanics o Probability & Statistics según la combinación del colegio.', topics: ['Pure 1 y Pure 3', 'Cálculo diferencial e integral', 'Mechanics', 'Probability & Statistics'] },
+        'ib-dp': { code: 'AA / AI, SL y HL', desc: 'Analysis and Approaches o Applications and Interpretation, en SL o HL, con exploración matemática (IA).', topics: ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Cálculo y estadística'] }
+      }
+    },
+    {
+      slug: 'ingles', name: 'Inglés',
+      blurb: 'Desde inglés escolar hasta lengua y literatura en nivel examen internacional.',
+      data: {
+        'plan-nacional': { code: 'Inglés escolar', desc: 'Apoyo en el inglés del currículum nacional y preparación de certificaciones externas.', topics: ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva y oral'] },
+        'igcse': { code: '0500 / 0510', desc: 'First Language English o English as a Second Language, según el colegio.', topics: ['Reading passages y comprensión', 'Directed writing', 'Escritura descriptiva y narrativa', 'Speaking y listening (0510)'] },
+        'a-level': { code: '9093 / 9695', desc: 'English Language o Literature in English, con foco en análisis y respuesta extendida.', topics: ['Análisis de textos', 'Escritura dirigida', 'Poesía, prosa y drama', 'Ensayo comparativo'] },
+        'ib-dp': { code: 'Lang A / Lang B', desc: 'Language A: Literature o Language and Literature, y Language B en SL o HL.', topics: ['Análisis textual guiado', 'Ensayo comparativo (Paper 2)', 'Oral individual', 'Producción escrita y HL essay'] }
+      }
+    }
+  ];
+
+  renderVals() {
+    return {
+      index: this.S.map(s => ({ label: s.name, href: '#' + s.slug })),
+      subjects: this.S.map((s, i) => ({
+        slug: s.slug, name: s.name, blurb: s.blurb,
+        sectionStyle: i % 2 === 1 ? 'background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC' : 'background:#FFFFFF',
+        entries: this.PROG.map(p => ({
+          id: s.slug + '-' + p.slug,
+          program: p.name,
+          code: s.data[p.slug].code,
+          desc: s.data[p.slug].desc,
+          topics: s.data[p.slug].topics
+        }))
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

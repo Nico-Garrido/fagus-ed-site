@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Source+Sans+3:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; color: #17365B; font-family: "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+  a { color: #17365B; text-decoration: none; }
+  a:hover { color: #2E4057; }
+  @keyframes fu { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden">
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:0 24px;min-height:74px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <img src="assets/fagus-mark.png" alt="" style="height:36px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
+        <a href="index.html" style="color:#2E4057">Inicio</a>
+        <a href="asignaturas.html" style="color:#2E4057">Asignaturas</a>
+        <a href="recursos.html" style="color:#2E4057">Recursos</a>
+      </nav>
+      <a href="index.html#contacto" style="margin-left:auto;background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">Agendar reunión</a>
+    </div>
+  </header>
+
+  <section style="max-width:1140px;margin:0 auto;padding:80px 24px 56px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">Programas</div>
+    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">Los cuatro currículums con los que trabajamos</h1>
+    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">Cada programa tiene su propia lógica de evaluación, calendario y exigencias. Esta página explica en detalle cómo funciona cada uno y qué implica para el estudiante y su familia.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:36px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+        <a href="{{ n.href }}" style="border:1px solid #E7E9EC;padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;color:#2E4057" style-hover="background:#F9F9F9;border-color:#17365B">{{ n.label }}</a>
+      </sc-for>
+    </div>
+  </section>
+
+  <sc-for list="{{ programs }}" as="p" hint-placeholder-count="4">
+    <section id="{{ p.slug }}" style="{{ p.sectionStyle }}">
+      <div style="max-width:1140px;margin:0 auto;padding:76px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:52px;align-items:start">
+        <div style="position:relative">
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ p.kicker }}</div>
+          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:pretty">{{ p.title }}</h2>
+          <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:22px 0 0;text-wrap:pretty">{{ p.intro }}</p>
+          <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:16px 0 0;text-wrap:pretty">{{ p.intro2 }}</p>
+          <a href="index.html#contacto" style="display:inline-block;margin-top:28px;border-bottom:1px solid #17365B;padding-bottom:3px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600">Consultar por este programa</a>
+        </div>
+        <div style="display:grid;gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+          <sc-for list="{{ p.facts }}" as="f" hint-placeholder-count="5">
+            <div style="background:#FFFFFF;padding:20px 22px">
+              <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ f.label }}</div>
+              <div style="font-size:16px;line-height:1.55;color:#2E4057;margin-top:7px;text-wrap:pretty">{{ f.value }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </sc-for>
+
+  <section style="background:#17365B;color:#FFFFFF">
+    <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
+      <div>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">¿No sabes cuál corresponde a tu caso?</h2>
+        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">En la primera reunión revisamos el colegio, el curso y los plazos, y te decimos con qué programa conviene trabajar.</p>
+      </div>
+      <a href="index.html#contacto" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">Agendar reunión gratuita</a>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <a href="index.html" style="display:flex;align-items:center;gap:12px">
+        <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <div style="font-size:14px;color:#A3ABB6">100% online, en Chile y en el extranjero.</div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  P = [
+    {
+      slug: 'plan-nacional', kicker: 'Currículum chileno', title: 'Plan Nacional',
+      intro: 'El plan nacional es el currículum definido por el Ministerio de Educación para la enseñanza básica y media en Chile. Organiza las asignaturas por objetivos de aprendizaje y culmina, para quienes postulan a la universidad, en la PAES.',
+      intro2: 'Trabajamos tanto el acompañamiento durante el año escolar (contenidos, pruebas, promedio) como la preparación específica para la PAES por eje temático.',
+      facts: [
+        { label: 'Etapa', value: '1° básico a 4° medio' },
+        { label: 'Estructura', value: 'Asignaturas obligatorias por nivel, definidas en las Bases Curriculares' },
+        { label: 'Evaluación', value: 'Calificaciones 1,0 a 7,0 durante el año; PAES al finalizar 4° medio' },
+        { label: 'Prueba de acceso', value: 'PAES: Competencia Lectora, Competencia Matemática M1 y M2, Ciencias e Historia' },
+        { label: 'Cómo apoyamos', value: 'Nivelación por asignatura, preparación de pruebas y ensayos PAES con seguimiento de puntaje' }
+      ]
+    },
+    {
+      slug: 'igcse', kicker: 'Cambridge', title: 'IGCSE',
+      intro: 'El IGCSE (International General Certificate of Secondary Education) es la certificación internacional de educación media de Cambridge. Se cursa habitualmente entre los 14 y 16 años y funciona como base para A-Level o para el IB Diploma.',
+      intro2: 'Cada asignatura se certifica por separado, con su propio código y syllabus. Un estudiante típico rinde entre seis y diez asignaturas, y varias ofrecen dos niveles: Core (hasta grado C) y Extended (hasta grado A*).',
+      facts: [
+        { label: 'Etapa', value: 'Años 10 y 11 del sistema británico (aprox. 1° y 2° medio)' },
+        { label: 'Estructura', value: 'Asignaturas independientes con syllabus y código propio' },
+        { label: 'Niveles', value: 'Core y Extended en varias asignaturas' },
+        { label: 'Evaluación', value: 'Exámenes externos en las series de mayo/junio y octubre/noviembre; papers teóricos y prácticos' },
+        { label: 'Calificación', value: 'Escala A* a G (y 9-1 en algunas variantes)' },
+        { label: 'Cómo apoyamos', value: 'Tutoría por asignatura alineada al syllabus vigente, práctica con past papers y mark schemes' }
+      ]
+    },
+    {
+      slug: 'a-level', kicker: 'Cambridge', title: 'A-Level',
+      intro: 'Los A Level son la etapa final del sistema británico: dos años de especialización en tres o cuatro asignaturas estudiadas en profundidad. Sus calificaciones son la moneda de cambio para postular a universidades del Reino Unido y de buena parte del mundo.',
+      intro2: 'El primer año (AS) puede certificarse por separado; el segundo (A2) completa el A Level. El salto de exigencia respecto de IGCSE es grande, sobre todo en el nivel de análisis y en la extensión de las respuestas escritas.',
+      facts: [
+        { label: 'Etapa', value: 'Años 12 y 13 (aprox. 3° y 4° medio)' },
+        { label: 'Estructura', value: 'AS en el primer año, A2 en el segundo; 3 o 4 asignaturas' },
+        { label: 'Evaluación', value: 'Exámenes externos por paper, incluyendo componentes prácticos en ciencias' },
+        { label: 'Calificación', value: 'Escala A* a E' },
+        { label: 'Uso', value: 'Requisito de admisión en universidades del Reino Unido y aceptado internacionalmente' },
+        { label: 'Cómo apoyamos', value: 'Tutoría por paper, técnica de respuesta extendida y preparación de componentes prácticos' }
+      ]
+    },
+    {
+      slug: 'ib-dp', kicker: 'International Baccalaureate', title: 'IB Diploma Programme',
+      intro: 'El IB Diploma Programme es un currículum de dos años que combina seis asignaturas de distintas áreas del conocimiento con tres componentes centrales: Teoría del Conocimiento (TOK), la Monografía (Extended Essay) y CAS.',
+      intro2: 'De las seis asignaturas, tres se cursan en Nivel Superior (HL) y tres en Nivel Medio (SL). El puntaje máximo es 45: 42 puntos por asignaturas y hasta 3 puntos adicionales por TOK y la Monografía.',
+      facts: [
+        { label: 'Etapa', value: 'Dos últimos años de enseñanza media' },
+        { label: 'Estructura', value: '6 asignaturas (3 HL + 3 SL) de los grupos 1 a 6' },
+        { label: 'Núcleo', value: 'Teoría del Conocimiento, Monografía y CAS' },
+        { label: 'Evaluación', value: 'Exámenes externos más evaluación interna (IA) en cada asignatura' },
+        { label: 'Calificación', value: '1 a 7 por asignatura; 45 puntos máximo, 24 mínimo para el diploma' },
+        { label: 'Cómo apoyamos', value: 'Tutoría por asignatura y nivel, orientación en la IA y en la Monografía, preparación de exámenes' }
+      ]
+    }
+  ];
+
+  renderVals() {
+    return {
+      nav: this.P.map(p => ({ label: p.title, href: '#' + p.slug })),
+      programs: this.P.map((p, i) => ({
+        ...p,
+        sectionStyle: i % 2 === 1 ? 'background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC' : 'background:#FFFFFF'
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

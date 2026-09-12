@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Source+Sans+3:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; color: #17365B; font-family: "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #17365B; text-decoration: none; }
+  a:hover { color: #2E4057; }
+  input, textarea, select, button { font: inherit; color: inherit; }
+  [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1); }
+  [data-reveal].in { opacity: 1; transform: none; }
+  @keyframes fu { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  @keyframes drift { 0% { transform: translate3d(0,0,0) rotate(0deg); } 50% { transform: translate3d(0,-22px,0) rotate(2.5deg); } 100% { transform: translate3d(0,0,0) rotate(0deg); } }
+  @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { *, [data-reveal] { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden">
+
+  <header style="position:relative;position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid #E7E9EC">
+    <div style="position:absolute;left:0;bottom:-1px;height:2px;width:0%;background:#17365B;transition:width .12s linear" data-progress="1"></div>
+    <div style="max-width:1140px;margin:0 auto;padding:0 24px;min-height:74px;display:flex;flex-wrap:wrap;align-items:center;gap:20px 32px">
+      <a href="#top" style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <img src="assets/fagus-mark.png" alt="" style="height:36px;width:auto;display:block;mix-blend-mode:multiply;transition:transform .5s cubic-bezier(.2,.8,.2,1)" style-hover="transform:translateY(-2px) rotate(-3deg)">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+
+      <nav style="display:flex;align-items:center;gap:28px;font-size:15px;color:#2E4057">
+        <div onMouseEnter="{{ openMenu }}" onMouseLeave="{{ closeMenu }}" style="position:relative;padding:26px 0">
+          <span style="cursor:default;display:flex;align-items:center;gap:6px">{{ t.navServices }}<span style="font-size:10px;color:#A3ABB6">▾</span></span>
+          <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;top:100%;left:-20px;width:460px;background:#FFFFFF;border:1px solid #E7E9EC;box-shadow:0 24px 60px -24px rgba(23,54,91,.25);padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:2px">
+              <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+                <a href="{{ s.href }}" target="{{ s.target }}" rel="noopener" style="padding:12px;display:block" style-hover="background:#F9F9F9">
+                  <div style="font-family:Figtree,sans-serif;font-size:14px;font-weight:600;color:#17365B">{{ s.title }}</div>
+                  <div style="font-size:13px;color:#7F8996;margin-top:3px;line-height:1.4">{{ s.short }}</div>
+                </a>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <sc-for list="{{ menus }}" as="m" hint-placeholder-count="3">
+          <div onMouseEnter="{{ m.enter }}" onMouseLeave="{{ m.leave }}" style="position:relative;padding:26px 0">
+            <span style="cursor:default;display:flex;align-items:center;gap:6px">{{ m.label }}<span style="font-size:10px;color:#A3ABB6">▾</span></span>
+            <sc-if value="{{ m.isOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;top:100%;left:-20px;width:250px;background:#FFFFFF;border:1px solid #E7E9EC;box-shadow:0 24px 60px -24px rgba(23,54,91,.25);padding:8px">
+                <sc-for list="{{ m.items }}" as="it" hint-placeholder-count="4">
+                  <div onMouseEnter="{{ it.enter }}" onMouseLeave="{{ it.leave }}" style="position:relative">
+                    <a href="{{ it.href }}" style="padding:11px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;color:#2E4057" style-hover="background:#F9F9F9">{{ it.label }}<span style="font-size:10px;color:#A3ABB6">{{ it.arrow }}</span></a>
+                    <sc-if value="{{ it.subOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;left:100%;top:-8px;width:220px;background:#FFFFFF;border:1px solid #E7E9EC;box-shadow:0 24px 60px -24px rgba(23,54,91,.25);padding:8px">
+                        <sc-for list="{{ it.sub }}" as="s2" hint-placeholder-count="4">
+                          <a href="{{ s2.href }}" style="padding:11px 12px;display:block;font-size:14px;color:#2E4057" style-hover="background:#F9F9F9">{{ s2.label }}</a>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <a href="#equipo" style="color:#2E4057">{{ t.navTeam }}</a>
+      </nav>
+
+      <div style="margin-left:auto;display:flex;align-items:center;gap:18px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="top" style="max-width:1140px;margin:0 auto;padding:96px 24px 84px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:56px;align-items:center">
+    <div>
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:22px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">{{ t.heroKicker }}</div>
+      <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(38px,5.2vw,62px);line-height:1.04;letter-spacing:-.02em;margin:0;color:#17365B;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.heroTitle }}</h1>
+      <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:52ch;margin:26px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .18s both">{{ t.heroSub }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:36px;animation:fu .9s cubic-bezier(.2,.8,.2,1) .28s both">
+        <a href="#contacto" style="background:#17365B;color:#FFFFFF;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px;transition:background .3s ease,transform .3s cubic-bezier(.2,.8,.2,1)" style-hover="background:#2E4057;color:#FFFFFF;transform:translateY(-2px)">{{ t.ctaPrimary }}</a>
+        <a href="#servicios" style="border:1px solid #17365B;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9">{{ t.ctaSecondary }}</a>
+      </div>
+      <div style="margin-top:28px;font-size:14px;color:#A3ABB6;animation:fu .9s cubic-bezier(.2,.8,.2,1) .36s both">{{ t.heroNote }}</div>
+    </div>
+    <div style="border-left:1px solid #E7E9EC;padding-left:44px;display:flex;flex-direction:column;gap:26px;animation:fu 1s cubic-bezier(.2,.8,.2,1) .4s both">
+      <sc-for list="{{ heroFacts }}" as="f" hint-placeholder-count="4">
+        <div>
+          <div style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#17365B">{{ f.label }}</div>
+          <div style="font-size:15px;color:#7F8996;margin-top:6px;line-height:1.5">{{ f.value }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <div style="background:#17365B;overflow:hidden;padding:15px 0;white-space:nowrap">
+    <div style="display:inline-flex;gap:0;animation:mq 34s linear infinite;will-change:transform">
+      <span style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.22em;color:#A3ABB6;padding-right:2px">{{ marquee }}</span>
+      <span style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.22em;color:#A3ABB6;padding-right:2px" aria-hidden="true">{{ marquee }}</span>
+    </div>
+  </div>
+
+  <section id="servicios" data-reveal="1" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:88px 24px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:52px">
+        <div>
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.servicesLabel }}</div>
+          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;max-width:22ch;text-wrap:pretty">{{ t.servicesTitle }}</h2>
+        </div>
+        <p style="font-size:16px;color:#7F8996;max-width:38ch;margin:0;line-height:1.6">{{ t.servicesSub }}</p>
+      </div>
+      <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:#E7E9EC;border:1px solid #E7E9EC">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+          <a href="{{ s.href }}" target="{{ s.target }}" rel="noopener" style="background:#FFFFFF;padding:34px 30px 38px;display:flex;flex-direction:column;min-height:230px;position:relative;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease,z-index 0s" style-hover="transform:translateY(-6px);box-shadow:0 26px 50px -28px rgba(23,54,91,.42);z-index:2">
+            <div style="font-family:Figtree,sans-serif;font-size:12px;color:#A3ABB6;letter-spacing:.1em">{{ s.num }}</div>
+            <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:20px;line-height:1.25;margin:18px 0 0;color:#17365B">{{ s.title }}</h3>
+            <p style="font-size:15px;line-height:1.6;color:#7F8996;margin:12px 0 0">{{ s.body }}</p>
+            <div style="margin-top:auto;padding-top:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:Figtree,sans-serif;font-size:13px;font-weight:600;color:#17365B">{{ s.tag }}<span style="color:#A3ABB6">{{ s.cue }}</span></div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.processLabel }}</div>
+    <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 56px;max-width:24ch;text-wrap:pretty">{{ t.processTitle }}</h2>
+    <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:40px">
+      <sc-for list="{{ steps }}" as="p" hint-placeholder-count="4">
+        <div style="border-top:2px solid #17365B;padding-top:22px">
+          <div style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.14em;color:#A3ABB6;margin-bottom:12px">{{ p.num }}</div>
+          <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:19px;margin:0;line-height:1.3">{{ p.title }}</h3>
+          <p style="font-size:15px;line-height:1.6;color:#7F8996;margin:10px 0 0">{{ p.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="programas" data-reveal="1" style="background:#17365B;color:#FFFFFF;position:relative;overflow:hidden">
+    <img src="assets/fagus-mark.png" alt="" style="position:absolute;right:-60px;top:40px;height:460px;opacity:.07;filter:invert(1);animation:drift 16s ease-in-out infinite;pointer-events:none">
+    <div style="position:relative;max-width:1140px;margin:0 auto;padding:92px 24px">
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.programsLabel }}</div>
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;color:#FFFFFF;max-width:26ch;text-wrap:pretty">{{ t.programsTitle }}</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:0;margin:48px 0 0;border-bottom:1px solid rgba(255,255,255,.18)">
+        <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="4">
+          <button onClick="{{ tb.onClick }}" style="{{ tb.style }}">{{ tb.label }}</button>
+        </sc-for>
+      </div>
+      <div data-tabpanel="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;padding-top:44px">
+        <div>
+          <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:26px;margin:0;color:#FFFFFF">{{ tab.heading }}</h3>
+          <p style="font-size:17px;line-height:1.65;color:#C9D0DA;margin:16px 0 0;max-width:46ch">{{ tab.body }}</p>
+          <a href="#contacto" style="display:inline-block;margin-top:30px;background:#FFFFFF;color:#17365B;padding:13px 22px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9;color:#17365B">{{ t.programsCta }}</a>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ tab.rows }}" as="r" hint-placeholder-count="4">
+            <div style="display:flex;justify-content:space-between;gap:24px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.14)">
+              <span style="font-size:15px;color:#C9D0DA">{{ r.k }}</span>
+              <span style="font-family:Figtree,sans-serif;font-size:15px;font-weight:500;color:#FFFFFF;text-align:right">{{ r.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="codigos" data-reveal="1" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:88px 24px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:44px">
+        <div>
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.codesLabel }}</div>
+          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;max-width:24ch;text-wrap:pretty">{{ t.codesTitle }}</h2>
+        </div>
+        <p style="font-size:15px;color:#7F8996;max-width:34ch;margin:0;line-height:1.6">{{ t.codesNote }}</p>
+      </div>
+      <div style="overflow-x:auto;background:#FFFFFF;border:1px solid #E7E9EC">
+        <div style="min-width:880px">
+          <div style="display:grid;grid-template-columns:1.3fr 1fr 1.5fr 2fr;background:#17365B">
+            <div style="padding:16px 22px;font-family:Figtree,sans-serif;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#FFFFFF">{{ t.codesSubject }}</div>
+            <div style="padding:16px 22px;font-family:Figtree,sans-serif;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#FFFFFF">IGCSE</div>
+            <div style="padding:16px 22px;font-family:Figtree,sans-serif;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#FFFFFF">A Level</div>
+            <div style="padding:16px 22px;font-family:Figtree,sans-serif;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#FFFFFF">IB DP</div>
+          </div>
+          <sc-for list="{{ codes }}" as="r" hint-placeholder-count="8">
+            <div style="display:grid;grid-template-columns:1.3fr 1fr 1.5fr 2fr;border-top:1px solid #E7E9EC;transition:background .25s ease" style-hover="background:#F9F9F9">
+              <div style="padding:18px 22px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px;color:#17365B">{{ r.subject }}</div>
+              <div style="padding:18px 22px;font-size:15px;color:#2E4057;font-variant-numeric:tabular-nums">{{ r.igcse }}</div>
+              <div style="padding:18px 22px;font-size:15px;color:#2E4057;font-variant-numeric:tabular-nums">{{ r.al }}</div>
+              <div style="padding:18px 22px;font-size:15px;color:#2E4057;font-variant-numeric:tabular-nums">{{ r.dp }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="preu" data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:start">
+    <div>
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.preuLabel }}</div>
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;text-wrap:pretty">{{ t.preuTitle }}</h2>
+      <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:20px 0 0;max-width:44ch;text-wrap:pretty">{{ t.preuBody }}</p>
+      <a href="https://www.preufagus-ed.cl" target="_blank" rel="noopener" style="display:inline-block;margin-top:28px;border:1px solid #17365B;padding:13px 22px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9">{{ t.preuCta }} ↗</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:#E7E9EC;border:1px solid #E7E9EC">
+      <sc-for list="{{ preuItems }}" as="p" hint-placeholder-count="4">
+        <div style="background:#FFFFFF;padding:28px 26px">
+          <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;color:#17365B">{{ p.title }}</div>
+          <p style="font-size:14px;line-height:1.6;color:#7F8996;margin:10px 0 0">{{ p.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <sc-if value="{{ showTestimonials }}" hint-placeholder-val="{{ true }}">
+    <section data-reveal="1" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+      <div style="max-width:1140px;margin:0 auto;padding:88px 24px">
+        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:44px">{{ t.testimonialsLabel }}</div>
+        <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px">
+          <sc-for list="{{ testimonials }}" as="q" hint-placeholder-count="3">
+            <figure style="margin:0;background:#FFFFFF;border:1px solid #E7E9EC;padding:32px 30px;display:flex;flex-direction:column;gap:22px">
+              <blockquote style="margin:0;font-family:Figtree,sans-serif;font-size:18px;line-height:1.5;color:#17365B;font-weight:400;text-wrap:pretty">{{ q.quote }}</blockquote>
+              <figcaption style="margin-top:auto;font-size:14px;color:#7F8996">{{ q.who }}</figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <section id="equipo" data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.teamLabel }}</div>
+    <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 52px;max-width:24ch;text-wrap:pretty">{{ t.teamTitle }}</h2>
+    <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:34px">
+      <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
+        <div>
+          <div style="width:112px;height:112px;background:#F9F9F9;border:1px solid #E7E9EC;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Figtree,sans-serif;font-size:26px;color:#A3ABB6;letter-spacing:.06em">{{ m.initials }}</div>
+          <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:18px;margin-top:20px">{{ m.name }}</div>
+          <div style="font-size:14px;color:#17365B;margin-top:5px;min-height:21px">{{ m.role }}</div>
+          <div style="font-size:14px;color:#17365B">{{ m.role2 }}</div>
+          <p style="font-size:14px;line-height:1.6;color:#7F8996;margin:12px 0 0;text-wrap:pretty">{{ m.bio }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="recursos" data-reveal="1" style="background:#F9F9F9;border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:88px 24px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:44px">
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.015em;margin:0">{{ t.resourcesTitle }}</h2>
+        <a href="#recursos" style="font-family:Figtree,sans-serif;font-size:14px;font-weight:600">{{ t.resourcesAll }}</a>
+      </div>
+      <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:28px">
+        <sc-for list="{{ posts }}" as="p" hint-placeholder-count="3">
+          <a href="#recursos" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:28px;display:flex;flex-direction:column;min-height:200px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease,border-color .3s ease" style-hover="border-color:#17365B;transform:translateY(-5px);box-shadow:0 22px 44px -26px rgba(23,54,91,.3)">
+            <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ p.kind }}</div>
+            <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:19px;line-height:1.3;margin:16px 0 0;color:#17365B;text-wrap:pretty">{{ p.title }}</h3>
+            <div style="margin-top:auto;padding-top:20px;font-size:14px;color:#7F8996">{{ p.meta }}</div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:start">
+    <div>
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.faqLabel }}</div>
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;text-wrap:pretty">{{ t.faqTitle }}</h2>
+    </div>
+    <div style="border-top:1px solid #E7E9EC">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+        <div style="border-bottom:1px solid #E7E9EC">
+          <button onClick="{{ f.onClick }}" style="width:100%;background:none;border:0;padding:22px 0;display:flex;justify-content:space-between;align-items:center;gap:24px;text-align:left;cursor:pointer">
+            <span style="font-family:Figtree,sans-serif;font-weight:500;font-size:17px;color:#17365B">{{ f.q }}</span>
+            <span style="{{ f.iconStyle }}">+</span>
+          </button>
+          <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+            <p style="font-size:15px;line-height:1.7;color:#7F8996;margin:0;padding:0 44px 24px 0;max-width:62ch">{{ f.a }}</p>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="contacto" data-reveal="1" style="background:#2E4057;color:#FFFFFF">
+    <div style="max-width:1140px;margin:0 auto;padding:92px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:60px">
+      <div>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;color:#FFFFFF;text-wrap:pretty">{{ t.contactTitle }}</h2>
+        <p style="font-size:17px;line-height:1.65;color:#D3D9E2;margin:20px 0 0;max-width:40ch">{{ t.contactBody }}</p>
+        <div style="margin-top:36px;display:flex;flex-direction:column;gap:14px;font-size:15px;color:#D3D9E2">
+          <div>contacto@fagus-ed.cl</div>
+          <div>{{ t.contactHours }}</div>
+        </div>
+      </div>
+      <form onSubmit="{{ onSubmit }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px">
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#C9D0DA;font-family:Figtree,sans-serif;letter-spacing:.06em">{{ t.fName }}
+          <input type="text" value="{{ contactName }}" onChange="{{ onContactName }}" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);color:#FFFFFF;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#C9D0DA;font-family:Figtree,sans-serif;letter-spacing:.06em">{{ t.fEmail }}
+          <input type="email" value="{{ contactEmail }}" onChange="{{ onContactEmail }}" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);color:#FFFFFF;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif">
+        </label>
+        <label style="grid-column:span 2;display:flex;flex-direction:column;gap:8px;font-size:13px;color:#C9D0DA;font-family:Figtree,sans-serif;letter-spacing:.06em">{{ t.fInterest }}
+          <select value="{{ contactInterest }}" onChange="{{ onContactInterest }}" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);color:#FFFFFF;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif">
+            <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+              <option value="{{ s.title }}" style="color:#17365B">{{ s.title }}</option>
+            </sc-for>
+          </select>
+        </label>
+        <label style="grid-column:span 2;display:flex;flex-direction:column;gap:8px;font-size:13px;color:#C9D0DA;font-family:Figtree,sans-serif;letter-spacing:.06em">{{ t.fMessage }}
+          <textarea rows="4" value="{{ contactMessage }}" onChange="{{ onContactMessage }}" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);color:#FFFFFF;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif;resize:vertical"></textarea>
+        </label>
+        <button type="submit" disabled="{{ sending }}" style="grid-column:span 2;background:#FFFFFF;color:#17365B;border:0;padding:15px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#F9F9F9">{{ submitLabel }}</button>
+        <sc-if value="{{ sendError }}" hint-placeholder-val="{{ false }}">
+          <div style="grid-column:span 2;font-size:13px;color:#FFD6D6">{{ sendError }}</div>
+        </sc-if>
+      </form>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:56px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="assets/fagus-mark.png" alt="" style="height:32px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:15px;width:auto;display:block;mix-blend-mode:multiply">
+      </div>
+      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Contenido&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#17365B&quot;,&quot;#2E4057&quot;,&quot;#A3ABB6&quot;],&quot;default&quot;:&quot;#17365B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;},&quot;showTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenido&quot;}}">
+class Component extends DCLogic {
+  state = { lang: null, tab: 0, faq: 0, menuOpen: false, sent: false, menu: null, subItem: null, contactName: '', contactEmail: '', contactInterest: '', contactMessage: '', sending: false, sendError: '' };
+
+  LINKS = [
+    { href: 'https://www.preufagus-ed.cl', ext: true },
+    { href: 'material.html' },
+    { href: 'tutoria.html' },
+    { href: 'agendar.html?s=familias' },
+    { href: 'agendar.html?s=vocacional' },
+    { href: 'agendar.html?s=admision' }
+  ];
+
+  PROGRAMS = [
+    { slug: 'plan-nacional', label: 'Plan Nacional' },
+    { slug: 'igcse', label: 'IGCSE' },
+    { slug: 'a-level', label: 'A-Level' },
+    { slug: 'ib-dp', label: 'IB DP' }
+  ];
+  SUBJECTS = [
+    { slug: 'biologia', es: 'Biología', en: 'Biology' },
+    { slug: 'quimica', es: 'Química', en: 'Chemistry' },
+    { slug: 'fisica', es: 'Física', en: 'Physics' },
+    { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics' },
+    { slug: 'ingles', es: 'Inglés', en: 'English' }
+  ];
+  RESOURCES = [
+    { slug: 'guias', es: 'Guías', en: 'Guides' },
+    { slug: 'past-papers', es: 'Past papers', en: 'Past papers' },
+    { slug: 'slides', es: 'Slides', en: 'Slides' },
+    { slug: 'notes', es: 'Apuntes', en: 'Notes' }
+  ];
+
+  buildMenus(t, lang) {
+    const mk = (key, label, items) => ({
+      key, label, isOpen: this.state.menu === key,
+      enter: () => this.setState({ menu: key }),
+      leave: () => this.setState({ menu: null, subItem: null }),
+      items
+    });
+    const plain = (label, href) => ({ label, href, arrow: '', subOpen: false, sub: [], enter: () => this.setState({ subItem: null }), leave: () => {} });
+    return [
+      mk('programs', t.navPrograms, this.PROGRAMS.map(p => plain(p.label, 'programas.html#' + p.slug))),
+      mk('subjects', t.navCodes, this.SUBJECTS.map(s => {
+        const id = 'sub-' + s.slug;
+        return {
+          label: lang === 'en' ? s.en : s.es,
+          href: 'asignaturas.html#' + s.slug,
+          arrow: '›',
+          subOpen: this.state.subItem === id,
+          enter: () => this.setState({ subItem: id }),
+          leave: () => {},
+          sub: this.PROGRAMS.map(p => ({ label: p.label, href: 'asignaturas.html#' + s.slug + '-' + p.slug }))
+        };
+      })),
+      mk('resources', t.navResources, this.RESOURCES.map(r => plain(lang === 'en' ? r.en : r.es, 'recursos.html#' + r.slug)))
+    ];
+  }
+
+  componentDidMount() {
+    const els = () => Array.from(document.querySelectorAll('[data-reveal]'));
+    if (!('IntersectionObserver' in window)) { els().forEach(e => e.classList.add('in')); return; }
+    this.io = new IntersectionObserver((ents) => {
+      ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); this.reveal(e.target); this.io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    const attach = () => els().forEach(e => { if (!e.classList.contains('in') && !e.dataset.obs) { e.dataset.obs = '1'; this.io.observe(e); } });
+    attach();
+    this.tick = setInterval(attach, 500);
+    document.querySelectorAll('[data-stagger]').forEach(g => {
+      Array.from(g.children).forEach((ch, i) => {
+        ch.style.transition = 'opacity .7s cubic-bezier(.2,.8,.2,1) ' + (i * 0.08 + 0.1) + 's, transform .7s cubic-bezier(.2,.8,.2,1) ' + (i * 0.08 + 0.1) + 's';
+        ch.style.opacity = '0';
+        ch.style.transform = 'translateY(22px)';
+      });
+    });
+    this.onScroll = () => {
+      const bar = document.querySelector('[data-progress]');
+      if (!bar) return;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+    setTimeout(() => clearInterval(this.tick), 6000);
+  }
+  reveal(section) {
+    section.querySelectorAll('[data-stagger]').forEach(g => {
+      Array.from(g.children).forEach(ch => { ch.style.opacity = '1'; ch.style.transform = 'none'; });
+    });
+  }
+
+  componentWillUnmount() { clearInterval(this.tick); if (this.io) this.io.disconnect(); window.removeEventListener('scroll', this.onScroll); }
+
+  componentDidUpdate(prev, prevState) {
+    if (prevState.tab !== this.state.tab) {
+      const el = document.querySelector('[data-tabpanel]');
+      if (el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = 'fu .5s cubic-bezier(.2,.8,.2,1) both'; }
+    }
+  }
+
+  D = {
+    es: {
+      navServices: 'Servicios', navPrograms: 'Programas', navCodes: 'Asignaturas', navResources: 'Recursos', navTeam: 'Nosotros', navCta: 'Agendar reunión',
+      codesLabel: 'Asignaturas y códigos', codesTitle: 'Códigos de asignatura por programa',
+      codesNote: 'Referencia de los códigos oficiales de cada asignatura en IGCSE, A Level e IB DP. Trabajamos con material alineado a cada uno.',
+      codesSubject: 'Asignatura',
+      heroKicker: 'Acompañamiento académico y vocacional',
+      heroTitle: 'Apoyo académico y decisiones bien informadas.',
+      heroSub: 'Fagus Ed acompaña a estudiantes y familias en Chile y en el extranjero: preparación para la PAES, currículums internacionales, tutoría privada y asesoría en la elección de colegios, programas y carreras.',
+      ctaPrimary: 'Agendar una reunión gratuita', ctaSecondary: 'Ver servicios',
+      heroNote: 'Primera reunión de 30 minutos, sin costo ni compromiso.',
+      servicesLabel: 'Servicios', servicesTitle: 'Seis formas de trabajar con nosotros',
+      servicesSub: 'Cada servicio funciona por separado o combinado en un plan de acompañamiento continuo.',
+      processLabel: 'Cómo funciona', processTitle: 'Un proceso claro, de la primera reunión al resultado',
+      programsLabel: 'Programas', programsTitle: 'Material y tutoría para currículums internacionales',
+      programsCta: 'Consultar por este programa',
+      preuLabel: 'Preu FagusED', preuTitle: 'Preparación PAES con seguimiento individual',
+      preuBody: 'Clases y ensayos orientados a la PAES, con diagnóstico inicial, plan de estudio por asignatura y reportes de avance para el estudiante y su familia.',
+      preuCta: 'Ver detalles del preu',
+      testimonialsLabel: 'Familias y estudiantes',
+      teamLabel: 'Nosotros', teamTitle: 'Un equipo con experiencia en aula y en admisión',
+      resourcesTitle: 'Recursos y artículos', resourcesAll: 'Ver todos',
+      faqLabel: 'Preguntas frecuentes', faqTitle: 'Lo que suelen preguntarnos',
+      contactTitle: 'Agenda una reunión gratuita', contactBody: 'Cuéntanos el curso, el programa y en qué necesitas apoyo. Respondemos con una propuesta concreta.',
+      contactHours: 'Lunes a viernes, 9:00 a 19:00 (Chile)',
+      fName: 'NOMBRE', fEmail: 'EMAIL', fInterest: 'ME INTERESA', fMessage: 'MENSAJE', fSubmit: 'Enviar solicitud', fSending: 'Enviando...', fSent: 'Solicitud enviada', fFailed: 'No se pudo enviar. Intenta de nuevo o escribe a contacto@fagus-ed.cl.',
+      footer: '© 2026 Fagus Ed. Santiago, Chile.'
+    },
+    en: {
+      navServices: 'Services', navPrograms: 'Programmes', navCodes: 'Subjects', navResources: 'Resources', navTeam: 'About', navCta: 'Book a meeting',
+      codesLabel: 'Subjects and codes', codesTitle: 'Subject codes by programme',
+      codesNote: 'Reference of the official subject codes for IGCSE, A Level and IB DP. Our material is aligned to each of them.',
+      codesSubject: 'Subject',
+      heroKicker: 'Academic and university guidance',
+      heroTitle: 'Academic support and well-informed decisions.',
+      heroSub: 'Fagus Ed supports students and families in Chile and abroad: PAES preparation, international curricula, private tutoring and guidance on choosing schools, programmes and degrees.',
+      ctaPrimary: 'Book a free meeting', ctaSecondary: 'See services',
+      heroNote: 'A free 30-minute first meeting, no commitment.',
+      servicesLabel: 'Services', servicesTitle: 'Six ways to work with us',
+      servicesSub: 'Each service works on its own or combined into an ongoing support plan.',
+      processLabel: 'How it works', processTitle: 'A clear process, from first meeting to result',
+      programsLabel: 'Programmes', programsTitle: 'Material and tutoring for international curricula',
+      programsCta: 'Ask about this programme',
+      preuLabel: 'Preu FagusED', preuTitle: 'PAES preparation with individual follow-up',
+      preuBody: 'Classes and mock exams built around the PAES, with an initial diagnostic, a study plan per subject and progress reports for the student and the family.',
+      preuCta: 'See prep details',
+      testimonialsLabel: 'Families and students',
+      teamLabel: 'About us', teamTitle: 'A team with classroom and admissions experience',
+      resourcesTitle: 'Resources and articles', resourcesAll: 'View all',
+      faqLabel: 'FAQ', faqTitle: 'What families usually ask',
+      contactTitle: 'Book a free meeting', contactBody: 'Tell us the year group, the programme and where you need support. We reply with a concrete proposal.',
+      contactHours: 'Monday to Friday, 9:00–19:00 (Chile)',
+      fName: 'NAME', fEmail: 'EMAIL', fInterest: 'I AM INTERESTED IN', fMessage: 'MESSAGE', fSubmit: 'Send request', fSending: 'Sending...', fSent: 'Request sent', fFailed: 'Could not send. Please try again or email contacto@fagus-ed.cl.',
+      footer: '© 2026 Fagus Ed. Santiago, Chile.'
+    }
+  };
+
+  C = {
+    es: {
+      codes: [
+        { subject: "Physics", igcse: "0625", al: "9702", dp: "100452" },
+        { subject: "Biology", igcse: "0610", al: "9700", dp: "100088" },
+        { subject: "Chemistry", igcse: "0620", al: "9701", dp: "100113" },
+        { subject: "Co-ordinated/Combined Sciences", igcse: "0654 (Double Award)", al: "—", dp: "—" },
+        { subject: "Mathematics", igcse: "0580", al: "9709", dp: "166711 (Analysis and Approaches) / 166712 (Applications and Interpretation)" },
+        { subject: "Additional/Further Mathematics", igcse: "0606 (Additional)", al: "9231 (Further)", dp: "—" },
+        { subject: "International Mathematics", igcse: "0607", al: "—", dp: "—" },
+        { subject: "English", igcse: "0500 (First Language)", al: "9093 (Language) / 9695 (Literature)", dp: "112733 (Lang & Lit) / 112711 (Literature) / 100179 (English B) / 100704 (Ab Initio)" },
+        { subject: "English as a Second Language", igcse: "0510 / 0511", al: "—", dp: "—" }
+      ],
+      services: [
+        { title: 'Preu FagusED', short: 'PAES, ensayos y plan de estudio', body: 'Clases por asignatura, ensayos periódicos y seguimiento del avance hacia la PAES.', tag: 'Grupal o individual' },
+        { title: 'Material IGCSE, A-Level y DP', short: 'Guías, ejercicios y past papers', body: 'Material propio alineado al syllabus, con ejercicios resueltos y práctica de exámenes anteriores.', tag: 'Acceso por asignatura' },
+        { title: 'Tutoría privada', short: 'Clases uno a uno, online o presencial', body: 'Sesiones enfocadas en los contenidos que el estudiante necesita reforzar, con reportes a la familia.', tag: '100% online' },
+        { title: 'Asesoría a familias', short: 'Qué colegio y qué currículum elegir', body: 'Acompañamiento a apoderados para comparar colegios, currículums y procesos de admisión.', tag: 'Para apoderados' },
+        { title: 'Orientación vocacional en Chile', short: 'Carreras, universidades y puntajes', body: 'Exploración de intereses, análisis de carreras y armado de una lista realista de postulaciones.', tag: 'Para estudiantes' },
+        { title: 'Admisión en el extranjero', short: 'Postulaciones fuera de Chile', body: 'Selección de universidades, requisitos, ensayos y calendario de postulación paso a paso.', tag: 'Reino Unido, EE.UU., Europa' }
+      ],
+      heroFacts: [
+        { label: 'Currículums', value: 'IGCSE, A-Level, IB DP y currículum nacional' },
+        { label: 'Preparación', value: 'PAES y exámenes internacionales' },
+        { label: 'Asesorías', value: 'Colegios, programas, carreras y admisión' },
+        { label: 'Modalidad', value: '100% online, desde cualquier ciudad de Chile o el extranjero' }
+      ],
+      steps: [
+        { num: '01', title: 'Reunión inicial', body: 'Conversamos con el estudiante y su familia para entender el contexto, el programa y los plazos.' },
+        { num: '02', title: 'Diagnóstico', body: 'Evaluamos nivel actual por asignatura o revisamos el perfil académico según el tipo de asesoría.' },
+        { num: '03', title: 'Plan de trabajo', body: 'Definimos objetivos, frecuencia de sesiones, material y fechas clave del calendario.' },
+        { num: '04', title: 'Seguimiento', body: 'Reportes periódicos de avance y ajustes al plan según resultados.' }
+      ],
+      tabs: ['IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
+      tabData: [
+        { heading: "IGCSE", body: "El IGCSE (International General Certificate of Secondary Education) es la certificación internacional de educación media de Cambridge. Se cursa habitualmente entre los 14 y los 16 años y se evalúa asignatura por asignatura con exámenes externos.", rows: [{ k: "Entidad", v: "Cambridge (CAIE)" }, { k: "Etapa", v: "14 a 16 años, equivalente a I y II medio" }, { k: "Estructura", v: "Certificación independiente por asignatura" }, { k: "Para qué sirve", v: "Base para A Level, IB Diploma o continuidad escolar en Chile" }] },
+        { heading: "A-Level", body: "Los A Level son la etapa final del sistema británico: dos años de especialización en tres o cuatro asignaturas estudiadas en profundidad. Sus calificaciones son el principal antecedente de admisión en universidades del Reino Unido y de varios otros países.", rows: [{ k: "Entidad", v: "Juntas examinadoras británicas (Cambridge, Edexcel, AQA)" }, { k: "Etapa", v: "16 a 18 años, en dos etapas: AS y A2" }, { k: "Estructura", v: "Tres o cuatro asignaturas en profundidad" }, { k: "Para qué sirve", v: "Admisión universitaria en el Reino Unido, Europa y otros destinos" }] },
+        { heading: "IB Diploma", body: "El IB Diploma Programme es un currículum de dos años que combina seis asignaturas de distintas áreas del conocimiento con tres componentes centrales: Teoría del Conocimiento, la Monografía y CAS. Entrega un diploma único con puntaje total sobre 45 puntos.", rows: [{ k: "Entidad", v: "International Baccalaureate Organization" }, { k: "Etapa", v: "16 a 18 años, últimos dos años de colegio" }, { k: "Estructura", v: "Seis asignaturas en HL o SL, más TOK, EE y CAS" }, { k: "Para qué sirve", v: "Diploma reconocido para admisión en Chile y en el extranjero" }] },
+        { heading: "PAES", body: "La PAES es la prueba de acceso al sistema universitario chileno. Se rinde al terminar la enseñanza media y su puntaje, junto a las notas y el ranking de notas, determina la postulación centralizada a las universidades del sistema de acceso.", rows: [{ k: "Entidad", v: "DEMRE, Universidad de Chile" }, { k: "Etapa", v: "Cuarto medio, con opción de rendirla en invierno o en verano" }, { k: "Estructura", v: "Competencia Lectora y Matemática M1 obligatorias, más pruebas electivas" }, { k: "Para qué sirve", v: "Postulación centralizada a las universidades del sistema de acceso en Chile" }] }
+      ],
+      preuItems: [
+        { title: 'Diagnóstico inicial', body: 'Ensayo de entrada para ubicar el punto de partida por eje temático.' },
+        { title: 'Plan por asignatura', body: 'Prioridades de estudio según brechas y carrera de interés.' },
+        { title: 'Ensayos periódicos', body: 'Corrección comentada y comparación con el ensayo anterior.' },
+        { title: 'Reporte a la familia', body: 'Resumen mensual de asistencia, avance y próximos pasos.' }
+      ],
+      testimonials: [
+        { quote: 'Llegamos buscando clases de matemática y salimos con un plan completo para la postulación.', who: 'Apoderada, estudiante de IV medio' },
+        { quote: 'La preparación de A-Level fue mucho más ordenada de lo que esperaba, con foco en el examen.', who: 'Estudiante de A-Level, Santiago' },
+        { quote: 'Nos ayudaron a comparar colegios y a entender qué currículum le convenía a nuestro hijo.', who: 'Familia, cambio de colegio en 7º básico' }
+      ],
+      team: [
+        { initials: 'NG', name: 'Nicolas Garrido', role: 'Director Ejecutivo', role2: 'Profesor de Física y Matemáticas', bio: 'Dirige Fagus Ed y hace clases de Física y Matemáticas en currículum nacional y programas internacionales.' },
+        { initials: 'PC', name: 'Pamela Corrales', role: 'Directora Académica', role2: 'Profesora de Química y Biología', bio: 'Coordina el trabajo académico del equipo y enseña Química y Biología en IGCSE, A-Level e IB Diploma.' },
+        { initials: 'PO', name: 'Pablo Ortega', role: 'Director de Tecnología', role2: 'Profesor de Física y Matemáticas', bio: 'A cargo de las plataformas y del material digital, además de hacer clases de Física y Matemáticas.' },
+        { initials: 'JM', name: 'Javiera Mundaca', role: '', role2: 'Profesora de Biología y Cs. Naturales', bio: 'Hace clases de Biología y Ciencias Naturales y prepara material de estudio para currículum nacional y programas internacionales.' }
+      ],
+      posts: [
+        { kind: 'Guía', title: 'IB, A-Level o currículum nacional: cómo comparar programas', meta: 'Lectura de 6 min' },
+        { kind: 'PAES', title: 'Cómo organizar el año de preparación PAES por eje temático', meta: 'Lectura de 5 min' },
+        { kind: 'Admisión', title: 'Calendario de postulación al extranjero para estudiantes en Chile', meta: 'Lectura de 8 min' }
+      ],
+      faqs: [
+        { q: '¿Las clases son online o presenciales?', a: 'Todos los servicios son online por ahora. Las sesiones se hacen por videollamada, lo que permite trabajar con estudiantes en cualquier ciudad de Chile o en el extranjero.' },
+        { q: '¿Trabajan con estudiantes de colegios internacionales y nacionales?', a: 'Sí. Cubrimos currículum nacional y programas internacionales IGCSE, A-Level e IB Diploma, además de preparación PAES.' },
+        { q: '¿Cómo se define el plan de trabajo?', a: 'Después de la reunión inicial y del diagnóstico definimos objetivos, frecuencia de sesiones y fechas clave. El plan se ajusta según los resultados de los ensayos.' },
+        { q: '¿Las asesorías de colegios incluyen a los apoderados?', a: 'Sí. Esa asesoría está pensada para la familia: comparamos colegios, currículums y procesos de admisión, y entregamos un informe con recomendaciones.' },
+        { q: '¿Apoyan postulaciones fuera de Chile?', a: 'Sí. Acompañamos la selección de universidades, los requisitos de cada país, los ensayos de postulación y el calendario completo.' }
+      ]
+    },
+    en: {
+      codes: [
+        { subject: "Physics", igcse: "0625", al: "9702", dp: "100452" },
+        { subject: "Biology", igcse: "0610", al: "9700", dp: "100088" },
+        { subject: "Chemistry", igcse: "0620", al: "9701", dp: "100113" },
+        { subject: "Co-ordinated/Combined Sciences", igcse: "0654 (Double Award)", al: "—", dp: "—" },
+        { subject: "Mathematics", igcse: "0580", al: "9709", dp: "166711 (Analysis and Approaches) / 166712 (Applications and Interpretation)" },
+        { subject: "Additional/Further Mathematics", igcse: "0606 (Additional)", al: "9231 (Further)", dp: "—" },
+        { subject: "International Mathematics", igcse: "0607", al: "—", dp: "—" },
+        { subject: "English", igcse: "0500 (First Language)", al: "9093 (Language) / 9695 (Literature)", dp: "112733 (Lang & Lit) / 112711 (Literature) / 100179 (English B) / 100704 (Ab Initio)" },
+        { subject: "English as a Second Language", igcse: "0510 / 0511", al: "—", dp: "—" }
+      ],
+      services: [
+        { title: 'Preu FagusED', short: 'PAES content, mocks and study plan', body: 'Subject classes, regular mock exams and progress tracking towards the PAES.', tag: 'Group or one-to-one' },
+        { title: 'IGCSE, A-Level and DP material', short: 'Guides, exercises and past papers', body: 'In-house material aligned to the syllabus, with worked exercises and past-paper practice.', tag: 'Access per subject' },
+        { title: 'Private tutoring', short: 'One-to-one, online or in person', body: 'Sessions focused on the topics the student needs to reinforce, with reports to the family.', tag: '100% online' },
+        { title: 'Family guidance', short: 'Which school and which curriculum', body: 'Support for parents comparing schools, curricula and admissions processes.', tag: 'For parents' },
+        { title: 'University guidance in Chile', short: 'Degrees, universities and scores', body: 'Interest exploration, degree analysis and a realistic application list.', tag: 'For students' },
+        { title: 'Admissions abroad', short: 'Applications outside Chile', body: 'University selection, requirements, essays and a step-by-step application calendar.', tag: 'UK, US, Europe' }
+      ],
+      heroFacts: [
+        { label: 'Curricula', value: 'IGCSE, A-Level, IB DP and the Chilean curriculum' },
+        { label: 'Exam prep', value: 'PAES and international examinations' },
+        { label: 'Guidance', value: 'Schools, programmes, degrees and admissions' },
+        { label: 'Format', value: 'Fully online, from any city in Chile or abroad' }
+      ],
+      steps: [
+        { num: '01', title: 'First meeting', body: 'We talk with the student and the family to understand the context, programme and deadlines.' },
+        { num: '02', title: 'Diagnostic', body: 'We assess the current level per subject, or review the academic profile for guidance work.' },
+        { num: '03', title: 'Work plan', body: 'We set objectives, session frequency, material and the key dates in the calendar.' },
+        { num: '04', title: 'Follow-up', body: 'Regular progress reports and adjustments to the plan based on results.' }
+      ],
+      tabs: ['IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
+      tabData: [
+        { heading: "IGCSE", body: "The IGCSE (International General Certificate of Secondary Education) is Cambridge’s international secondary qualification. It is usually taken between ages 14 and 16 and is assessed subject by subject through external examinations.", rows: [{ k: "Awarding body", v: "Cambridge (CAIE)" }, { k: "Stage", v: "Ages 14 to 16" }, { k: "Structure", v: "A separate qualification for each subject" }, { k: "What it is for", v: "A base for A Level, the IB Diploma or continuing school in Chile" }] },
+        { heading: "A-Level", body: "A Levels are the final stage of the British system: two years of specialisation in three or four subjects studied in depth. The grades are the main basis for admission to universities in the UK and several other countries.", rows: [{ k: "Awarding body", v: "British exam boards (Cambridge, Edexcel, AQA)" }, { k: "Stage", v: "Ages 16 to 18, in two stages: AS and A2" }, { k: "Structure", v: "Three or four subjects studied in depth" }, { k: "What it is for", v: "University admission in the UK, Europe and other destinations" }] },
+        { heading: "IB Diploma", body: "The IB Diploma Programme is a two-year curriculum combining six subjects from different areas of knowledge with three core components: Theory of Knowledge, the Extended Essay and CAS. It awards a single diploma scored out of 45 points.", rows: [{ k: "Awarding body", v: "International Baccalaureate Organization" }, { k: "Stage", v: "Ages 16 to 18, the final two years of school" }, { k: "Structure", v: "Six subjects at HL or SL, plus TOK, EE and CAS" }, { k: "What it is for", v: "A diploma recognised for admission in Chile and abroad" }] },
+        { heading: "PAES", body: "The PAES is the entrance examination for the Chilean university system. It is sat at the end of secondary school and the score, together with school grades and grade ranking, determines the centralised application to universities in the national admissions system.", rows: [{ k: "Awarding body", v: "DEMRE, Universidad de Chile" }, { k: "Stage", v: "Final year of school, with a winter or summer sitting" }, { k: "Structure", v: "Reading and Maths M1 are compulsory, plus elective tests" }, { k: "What it is for", v: "Centralised application to universities in the Chilean admissions system" }] }
+      ],
+      preuItems: [
+        { title: 'Initial diagnostic', body: 'An entry mock exam to locate the starting point per topic area.' },
+        { title: 'Plan per subject', body: 'Study priorities based on gaps and the degree the student is aiming for.' },
+        { title: 'Regular mocks', body: 'Detailed feedback and comparison against the previous mock.' },
+        { title: 'Family report', body: 'A monthly summary of attendance, progress and next steps.' }
+      ],
+      testimonials: [
+        { quote: 'We came looking for maths classes and left with a full plan for the application.', who: 'Parent, final-year student' },
+        { quote: 'The A-Level preparation was far more organised than I expected, and clearly exam-focused.', who: 'A-Level student, Santiago' },
+        { quote: 'They helped us compare schools and understand which curriculum suited our son.', who: 'Family, school change in Year 8' }
+      ],
+      team: [
+        { initials: 'NG', name: 'Nicolas Garrido', role: 'Executive Director', role2: 'Physics and Mathematics teacher', bio: 'Leads Fagus Ed and teaches Physics and Mathematics across the national curriculum and international programmes.' },
+        { initials: 'PC', name: 'Pamela Corrales', role: 'Academic Director', role2: 'Chemistry and Biology teacher', bio: 'Coordinates the academic work of the team and teaches Chemistry and Biology in IGCSE, A-Level and IB Diploma.' },
+        { initials: 'PO', name: 'Pablo Ortega', role: 'Technology Director', role2: 'Physics and Mathematics teacher', bio: 'Runs the platforms and digital material, alongside teaching Physics and Mathematics.' },
+        { initials: 'JM', name: 'Javiera Mundaca', role: '', role2: 'Biology and Natural Sciences teacher', bio: 'Teaches Biology and Natural Sciences and builds study material for the national curriculum and international programmes.' }
+      ],
+      posts: [
+        { kind: 'Guide', title: 'IB, A-Level or the national curriculum: how to compare programmes', meta: '6 min read' },
+        { kind: 'PAES', title: 'How to organise the PAES year by topic area', meta: '5 min read' },
+        { kind: 'Admissions', title: 'An application calendar for students in Chile applying abroad', meta: '8 min read' }
+      ],
+      faqs: [
+        { q: 'Are classes online or in person?', a: 'Everything is online for now. Sessions run over video call, so we can work with students anywhere in Chile or abroad.' },
+        { q: 'Do you work with both international and Chilean schools?', a: 'Yes. We cover the national curriculum and the IGCSE, A-Level and IB Diploma programmes, alongside PAES preparation.' },
+        { q: 'How is the work plan defined?', a: 'After the first meeting and the diagnostic we set objectives, session frequency and key dates. The plan is adjusted as mock results come in.' },
+        { q: 'Does school guidance include the parents?', a: 'Yes. That service is designed for the family: we compare schools, curricula and admissions processes, and deliver a report with recommendations.' },
+        { q: 'Do you support applications outside Chile?', a: 'Yes. We support university selection, country-specific requirements, application essays and the full calendar.' }
+      ]
+    }
+  };
+
+  renderVals() {
+    const lang = this.state.lang || (this.props.lang === 'en' ? 'en' : 'es');
+    const t = this.D[lang];
+    const c = this.C[lang];
+    const accent = this.props.accent || '#17365B';
+    const langBtn = (on) => `background:${on ? accent : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
+    return {
+      t, lang, accent,
+      marquee: c.tabs.concat(lang === 'es' ? ['Tutoría privada', 'Asesoría a familias', 'Orientación vocacional', 'Admisión en el extranjero'] : ['Private tutoring', 'Family guidance', 'University guidance', 'Admissions abroad']).join('   ·   ') + '   ·   ',
+      showTestimonials: this.props.showTestimonials !== false,
+      esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
+      setEs: () => this.setState({ lang: 'es' }), setEn: () => this.setState({ lang: 'en' }),
+      menus: this.buildMenus(t, lang),
+      menuOpen: this.state.menuOpen,
+      openMenu: () => this.setState({ menuOpen: true }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      services: c.services.map((s, i) => {
+        const L = this.LINKS[i] || { href: '#contacto' };
+        return { ...s, num: String(i + 1).padStart(2, '0'), href: L.href, target: L.ext ? '_blank' : '_self', cue: L.ext ? '↗' : '→' };
+      }),
+      heroFacts: c.heroFacts, steps: c.steps, preuItems: c.preuItems,
+      testimonials: c.testimonials, team: c.team, posts: c.posts, codes: c.codes,
+      tabs: c.tabs.map((label, i) => ({
+        label,
+        onClick: () => this.setState({ tab: i }),
+        style: `background:none;border:0;border-bottom:2px solid ${i === this.state.tab ? '#FFFFFF' : 'transparent'};color:${i === this.state.tab ? '#FFFFFF' : '#A3ABB6'};padding:14px 22px 14px 0;margin-right:26px;font-family:Figtree,sans-serif;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:.02em`
+      })),
+      tab: c.tabData[this.state.tab] || c.tabData[0],
+      faqs: c.faqs.map((f, i) => ({
+        ...f,
+        open: this.state.faq === i,
+        onClick: () => this.setState({ faq: this.state.faq === i ? -1 : i }),
+        iconStyle: `font-family:Figtree,sans-serif;font-size:20px;color:#A3ABB6;transition:transform .25s ease;transform:rotate(${this.state.faq === i ? 45 : 0}deg)`
+      })),
+      contactName: this.state.contactName, contactEmail: this.state.contactEmail,
+      contactInterest: this.state.contactInterest, contactMessage: this.state.contactMessage,
+      onContactName: (e) => this.setState({ contactName: e.target.value }),
+      onContactEmail: (e) => this.setState({ contactEmail: e.target.value }),
+      onContactInterest: (e) => this.setState({ contactInterest: e.target.value }),
+      onContactMessage: (e) => this.setState({ contactMessage: e.target.value }),
+      sending: this.state.sending,
+      sendError: this.state.sendError,
+      submitLabel: this.state.sending ? t.fSending : this.state.sent ? t.fSent : t.fSubmit,
+      onSubmit: (e) => {
+        e.preventDefault();
+        if (this.state.sending) return;
+        this.setState({ sending: true, sendError: '' });
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: this.state.contactName,
+            email: this.state.contactEmail,
+            interest: this.state.contactInterest,
+            message: this.state.contactMessage
+          })
+        })
+          .then((r) => { if (!r.ok) throw new Error('request failed'); return r.json(); })
+          .then(() => this.setState({ sending: false, sent: true, contactName: '', contactEmail: '', contactInterest: '', contactMessage: '' }))
+          .catch(() => this.setState({ sending: false, sendError: t.fFailed }));
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
