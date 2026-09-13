@@ -30,18 +30,24 @@
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
       <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
-        <a href="index.html" style="color:#2E4057">Inicio</a>
-        <a href="programas.html" style="color:#2E4057">Programas</a>
-        <a href="asignaturas.html" style="color:#2E4057">Asignaturas</a>
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
+        <a href="asignaturas.html" style="color:#2E4057">{{ t.navSubjects }}</a>
       </nav>
-      <a href="index.html#contacto" style="margin-left:auto;background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">Agendar reunión</a>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="index.html#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
     </div>
   </header>
 
   <section style="max-width:1140px;margin:0 auto;padding:80px 24px 44px">
-    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">Recursos</div>
-    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">Material de estudio ordenado por tipo</h1>
-    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">Guías, past papers, slides y apuntes preparados por el equipo. Filtra por programa para ver solo lo que te sirve.</p>
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">{{ t.kicker }}</div>
+    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.title }}</h1>
+    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">{{ t.intro }}</p>
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:34px">
       <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
         <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
@@ -56,7 +62,7 @@
           <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0">{{ g.title }}</h2>
           <div style="font-size:16px;color:#7F8996;max-width:52ch;text-wrap:pretty">{{ g.blurb }}</div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
           <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
             <a href="index.html#contacto" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:26px;display:flex;flex-direction:column;min-height:180px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
               <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.program }}</div>
@@ -66,7 +72,7 @@
           </sc-for>
         </div>
         <sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}">
-          <div style="border:1px dashed #D8DCE2;padding:34px;font-size:16px;color:#7F8996">No hay material de este tipo para el programa seleccionado todavía.</div>
+          <div style="border:1px dashed #D8DCE2;padding:34px;font-size:16px;color:#7F8996">{{ t.empty }}</div>
         </sc-if>
       </div>
     </section>
@@ -75,10 +81,10 @@
   <section style="background:#17365B;color:#FFFFFF">
     <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
       <div>
-        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">¿Buscas material de una asignatura específica?</h2>
-        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">Escríbenos y te enviamos el paquete que corresponde a tu programa y nivel.</p>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">{{ t.ctaTitle }}</h2>
+        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">{{ t.ctaBody }}</p>
       </div>
-      <a href="index.html#contacto" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">Escribir al equipo</a>
+      <a href="index.html#contacto" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">{{ t.ctaButton }}</a>
     </div>
   </section>
 
@@ -88,85 +94,141 @@
         <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
-      <div style="font-size:14px;color:#A3ABB6">100% online, en Chile y en el extranjero.</div>
+      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
     </div>
   </footer>
 </div>
-
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { filter: 'all' };
+  state = { filter: 'all', lang: null };
 
   PROG = [
-    { slug: 'all', label: 'Todos' },
-    { slug: 'plan-nacional', label: 'Plan Nacional' },
-    { slug: 'igcse', label: 'IGCSE' },
-    { slug: 'a-level', label: 'A-Level' },
-    { slug: 'ib-dp', label: 'IB DP' }
+    { slug: 'all', es: 'Todos', en: 'All' },
+    { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
+    { slug: 'lower-secondary', es: 'Lower Secondary', en: 'Lower Secondary' },
+    { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
+    { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
+    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' }
   ];
+
+  UI = {
+    es: {
+      navHome: 'Inicio', navPrograms: 'Programas', navSubjects: 'Asignaturas', navCta: 'Agendar reunión',
+      kicker: 'Recursos',
+      title: 'Material de estudio ordenado por tipo',
+      intro: 'Guías, past papers, slides y apuntes preparados por el equipo. Filtra por programa para ver solo lo que te sirve.',
+      empty: 'No hay material de este tipo para el programa seleccionado todavía.',
+      ctaTitle: '¿Buscas material de una asignatura específica?',
+      ctaBody: 'Escríbenos y te enviamos el paquete que corresponde a tu programa y nivel.',
+      ctaButton: 'Escribir al equipo',
+      footer: '100% online, en Chile y en el extranjero.'
+    },
+    en: {
+      navHome: 'Home', navPrograms: 'Programmes', navSubjects: 'Subjects', navCta: 'Book a meeting',
+      kicker: 'Resources',
+      title: 'Study material organised by type',
+      intro: 'Guides, past papers, slides and notes prepared by the team. Filter by programme to see only what is useful to you.',
+      empty: 'There is no material of this type for the selected programme yet.',
+      ctaTitle: 'Looking for material on a specific subject?',
+      ctaBody: 'Write to us and we will send the pack that matches your programme and level.',
+      ctaButton: 'Write to the team',
+      footer: 'Fully online, in Chile and abroad.'
+    }
+  };
 
   G = [
     {
-      slug: 'guias', title: 'Guías', blurb: 'Resúmenes de contenido y ejercicios resueltos por unidad.',
+      slug: 'guias',
+      title: { es: 'Guías', en: 'Guides' },
+      blurb: { es: 'Resúmenes de contenido y ejercicios resueltos por unidad.', en: 'Content summaries and worked exercises by unit.' },
       items: [
-        { p: 'igcse', title: 'Estequiometría: guía de cálculo paso a paso', meta: 'PDF · 14 páginas' },
-        { p: 'a-level', title: 'Campos eléctricos y gravitacionales: guía comparada', meta: 'PDF · 11 páginas' },
-        { p: 'ib-dp', title: 'Cómo estructurar la exploración matemática (IA)', meta: 'PDF · 9 páginas' },
-        { p: 'plan-nacional', title: 'Eje Álgebra y Funciones para M1', meta: 'PDF · 16 páginas' }
+        { p: 'igcse', title: { es: 'Estequiometría: guía de cálculo paso a paso', en: 'Stoichiometry: step-by-step calculation guide' }, meta: { es: 'PDF · 14 páginas', en: 'PDF · 14 pages' } },
+        { p: 'a-level', title: { es: 'Campos eléctricos y gravitacionales: guía comparada', en: 'Electric and gravitational fields: comparative guide' }, meta: { es: 'PDF · 11 páginas', en: 'PDF · 11 pages' } },
+        { p: 'ib-dp', title: { es: 'Cómo estructurar la exploración matemática (IA)', en: 'How to structure the mathematical exploration (IA)' }, meta: { es: 'PDF · 9 páginas', en: 'PDF · 9 pages' } },
+        { p: 'plan-nacional', title: { es: 'Eje Álgebra y Funciones para M1', en: 'Algebra and Functions strand for M1' }, meta: { es: 'PDF · 16 páginas', en: 'PDF · 16 pages' } },
+        { p: 'lower-secondary', title: { es: 'Ciencias Lower Secondary: los tres ejes en una guía', en: 'Lower Secondary Science: the three strands in one guide' }, meta: { es: 'PDF · 18 páginas', en: 'PDF · 18 pages' } },
+        { p: 'lower-secondary', title: { es: 'Preparación IELTS, FCE y CAE: estructura de cada examen', en: 'IELTS, FCE and CAE preparation: the structure of each exam' }, meta: { es: 'PDF · 10 páginas', en: 'PDF · 10 pages' } }
       ]
     },
     {
-      slug: 'past-papers', title: 'Past papers', blurb: 'Exámenes de años anteriores con mark scheme y comentarios del equipo.',
+      slug: 'past-papers',
+      title: { es: 'Past papers', en: 'Past papers' },
+      blurb: { es: 'Exámenes de años anteriores con mark scheme y comentarios del equipo.', en: 'Previous years’ examinations with mark schemes and notes from the team.' },
       items: [
-        { p: 'igcse', title: 'Physics 0625 · Paper 4 · series recientes', meta: 'Con mark scheme' },
-        { p: 'igcse', title: 'Biology 0610 · Paper 6 (práctico alternativo)', meta: 'Con mark scheme' },
-        { p: 'a-level', title: 'Chemistry 9701 · Papers 2 y 4', meta: 'Con mark scheme' },
-        { p: 'ib-dp', title: 'Physics SL/HL · Paper 1 y Paper 2', meta: 'Selección por tema' },
-        { p: 'plan-nacional', title: 'Ensayos PAES Competencia Matemática M1', meta: 'Con corrección comentada' }
+        { p: 'igcse', title: { es: 'Physics 0625 · Paper 4 · series recientes', en: 'Physics 0625 · Paper 4 · recent series' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } },
+        { p: 'igcse', title: { es: 'Biology 0610 · Paper 6 (práctico alternativo)', en: 'Biology 0610 · Paper 6 (alternative to practical)' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } },
+        { p: 'a-level', title: { es: 'Chemistry 9701 · Papers 2 y 4', en: 'Chemistry 9701 · Papers 2 and 4' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } },
+        { p: 'ib-dp', title: { es: 'Physics SL/HL · Paper 1 y Paper 2', en: 'Physics SL/HL · Paper 1 and Paper 2' }, meta: { es: 'Selección por tema', en: 'Selected by topic' } },
+        { p: 'plan-nacional', title: { es: 'Ensayos PAES Competencia Matemática M1', en: 'PAES Mathematics M1 mock exams' }, meta: { es: 'Con corrección comentada', en: 'With annotated feedback' } },
+        { p: 'lower-secondary', title: { es: 'Checkpoint Science 1113 · Papers 1 y 2', en: 'Checkpoint Science 1113 · Papers 1 and 2' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } },
+        { p: 'lower-secondary', title: { es: 'Checkpoint Mathematics 1112 · Papers 1 y 2', en: 'Checkpoint Mathematics 1112 · Papers 1 and 2' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } }
       ]
     },
     {
-      slug: 'slides', title: 'Slides', blurb: 'Presentaciones de clase, útiles para repasar antes de una prueba.',
+      slug: 'slides',
+      title: { es: 'Slides', en: 'Slides' },
+      blurb: { es: 'Presentaciones de clase, útiles para repasar antes de una prueba.', en: 'Class presentations, useful for revising before a test.' },
       items: [
-        { p: 'igcse', title: 'Ondas y luz: presentación de repaso', meta: '38 slides' },
-        { p: 'a-level', title: 'Mecanismos orgánicos: sustitución y eliminación', meta: '42 slides' },
-        { p: 'ib-dp', title: 'Continuidad y cambio en Biología', meta: '30 slides' }
+        { p: 'igcse', title: { es: 'Ondas y luz: presentación de repaso', en: 'Waves and light: revision presentation' }, meta: { es: '38 slides', en: '38 slides' } },
+        { p: 'a-level', title: { es: 'Mecanismos orgánicos: sustitución y eliminación', en: 'Organic mechanisms: substitution and elimination' }, meta: { es: '42 slides', en: '42 slides' } },
+        { p: 'ib-dp', title: { es: 'Continuidad y cambio en Biología', en: 'Continuity and change in Biology' }, meta: { es: '30 slides', en: '30 slides' } }
       ]
     },
     {
-      slug: 'notes', title: 'Apuntes', blurb: 'Notas breves por tema, escritas para leer en diez minutos.',
+      slug: 'notes',
+      title: { es: 'Apuntes', en: 'Notes' },
+      blurb: { es: 'Notas breves por tema, escritas para leer en diez minutos.', en: 'Short notes by topic, written to be read in ten minutes.' },
       items: [
-        { p: 'a-level', title: 'Incertidumbres y tratamiento de datos experimentales', meta: 'Lectura de 7 min' },
-        { p: 'ib-dp', title: 'Criterios de evaluación de la Monografía', meta: 'Lectura de 6 min' },
-        { p: 'plan-nacional', title: 'Cómo se calcula el puntaje PAES', meta: 'Lectura de 5 min' },
-        { p: 'igcse', title: 'Diferencias entre Core y Extended', meta: 'Lectura de 4 min' }
+        { p: 'a-level', title: { es: 'Incertidumbres y tratamiento de datos experimentales', en: 'Uncertainties and handling experimental data' }, meta: { es: 'Lectura de 7 min', en: '7 min read' } },
+        { p: 'ib-dp', title: { es: 'Criterios de evaluación de la Monografía', en: 'Extended Essay assessment criteria' }, meta: { es: 'Lectura de 6 min', en: '6 min read' } },
+        { p: 'plan-nacional', title: { es: 'Cómo se calcula el puntaje PAES', en: 'How the PAES score is calculated' }, meta: { es: 'Lectura de 5 min', en: '5 min read' } },
+        { p: 'igcse', title: { es: 'Diferencias entre Core y Extended', en: 'Differences between Core and Extended' }, meta: { es: 'Lectura de 4 min', en: '4 min read' } }
       ]
     }
   ];
 
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
+
   renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = this.UI[lang];
     const f = this.state.filter;
-    const labelOf = (slug) => (this.PROG.find(p => p.slug === slug) || {}).label || slug;
+    const labelOf = (slug) => { const p = this.PROG.find(x => x.slug === slug); return p ? p[lang] : slug; };
+    const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     return {
+      t, lang,
+      esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
+      setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       filters: this.PROG.map(p => ({
-        label: p.label,
+        label: p[lang],
         onClick: () => this.setState({ filter: p.slug }),
         style: `border:1px solid ${f === p.slug ? '#17365B' : '#E7E9EC'};background:${f === p.slug ? '#17365B' : 'transparent'};color:${f === p.slug ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`
       })),
       groups: this.G.map((g, i) => {
         const items = g.items.filter(it => f === 'all' || it.p === f);
         return {
-          slug: g.slug, title: g.title, blurb: g.blurb,
+          slug: g.slug, title: g.title[lang], blurb: g.blurb[lang],
           sectionStyle: i % 2 === 1 ? 'background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC' : 'background:#FFFFFF',
           empty: items.length === 0,
-          items: items.map(it => ({ ...it, program: labelOf(it.p) }))
+          items: items.map(it => ({ title: it.title[lang], meta: it.meta[lang], program: labelOf(it.p) }))
         };
       })
     };
   }
 }
-
 </script>
 </body>
 </html>

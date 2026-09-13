@@ -23,6 +23,16 @@
   @keyframes drift { 0% { transform: translate3d(0,0,0) rotate(0deg); } 50% { transform: translate3d(0,-22px,0) rotate(2.5deg); } 100% { transform: translate3d(0,0,0) rotate(0deg); } }
   @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) { *, [data-reveal] { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; } }
+  [data-navdesk] { display: flex; }
+  [data-navmob] { display: none; }
+  @media (max-width: 940px) {
+    [data-navdesk] { display: none !important; }
+    [data-navmob] { display: flex !important; }
+  }
+  @media (max-width: 760px) {
+    [data-heroside] { border-left: 0 !important; border-top: 1px solid #E7E9EC; padding-left: 0 !important; padding-top: 30px; }
+    [data-sec] { padding-top: 56px !important; padding-bottom: 56px !important; }
+  }
 </style>
 </helmet>
 
@@ -36,9 +46,9 @@
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
 
-      <nav style="display:flex;align-items:center;gap:28px;font-size:15px;color:#2E4057">
+      <nav data-navdesk="1" style="display:flex;align-items:center;gap:28px;font-size:15px;color:#2E4057">
         <div onMouseEnter="{{ openMenu }}" onMouseLeave="{{ closeMenu }}" style="position:relative;padding:26px 0">
-          <span style="cursor:default;display:flex;align-items:center;gap:6px">{{ t.navServices }}<span style="font-size:10px;color:#A3ABB6">▾</span></span>
+          <a href="#servicios" style="display:flex;align-items:center;gap:6px;color:#2E4057">{{ t.navServices }}<span style="font-size:10px;color:#A3ABB6">▾</span></a>
           <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
             <div style="position:absolute;top:100%;left:-20px;width:460px;background:#FFFFFF;border:1px solid #E7E9EC;box-shadow:0 24px 60px -24px rgba(23,54,91,.25);padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:2px">
               <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
@@ -52,7 +62,7 @@
         </div>
         <sc-for list="{{ menus }}" as="m" hint-placeholder-count="3">
           <div onMouseEnter="{{ m.enter }}" onMouseLeave="{{ m.leave }}" style="position:relative;padding:26px 0">
-            <span style="cursor:default;display:flex;align-items:center;gap:6px">{{ m.label }}<span style="font-size:10px;color:#A3ABB6">▾</span></span>
+            <a href="{{ m.href }}" style="display:flex;align-items:center;gap:6px;color:#2E4057">{{ m.label }}<span style="font-size:10px;color:#A3ABB6">▾</span></a>
             <sc-if value="{{ m.isOpen }}" hint-placeholder-val="{{ false }}">
               <div style="position:absolute;top:100%;left:-20px;width:250px;background:#FFFFFF;border:1px solid #E7E9EC;box-shadow:0 24px 60px -24px rgba(23,54,91,.25);padding:8px">
                 <sc-for list="{{ m.items }}" as="it" hint-placeholder-count="4">
@@ -80,11 +90,26 @@
           <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
         </div>
         <a href="#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+        <button data-navmob="1" onClick="{{ toggleNav }}" style="align-items:center;gap:8px;border:1px solid #E7E9EC;background:#FFFFFF;color:#17365B;padding:10px 14px;font-family:Figtree,sans-serif;font-size:14px;font-weight:600;cursor:pointer">{{ navToggleLabel }}</button>
       </div>
     </div>
+    <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+      <div data-navmob="1" style="flex-direction:column;border-top:1px solid #E7E9EC;background:#FFFFFF;max-height:70vh;overflow-y:auto;padding:8px 0 18px">
+        <sc-for list="{{ mobileGroups }}" as="g" hint-placeholder-count="4">
+          <div style="padding:14px 24px 4px">
+            <div style="font-family:Figtree,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#A3ABB6;margin-bottom:6px">{{ g.label }}</div>
+            <div style="display:flex;flex-direction:column">
+              <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+                <a href="{{ it.href }}" target="{{ it.target }}" rel="noopener" onClick="{{ closeNav }}" style="padding:12px 0;font-size:16px;color:#2E4057;border-bottom:1px solid #F2F3F5" style-hover="color:#17365B">{{ it.label }}</a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
   </header>
 
-  <section id="top" style="max-width:1140px;margin:0 auto;padding:96px 24px 84px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:56px;align-items:center">
+  <section id="top" data-sec="1" style="max-width:1140px;margin:0 auto;padding:96px 24px 84px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:56px;align-items:center">
     <div>
       <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:22px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">{{ t.heroKicker }}</div>
       <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(38px,5.2vw,62px);line-height:1.04;letter-spacing:-.02em;margin:0;color:#17365B;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.heroTitle }}</h1>
@@ -95,7 +120,7 @@
       </div>
       <div style="margin-top:28px;font-size:14px;color:#A3ABB6;animation:fu .9s cubic-bezier(.2,.8,.2,1) .36s both">{{ t.heroNote }}</div>
     </div>
-    <div style="border-left:1px solid #E7E9EC;padding-left:44px;display:flex;flex-direction:column;gap:26px;animation:fu 1s cubic-bezier(.2,.8,.2,1) .4s both">
+    <div data-heroside="1" style="border-left:1px solid #E7E9EC;padding-left:44px;display:flex;flex-direction:column;gap:26px;animation:fu 1s cubic-bezier(.2,.8,.2,1) .4s both">
       <sc-for list="{{ heroFacts }}" as="f" hint-placeholder-count="4">
         <div>
           <div style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#17365B">{{ f.label }}</div>
@@ -121,7 +146,7 @@
         </div>
         <p style="font-size:16px;color:#7F8996;max-width:38ch;margin:0;line-height:1.6">{{ t.servicesSub }}</p>
       </div>
-      <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:#E7E9EC;border:1px solid #E7E9EC">
+      <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1px;background:#E7E9EC;border:1px solid #E7E9EC">
         <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
           <a href="{{ s.href }}" target="{{ s.target }}" rel="noopener" style="background:#FFFFFF;padding:34px 30px 38px;display:flex;flex-direction:column;min-height:230px;position:relative;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease,z-index 0s" style-hover="transform:translateY(-6px);box-shadow:0 26px 50px -28px rgba(23,54,91,.42);z-index:2">
             <div style="font-family:Figtree,sans-serif;font-size:12px;color:#A3ABB6;letter-spacing:.1em">{{ s.num }}</div>
@@ -137,7 +162,7 @@
   <section data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px">
     <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.processLabel }}</div>
     <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 56px;max-width:24ch;text-wrap:pretty">{{ t.processTitle }}</h2>
-    <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:40px">
+    <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:40px">
       <sc-for list="{{ steps }}" as="p" hint-placeholder-count="4">
         <div style="border-top:2px solid #17365B;padding-top:22px">
           <div style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.14em;color:#A3ABB6;margin-bottom:12px">{{ p.num }}</div>
@@ -158,7 +183,7 @@
           <button onClick="{{ tb.onClick }}" style="{{ tb.style }}">{{ tb.label }}</button>
         </sc-for>
       </div>
-      <div data-tabpanel="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;padding-top:44px">
+      <div data-tabpanel="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:48px;padding-top:44px">
         <div>
           <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:26px;margin:0;color:#FFFFFF">{{ tab.heading }}</h3>
           <p style="font-size:17px;line-height:1.65;color:#C9D0DA;margin:16px 0 0;max-width:46ch">{{ tab.body }}</p>
@@ -206,14 +231,14 @@
     </div>
   </section>
 
-  <section id="preu" data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:start">
+  <section id="preu" data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:56px;align-items:start">
     <div>
       <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.preuLabel }}</div>
       <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;text-wrap:pretty">{{ t.preuTitle }}</h2>
       <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:20px 0 0;max-width:44ch;text-wrap:pretty">{{ t.preuBody }}</p>
       <a href="https://www.preufagus-ed.cl" target="_blank" rel="noopener" style="display:inline-block;margin-top:28px;border:1px solid #17365B;padding:13px 22px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9">{{ t.preuCta }} ↗</a>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:#E7E9EC;border:1px solid #E7E9EC">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:1px;background:#E7E9EC;border:1px solid #E7E9EC">
       <sc-for list="{{ preuItems }}" as="p" hint-placeholder-count="4">
         <div style="background:#FFFFFF;padding:28px 26px">
           <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;color:#17365B">{{ p.title }}</div>
@@ -227,7 +252,7 @@
     <section data-reveal="1" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
       <div style="max-width:1140px;margin:0 auto;padding:88px 24px">
         <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:44px">{{ t.testimonialsLabel }}</div>
-        <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px">
+        <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:32px">
           <sc-for list="{{ testimonials }}" as="q" hint-placeholder-count="3">
             <figure style="margin:0;background:#FFFFFF;border:1px solid #E7E9EC;padding:32px 30px;display:flex;flex-direction:column;gap:22px">
               <blockquote style="margin:0;font-family:Figtree,sans-serif;font-size:18px;line-height:1.5;color:#17365B;font-weight:400;text-wrap:pretty">{{ q.quote }}</blockquote>
@@ -241,8 +266,9 @@
 
   <section id="equipo" data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px">
     <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.teamLabel }}</div>
-    <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 52px;max-width:24ch;text-wrap:pretty">{{ t.teamTitle }}</h2>
-    <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:34px">
+    <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 26px;max-width:24ch;text-wrap:pretty">{{ t.teamTitle }}</h2>
+    <p style="font-size:18px;line-height:1.65;color:#5A6675;margin:0 0 52px;max-width:74ch;text-wrap:pretty">{{ t.teamIntro }}</p>
+    <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:40px">
       <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
         <div>
           <div style="width:112px;height:112px;background:#F9F9F9;border:1px solid #E7E9EC;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Figtree,sans-serif;font-size:26px;color:#A3ABB6;letter-spacing:.06em">{{ m.initials }}</div>
@@ -261,7 +287,7 @@
         <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.015em;margin:0">{{ t.resourcesTitle }}</h2>
         <a href="#recursos" style="font-family:Figtree,sans-serif;font-size:14px;font-weight:600">{{ t.resourcesAll }}</a>
       </div>
-      <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:28px">
+      <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));gap:28px">
         <sc-for list="{{ posts }}" as="p" hint-placeholder-count="3">
           <a href="#recursos" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:28px;display:flex;flex-direction:column;min-height:200px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease,border-color .3s ease" style-hover="border-color:#17365B;transform:translateY(-5px);box-shadow:0 22px 44px -26px rgba(23,54,91,.3)">
             <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ p.kind }}</div>
@@ -273,7 +299,7 @@
     </div>
   </section>
 
-  <section data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:start">
+  <section data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:56px;align-items:start">
     <div>
       <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.faqLabel }}</div>
       <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;text-wrap:pretty">{{ t.faqTitle }}</h2>
@@ -294,7 +320,7 @@
   </section>
 
   <section id="contacto" data-reveal="1" style="background:#2E4057;color:#FFFFFF">
-    <div style="max-width:1140px;margin:0 auto;padding:92px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:60px">
+    <div style="max-width:1140px;margin:0 auto;padding:92px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:60px">
       <div>
         <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0;color:#FFFFFF;text-wrap:pretty">{{ t.contactTitle }}</h2>
         <p style="font-size:17px;line-height:1.65;color:#D3D9E2;margin:20px 0 0;max-width:40ch">{{ t.contactBody }}</p>
@@ -303,7 +329,7 @@
           <div>{{ t.contactHours }}</div>
         </div>
       </div>
-      <form onSubmit="{{ onSubmit }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px">
+      <form onSubmit="{{ onSubmit }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:18px">
         <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#C9D0DA;font-family:Figtree,sans-serif;letter-spacing:.06em">{{ t.fName }}
           <input type="text" value="{{ contactName }}" onChange="{{ onContactName }}" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);color:#FFFFFF;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif">
         </label>
@@ -342,7 +368,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Contenido&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#17365B&quot;,&quot;#2E4057&quot;,&quot;#A3ABB6&quot;],&quot;default&quot;:&quot;#17365B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;},&quot;showTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenido&quot;}}">
 class Component extends DCLogic {
-  state = { lang: null, tab: 0, faq: 0, menuOpen: false, sent: false, menu: null, subItem: null, contactName: '', contactEmail: '', contactInterest: '', contactMessage: '', sending: false, sendError: '' };
+  state = { lang: null, tab: 0, faq: 0, menuOpen: false, sent: false, menu: null, subItem: null, navOpen: false, contactName: '', contactEmail: '', contactInterest: '', contactMessage: '', sending: false, sendError: '' };
 
   LINKS = [
     { href: 'https://www.preufagus-ed.cl', ext: true },
@@ -355,6 +381,7 @@ class Component extends DCLogic {
 
   PROGRAMS = [
     { slug: 'plan-nacional', label: 'Plan Nacional' },
+    { slug: 'lower-secondary', label: 'Lower Secondary' },
     { slug: 'igcse', label: 'IGCSE' },
     { slug: 'a-level', label: 'A-Level' },
     { slug: 'ib-dp', label: 'IB DP' }
@@ -374,15 +401,15 @@ class Component extends DCLogic {
   ];
 
   buildMenus(t, lang) {
-    const mk = (key, label, items) => ({
-      key, label, isOpen: this.state.menu === key,
+    const mk = (key, label, items, href) => ({
+      key, label, href, isOpen: this.state.menu === key,
       enter: () => this.setState({ menu: key }),
       leave: () => this.setState({ menu: null, subItem: null }),
       items
     });
     const plain = (label, href) => ({ label, href, arrow: '', subOpen: false, sub: [], enter: () => this.setState({ subItem: null }), leave: () => {} });
     return [
-      mk('programs', t.navPrograms, this.PROGRAMS.map(p => plain(p.label, 'programas.html#' + p.slug))),
+      mk('programs', t.navPrograms, this.PROGRAMS.map(p => plain(p.label, 'programas.html#' + p.slug)), 'programas.html'),
       mk('subjects', t.navCodes, this.SUBJECTS.map(s => {
         const id = 'sub-' + s.slug;
         return {
@@ -394,8 +421,8 @@ class Component extends DCLogic {
           leave: () => {},
           sub: this.PROGRAMS.map(p => ({ label: p.label, href: 'asignaturas.html#' + s.slug + '-' + p.slug }))
         };
-      })),
-      mk('resources', t.navResources, this.RESOURCES.map(r => plain(lang === 'en' ? r.en : r.es, 'recursos.html#' + r.slug)))
+      }), 'asignaturas.html'),
+      mk('resources', t.navResources, this.RESOURCES.map(r => plain(lang === 'en' ? r.en : r.es, 'recursos.html#' + r.slug)), 'recursos.html')
     ];
   }
 
@@ -460,7 +487,8 @@ class Component extends DCLogic {
       preuBody: 'Clases y ensayos orientados a la PAES, con diagnóstico inicial, plan de estudio por asignatura y reportes de avance para el estudiante y su familia.',
       preuCta: 'Ver detalles del preu',
       testimonialsLabel: 'Familias y estudiantes',
-      teamLabel: 'Nosotros', teamTitle: 'Un equipo con experiencia en aula y en admisión',
+      teamLabel: 'Nosotros', teamTitle: 'Un Equipo con experiencia',
+      teamIntro: 'Fagus-ED fue fundado por Nicolás, Pamela y Pablo, quienes reúnen experiencia en los currículos Cambridge, Bachillerato Internacional y nacional chileno. El proyecto nace con el propósito de nivelar la cancha y ampliar el acceso a una educación de calidad.',
       resourcesTitle: 'Recursos y artículos', resourcesAll: 'Ver todos',
       faqLabel: 'Preguntas frecuentes', faqTitle: 'Lo que suelen preguntarnos',
       contactTitle: 'Agenda una reunión gratuita', contactBody: 'Cuéntanos el curso, el programa y en qué necesitas apoyo. Respondemos con una propuesta concreta.',
@@ -487,7 +515,8 @@ class Component extends DCLogic {
       preuBody: 'Classes and mock exams built around the PAES, with an initial diagnostic, a study plan per subject and progress reports for the student and the family.',
       preuCta: 'See prep details',
       testimonialsLabel: 'Families and students',
-      teamLabel: 'About us', teamTitle: 'A team with classroom and admissions experience',
+      teamLabel: 'About us', teamTitle: 'A team with experience',
+      teamIntro: 'Fagus-ED was founded by Nicolás, Pamela and Pablo, who bring together experience in the Cambridge, International Baccalaureate and Chilean national curricula. The project was created to level the playing field and widen access to a quality education.',
       resourcesTitle: 'Resources and articles', resourcesAll: 'View all',
       faqLabel: 'FAQ', faqTitle: 'What families usually ask',
       contactTitle: 'Book a free meeting', contactBody: 'Tell us the year group, the programme and where you need support. We reply with a concrete proposal.',
@@ -530,8 +559,9 @@ class Component extends DCLogic {
         { num: '03', title: 'Plan de trabajo', body: 'Definimos objetivos, frecuencia de sesiones, material y fechas clave del calendario.' },
         { num: '04', title: 'Seguimiento', body: 'Reportes periódicos de avance y ajustes al plan según resultados.' }
       ],
-      tabs: ['IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
+      tabs: ['Lower Secondary', 'IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
       tabData: [
+        { heading: "Lower Secondary", body: "Cambridge Lower Secondary cubre las etapas 7, 8 y 9, equivalentes aproximadamente a 6°, 7° y 8° básico. Ciencias es una sola asignatura organizada en ejes de Biología, Química y Física, y trabajamos cada eje por separado, junto con Mathematics e English.", rows: [{ k: "Entidad", v: "Cambridge (CAIE)" }, { k: "Etapa", v: "Stages 7 a 9, aprox. 6° a 8° básico" }, { k: "Asignaturas", v: "English 1111 o ESL 1110, Mathematics 1112 y Science 1113" }, { k: "Para qué sirve", v: "Base directa para IGCSE, con Checkpoint al cerrar la etapa 9" }] },
         { heading: "IGCSE", body: "El IGCSE (International General Certificate of Secondary Education) es la certificación internacional de educación media de Cambridge. Se cursa habitualmente entre los 14 y los 16 años y se evalúa asignatura por asignatura con exámenes externos.", rows: [{ k: "Entidad", v: "Cambridge (CAIE)" }, { k: "Etapa", v: "14 a 16 años, equivalente a I y II medio" }, { k: "Estructura", v: "Certificación independiente por asignatura" }, { k: "Para qué sirve", v: "Base para A Level, IB Diploma o continuidad escolar en Chile" }] },
         { heading: "A-Level", body: "Los A Level son la etapa final del sistema británico: dos años de especialización en tres o cuatro asignaturas estudiadas en profundidad. Sus calificaciones son el principal antecedente de admisión en universidades del Reino Unido y de varios otros países.", rows: [{ k: "Entidad", v: "Juntas examinadoras británicas (Cambridge, Edexcel, AQA)" }, { k: "Etapa", v: "16 a 18 años, en dos etapas: AS y A2" }, { k: "Estructura", v: "Tres o cuatro asignaturas en profundidad" }, { k: "Para qué sirve", v: "Admisión universitaria en el Reino Unido, Europa y otros destinos" }] },
         { heading: "IB Diploma", body: "El IB Diploma Programme es un currículum de dos años que combina seis asignaturas de distintas áreas del conocimiento con tres componentes centrales: Teoría del Conocimiento, la Monografía y CAS. Entrega un diploma único con puntaje total sobre 45 puntos.", rows: [{ k: "Entidad", v: "International Baccalaureate Organization" }, { k: "Etapa", v: "16 a 18 años, últimos dos años de colegio" }, { k: "Estructura", v: "Seis asignaturas en HL o SL, más TOK, EE y CAS" }, { k: "Para qué sirve", v: "Diploma reconocido para admisión en Chile y en el extranjero" }] },
@@ -549,10 +579,11 @@ class Component extends DCLogic {
         { quote: 'Nos ayudaron a comparar colegios y a entender qué currículum le convenía a nuestro hijo.', who: 'Familia, cambio de colegio en 7º básico' }
       ],
       team: [
-        { initials: 'NG', name: 'Nicolas Garrido', role: 'Director Ejecutivo', role2: 'Profesor de Física y Matemáticas', bio: 'Dirige Fagus Ed y hace clases de Física y Matemáticas en currículum nacional y programas internacionales.' },
-        { initials: 'PC', name: 'Pamela Corrales', role: 'Directora Académica', role2: 'Profesora de Química y Biología', bio: 'Coordina el trabajo académico del equipo y enseña Química y Biología en IGCSE, A-Level e IB Diploma.' },
-        { initials: 'PO', name: 'Pablo Ortega', role: 'Director de Tecnología', role2: 'Profesor de Física y Matemáticas', bio: 'A cargo de las plataformas y del material digital, además de hacer clases de Física y Matemáticas.' },
-        { initials: 'JM', name: 'Javiera Mundaca', role: '', role2: 'Profesora de Biología y Cs. Naturales', bio: 'Hace clases de Biología y Ciencias Naturales y prepara material de estudio para currículum nacional y programas internacionales.' }
+        { initials: 'NG', name: 'Nicolás Garrido', role: 'Director Ejecutivo', role2: '', bio: 'Profesor de Física y Matemáticas con experiencia en colegios nacionales e internacionales. Se ha especializado en la enseñanza del currículo Cambridge, incluyendo Cambridge Lower Secondary, IGCSE Physics, IGCSE Co-ordinated Sciences y A Level Physics. Como Director Ejecutivo de Fagus-ED, lidera el desarrollo estratégico del proyecto y la creación de programas académicos que preparan a los estudiantes para desenvolverse con éxito en contextos educativos nacionales e internacionales.' },
+        { initials: 'PC', name: 'Pamela Corrales', role: 'Directora Académica', role2: '', bio: 'Profesora de Química y Biología y magíster en Didáctica de las Ciencias Experimentales. Cuenta con experiencia en el Bachillerato Internacional, especialmente en la enseñanza de las ciencias dentro del Programa del Diploma. Como Directora Académica, lidera el diseño curricular y pedagógico de Fagus-ED, promoviendo metodologías que combinan el rigor científico, la experimentación y una enseñanza adaptada a las necesidades de cada estudiante.' },
+        { initials: 'PO', name: 'Pablo Ortega', role: 'Director de Tecnología', role2: '', bio: 'Profesor de Física y Matemáticas con amplia experiencia en el currículum nacional chileno y en la preparación de estudiantes para la PAES. Su trabajo se ha centrado en el desarrollo de estrategias, materiales y evaluaciones orientadas al fortalecimiento de habilidades y a la obtención de mejores resultados en las pruebas de admisión universitaria. Como Director de Tecnología, lidera la incorporación de herramientas digitales que permiten personalizar el aprendizaje y realizar un seguimiento sistemático del progreso académico.' },
+        { initials: 'TB', name: 'Thomas Burgess', role: 'Profesor de Inglés', role2: '', bio: 'Profesor británico de inglés, hablante nativo de inglés y español, con certificación Cambridge CELTA y más de diez años de experiencia en enseñanza de idiomas. Cuenta con experiencia en Cambridge Lower Secondary y en la preparación de estudiantes para IGCSE English, English as a Second Language y otros exámenes internacionales. En Fagus-ED, contribuye al desarrollo de las habilidades comunicativas, la escritura académica y el pensamiento crítico de los estudiantes, preparándolos para desenvolverse con confianza en contextos educativos internacionales.' },
+        { initials: 'JM', name: 'Javiera Mundaca', role: 'Profesora de Biología', role2: '', bio: 'Profesora de Ciencias Naturales y Biología con experiencia enseñando Ciencias Naturales, Biología y Química desde Educación Básica hasta IV Medio. Su trayectoria incluye los electivos de Ciencias de la Salud y Biología de los Ecosistemas, además de la preparación PAES en Biología y Química. También se ha desempeñado como coordinadora del Departamento de Ciencias y en la construcción y validación de ítems para Editorial Santillana. En Fagus-ED, acompaña a sus alumnos en la comprensión de los fenómenos biológicos y en el desarrollo del razonamiento científico, entregándoles las herramientas necesarias para enfrentar sus desafíos académicos con confianza y autonomía.' }
       ],
       posts: [
         { kind: 'Guía', title: 'IB, A-Level o currículum nacional: cómo comparar programas', meta: 'Lectura de 6 min' },
@@ -599,8 +630,9 @@ class Component extends DCLogic {
         { num: '03', title: 'Work plan', body: 'We set objectives, session frequency, material and the key dates in the calendar.' },
         { num: '04', title: 'Follow-up', body: 'Regular progress reports and adjustments to the plan based on results.' }
       ],
-      tabs: ['IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
+      tabs: ['Lower Secondary', 'IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
       tabData: [
+        { heading: "Lower Secondary", body: "Cambridge Lower Secondary covers stages 7, 8 and 9, for students aged roughly 11 to 14. Science is a single subject organised into Biology, Chemistry and Physics strands, and we work each strand separately, alongside Mathematics and English.", rows: [{ k: "Awarding body", v: "Cambridge (CAIE)" }, { k: "Stage", v: "Stages 7 to 9, ages 11 to 14" }, { k: "Subjects", v: "English 1111 or ESL 1110, Mathematics 1112 and Science 1113" }, { k: "What it is for", v: "A direct base for IGCSE, with Checkpoint at the end of stage 9" }] },
         { heading: "IGCSE", body: "The IGCSE (International General Certificate of Secondary Education) is Cambridge’s international secondary qualification. It is usually taken between ages 14 and 16 and is assessed subject by subject through external examinations.", rows: [{ k: "Awarding body", v: "Cambridge (CAIE)" }, { k: "Stage", v: "Ages 14 to 16" }, { k: "Structure", v: "A separate qualification for each subject" }, { k: "What it is for", v: "A base for A Level, the IB Diploma or continuing school in Chile" }] },
         { heading: "A-Level", body: "A Levels are the final stage of the British system: two years of specialisation in three or four subjects studied in depth. The grades are the main basis for admission to universities in the UK and several other countries.", rows: [{ k: "Awarding body", v: "British exam boards (Cambridge, Edexcel, AQA)" }, { k: "Stage", v: "Ages 16 to 18, in two stages: AS and A2" }, { k: "Structure", v: "Three or four subjects studied in depth" }, { k: "What it is for", v: "University admission in the UK, Europe and other destinations" }] },
         { heading: "IB Diploma", body: "The IB Diploma Programme is a two-year curriculum combining six subjects from different areas of knowledge with three core components: Theory of Knowledge, the Extended Essay and CAS. It awards a single diploma scored out of 45 points.", rows: [{ k: "Awarding body", v: "International Baccalaureate Organization" }, { k: "Stage", v: "Ages 16 to 18, the final two years of school" }, { k: "Structure", v: "Six subjects at HL or SL, plus TOK, EE and CAS" }, { k: "What it is for", v: "A diploma recognised for admission in Chile and abroad" }] },
@@ -618,10 +650,11 @@ class Component extends DCLogic {
         { quote: 'They helped us compare schools and understand which curriculum suited our son.', who: 'Family, school change in Year 8' }
       ],
       team: [
-        { initials: 'NG', name: 'Nicolas Garrido', role: 'Executive Director', role2: 'Physics and Mathematics teacher', bio: 'Leads Fagus Ed and teaches Physics and Mathematics across the national curriculum and international programmes.' },
-        { initials: 'PC', name: 'Pamela Corrales', role: 'Academic Director', role2: 'Chemistry and Biology teacher', bio: 'Coordinates the academic work of the team and teaches Chemistry and Biology in IGCSE, A-Level and IB Diploma.' },
-        { initials: 'PO', name: 'Pablo Ortega', role: 'Technology Director', role2: 'Physics and Mathematics teacher', bio: 'Runs the platforms and digital material, alongside teaching Physics and Mathematics.' },
-        { initials: 'JM', name: 'Javiera Mundaca', role: '', role2: 'Biology and Natural Sciences teacher', bio: 'Teaches Biology and Natural Sciences and builds study material for the national curriculum and international programmes.' }
+        { initials: 'NG', name: 'Nicolás Garrido', role: 'Executive Director', role2: '', bio: 'Physics and Mathematics teacher with experience in both Chilean and international schools. He has specialised in teaching the Cambridge curriculum, including Cambridge Lower Secondary, IGCSE Physics, IGCSE Co-ordinated Sciences and A Level Physics. As Executive Director of Fagus-ED, he leads the strategic development of the project and the creation of academic programmes that prepare students to succeed in national and international educational contexts.' },
+        { initials: 'PC', name: 'Pamela Corrales', role: 'Academic Director', role2: '', bio: 'Chemistry and Biology teacher with a master’s degree in the Didactics of Experimental Sciences. She has experience in the International Baccalaureate, particularly teaching sciences within the Diploma Programme. As Academic Director, she leads the curricular and pedagogical design of Fagus-ED, promoting methodologies that combine scientific rigour, experimentation and teaching adapted to each student’s needs.' },
+        { initials: 'PO', name: 'Pablo Ortega', role: 'Technology Director', role2: '', bio: 'Physics and Mathematics teacher with extensive experience in the Chilean national curriculum and in preparing students for the PAES. His work has focused on developing strategies, materials and assessments aimed at strengthening skills and achieving better results in university entrance examinations. As Technology Director, he leads the adoption of digital tools that make it possible to personalise learning and track academic progress systematically.' },
+        { initials: 'TB', name: 'Thomas Burgess', role: 'English teacher', role2: '', bio: 'British teacher of English, a native speaker of both English and Spanish, with the Cambridge CELTA certification and more than ten years of experience in language teaching. He has experience in Cambridge Lower Secondary and in preparing students for IGCSE English, English as a Second Language and other international examinations. At Fagus-ED he contributes to the development of students’ communication skills, academic writing and critical thinking, preparing them to work with confidence in international educational contexts.' },
+        { initials: 'JM', name: 'Javiera Mundaca', role: 'Biology teacher', role2: '', bio: 'Natural Sciences and Biology teacher with experience teaching Natural Sciences, Biology and Chemistry from primary school to the final year of secondary. Her career includes the Health Sciences and Ecosystem Biology elective courses, as well as PAES preparation in Biology and Chemistry. She has also worked as coordinator of the Science Department and on the construction and validation of items for Editorial Santillana. At Fagus-ED she guides her students in understanding biological phenomena and developing scientific reasoning, giving them the tools they need to face their academic challenges with confidence and autonomy.' }
       ],
       posts: [
         { kind: 'Guide', title: 'IB, A-Level or the national curriculum: how to compare programmes', meta: '6 min read' },
@@ -638,8 +671,22 @@ class Component extends DCLogic {
     }
   };
 
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
+
   renderVals() {
-    const lang = this.state.lang || (this.props.lang === 'en' ? 'en' : 'es');
+    const lang = this.state.lang || this.storedLang() || (this.props.lang === 'en' ? 'en' : 'es');
     const t = this.D[lang];
     const c = this.C[lang];
     const accent = this.props.accent || '#17365B';
@@ -649,8 +696,19 @@ class Component extends DCLogic {
       marquee: c.tabs.concat(lang === 'es' ? ['Tutoría privada', 'Asesoría a familias', 'Orientación vocacional', 'Admisión en el extranjero'] : ['Private tutoring', 'Family guidance', 'University guidance', 'Admissions abroad']).join('   ·   ') + '   ·   ',
       showTestimonials: this.props.showTestimonials !== false,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
-      setEs: () => this.setState({ lang: 'es' }), setEn: () => this.setState({ lang: 'en' }),
+      setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       menus: this.buildMenus(t, lang),
+      navOpen: this.state.navOpen,
+      navToggleLabel: this.state.navOpen ? (lang === 'en' ? 'Close' : 'Cerrar') : (lang === 'en' ? 'Menu' : 'Menú'),
+      toggleNav: () => this.setState({ navOpen: !this.state.navOpen }),
+      closeNav: () => this.setState({ navOpen: false }),
+      mobileGroups: [
+        { label: t.navServices, items: c.services.map((s, i) => { const L = this.LINKS[i] || { href: '#contacto' }; return { label: s.title, href: L.href, target: L.ext ? '_blank' : '_self' }; }) },
+        { label: t.navPrograms, items: this.PROGRAMS.map(p => ({ label: p.label, href: 'programas.html#' + p.slug, target: '_self' })) },
+        { label: t.navCodes, items: this.SUBJECTS.map(s => ({ label: lang === 'en' ? s.en : s.es, href: 'asignaturas.html#' + s.slug, target: '_self' })) },
+        { label: t.navResources, items: this.RESOURCES.map(r => ({ label: lang === 'en' ? r.en : r.es, href: 'recursos.html#' + r.slug, target: '_self' })) },
+        { label: t.navTeam, items: [{ label: t.teamTitle, href: '#equipo', target: '_self' }, { label: t.navCta, href: '#contacto', target: '_self' }] }
+      ],
       menuOpen: this.state.menuOpen,
       openMenu: () => this.setState({ menuOpen: true }),
       closeMenu: () => this.setState({ menuOpen: false }),

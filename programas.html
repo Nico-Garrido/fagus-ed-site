@@ -16,6 +16,7 @@
   * { box-sizing: border-box; }
   a { color: #17365B; text-decoration: none; }
   a:hover { color: #2E4057; }
+  [id] { scroll-margin-top: 96px; }
   @keyframes fu { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
@@ -29,18 +30,24 @@
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
       <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
-        <a href="index.html" style="color:#2E4057">Inicio</a>
-        <a href="asignaturas.html" style="color:#2E4057">Asignaturas</a>
-        <a href="recursos.html" style="color:#2E4057">Recursos</a>
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="asignaturas.html" style="color:#2E4057">{{ t.navSubjects }}</a>
+        <a href="recursos.html" style="color:#2E4057">{{ t.navResources }}</a>
       </nav>
-      <a href="index.html#contacto" style="margin-left:auto;background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">Agendar reunión</a>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="index.html#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
     </div>
   </header>
 
   <section style="max-width:1140px;margin:0 auto;padding:80px 24px 56px">
-    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">Programas</div>
-    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">Los cuatro currículums con los que trabajamos</h1>
-    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">Cada programa tiene su propia lógica de evaluación, calendario y exigencias. Esta página explica en detalle cómo funciona cada uno y qué implica para el estudiante y su familia.</p>
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">{{ t.kicker }}</div>
+    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.title }}</h1>
+    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">{{ t.intro }}</p>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:36px">
       <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
         <a href="{{ n.href }}" style="border:1px solid #E7E9EC;padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;color:#2E4057" style-hover="background:#F9F9F9;border-color:#17365B">{{ n.label }}</a>
@@ -50,13 +57,13 @@
 
   <sc-for list="{{ programs }}" as="p" hint-placeholder-count="4">
     <section id="{{ p.slug }}" style="{{ p.sectionStyle }}">
-      <div style="max-width:1140px;margin:0 auto;padding:76px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:52px;align-items:start">
+      <div style="max-width:1140px;margin:0 auto;padding:76px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:52px;align-items:start">
         <div style="position:relative">
           <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ p.kicker }}</div>
           <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:pretty">{{ p.title }}</h2>
           <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:22px 0 0;text-wrap:pretty">{{ p.intro }}</p>
           <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:16px 0 0;text-wrap:pretty">{{ p.intro2 }}</p>
-          <a href="index.html#contacto" style="display:inline-block;margin-top:28px;border-bottom:1px solid #17365B;padding-bottom:3px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600">Consultar por este programa</a>
+          <a href="index.html#contacto" style="display:inline-block;margin-top:28px;border-bottom:1px solid #17365B;padding-bottom:3px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600">{{ t.askAbout }}</a>
         </div>
         <div style="display:grid;gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
           <sc-for list="{{ p.facts }}" as="f" hint-placeholder-count="5">
@@ -73,10 +80,10 @@
   <section style="background:#17365B;color:#FFFFFF">
     <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
       <div>
-        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">¿No sabes cuál corresponde a tu caso?</h2>
-        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">En la primera reunión revisamos el colegio, el curso y los plazos, y te decimos con qué programa conviene trabajar.</p>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">{{ t.ctaTitle }}</h2>
+        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">{{ t.ctaBody }}</p>
       </div>
-      <a href="index.html#contacto" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">Agendar reunión gratuita</a>
+      <a href="index.html#contacto" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">{{ t.ctaButton }}</a>
     </div>
   </section>
 
@@ -86,79 +93,200 @@
         <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
-      <div style="font-size:14px;color:#A3ABB6">100% online, en Chile y en el extranjero.</div>
+      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
     </div>
   </footer>
 </div>
-
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  P = [
-    {
-      slug: 'plan-nacional', kicker: 'Currículum chileno', title: 'Plan Nacional',
-      intro: 'El plan nacional es el currículum definido por el Ministerio de Educación para la enseñanza básica y media en Chile. Organiza las asignaturas por objetivos de aprendizaje y culmina, para quienes postulan a la universidad, en la PAES.',
-      intro2: 'Trabajamos tanto el acompañamiento durante el año escolar (contenidos, pruebas, promedio) como la preparación específica para la PAES por eje temático.',
-      facts: [
-        { label: 'Etapa', value: '1° básico a 4° medio' },
-        { label: 'Estructura', value: 'Asignaturas obligatorias por nivel, definidas en las Bases Curriculares' },
-        { label: 'Evaluación', value: 'Calificaciones 1,0 a 7,0 durante el año; PAES al finalizar 4° medio' },
-        { label: 'Prueba de acceso', value: 'PAES: Competencia Lectora, Competencia Matemática M1 y M2, Ciencias e Historia' },
-        { label: 'Cómo apoyamos', value: 'Nivelación por asignatura, preparación de pruebas y ensayos PAES con seguimiento de puntaje' }
+  state = { lang: null };
+
+  D = {
+    es: {
+      navHome: 'Inicio', navSubjects: 'Asignaturas', navResources: 'Recursos', navCta: 'Agendar reunión',
+      kicker: 'Programas',
+      title: 'Los cuatro currículums con los que trabajamos',
+      intro: 'Cada programa tiene su propia lógica de evaluación, calendario y exigencias. Esta página explica en detalle cómo funciona cada uno y qué implica para el estudiante y su familia.',
+      askAbout: 'Consultar por este programa',
+      ctaTitle: '¿No sabes cuál corresponde a tu caso?',
+      ctaBody: 'En la primera reunión revisamos el colegio, el curso y los plazos, y te decimos con qué programa conviene trabajar.',
+      ctaButton: 'Agendar reunión gratuita',
+      footer: '100% online, en Chile y en el extranjero.',
+      programs: [
+        {
+          slug: 'plan-nacional', kicker: 'Currículum chileno', title: 'Plan Nacional',
+          intro: 'El plan nacional es el currículum definido por el Ministerio de Educación para la enseñanza básica y media en Chile. Organiza las asignaturas por objetivos de aprendizaje y culmina, para quienes postulan a la universidad, en la PAES.',
+          intro2: 'Trabajamos tanto el acompañamiento durante el año escolar (contenidos, pruebas, promedio) como la preparación específica para la PAES por eje temático.',
+          facts: [
+            { label: 'Etapa', value: '1° básico a 4° medio' },
+            { label: 'Estructura', value: 'Asignaturas obligatorias por nivel, definidas en las Bases Curriculares' },
+            { label: 'Evaluación', value: 'Calificaciones 1,0 a 7,0 durante el año; PAES al finalizar 4° medio' },
+            { label: 'Prueba de acceso', value: 'PAES: Competencia Lectora, Competencia Matemática M1 y M2, Ciencias e Historia' },
+            { label: 'Cómo apoyamos', value: 'Nivelación por asignatura, preparación de pruebas y ensayos PAES con seguimiento de puntaje' }
+          ]
+        },
+        {
+          slug: 'lower-secondary', kicker: 'Cambridge', title: 'Lower Secondary',
+          intro: 'Cambridge Lower Secondary cubre las etapas 7, 8 y 9 del sistema británico, equivalentes aproximadamente a 6°, 7° y 8° básico. Es el programa que antecede al IGCSE y establece la base de contenidos y de lenguaje académico con la que después se trabaja en la educación media internacional.',
+          intro2: 'Las asignaturas principales son English, Mathematics y Science. Ciencias es una sola asignatura, pero su currículum está organizado en ejes de Biología, Química y Física, por lo que trabajamos cada eje por separado. Al final de la etapa 9 los colegios suelen aplicar los Cambridge Checkpoint.',
+          facts: [
+            { label: 'Etapa', value: 'Stages 7, 8 y 9 (aprox. 6° a 8° básico)' },
+            { label: 'Asignaturas', value: 'English (1111) o English as a Second Language (1110), Mathematics (1112) y Science (1113)' },
+            { label: 'Ciencias', value: 'Una sola asignatura con ejes de Biología, Química y Física, más Tierra y Espacio' },
+            { label: 'Evaluación', value: 'Evaluación del colegio durante cada etapa y Cambridge Checkpoint al cerrar la etapa 9' },
+            { label: 'Cómo apoyamos', value: 'Tutoría por eje de ciencias, matemáticas y English, con preparación específica de Checkpoint' }
+          ]
+        },
+        {
+          slug: 'igcse', kicker: 'Cambridge', title: 'IGCSE',
+          intro: 'El IGCSE (International General Certificate of Secondary Education) es la certificación internacional de educación media de Cambridge. Se cursa habitualmente entre los 14 y 16 años y funciona como base para A-Level o para el IB Diploma.',
+          intro2: 'Cada asignatura se certifica por separado, con su propio código y syllabus. Un estudiante típico rinde entre seis y diez asignaturas, y varias ofrecen dos niveles: Core (hasta grado C) y Extended (hasta grado A*).',
+          facts: [
+            { label: 'Etapa', value: 'Años 10 y 11 del sistema británico (aprox. 1° y 2° medio)' },
+            { label: 'Estructura', value: 'Asignaturas independientes con syllabus y código propio' },
+            { label: 'Niveles', value: 'Core y Extended en varias asignaturas' },
+            { label: 'Evaluación', value: 'Exámenes externos en las series de mayo/junio y octubre/noviembre; papers teóricos y prácticos' },
+            { label: 'Calificación', value: 'Escala A* a G (y 9-1 en algunas variantes)' },
+            { label: 'Cómo apoyamos', value: 'Tutoría por asignatura alineada al syllabus vigente, práctica con past papers y mark schemes' }
+          ]
+        },
+        {
+          slug: 'a-level', kicker: 'Cambridge', title: 'A-Level',
+          intro: 'Los A Level son la etapa final del sistema británico: dos años de especialización en tres o cuatro asignaturas estudiadas en profundidad. Sus calificaciones son la moneda de cambio para postular a universidades del Reino Unido y de buena parte del mundo.',
+          intro2: 'El primer año (AS) puede certificarse por separado; el segundo (A2) completa el A Level. El salto de exigencia respecto de IGCSE es grande, sobre todo en el nivel de análisis y en la extensión de las respuestas escritas.',
+          facts: [
+            { label: 'Etapa', value: 'Años 12 y 13 (aprox. 3° y 4° medio)' },
+            { label: 'Estructura', value: 'AS en el primer año, A2 en el segundo; 3 o 4 asignaturas' },
+            { label: 'Evaluación', value: 'Exámenes externos por paper, incluyendo componentes prácticos en ciencias' },
+            { label: 'Calificación', value: 'Escala A* a E' },
+            { label: 'Uso', value: 'Requisito de admisión en universidades del Reino Unido y aceptado internacionalmente' },
+            { label: 'Cómo apoyamos', value: 'Tutoría por paper, técnica de respuesta extendida y preparación de componentes prácticos' }
+          ]
+        },
+        {
+          slug: 'ib-dp', kicker: 'International Baccalaureate', title: 'IB Diploma Programme',
+          intro: 'El IB Diploma Programme es un currículum de dos años que combina seis asignaturas de distintas áreas del conocimiento con tres componentes centrales: Teoría del Conocimiento (TOK), la Monografía (Extended Essay) y CAS.',
+          intro2: 'De las seis asignaturas, tres se cursan en Nivel Superior (HL) y tres en Nivel Medio (SL). El puntaje máximo es 45: 42 puntos por asignaturas y hasta 3 puntos adicionales por TOK y la Monografía.',
+          facts: [
+            { label: 'Etapa', value: 'Dos últimos años de enseñanza media' },
+            { label: 'Estructura', value: '6 asignaturas (3 HL + 3 SL) de los grupos 1 a 6' },
+            { label: 'Núcleo', value: 'Teoría del Conocimiento, Monografía y CAS' },
+            { label: 'Evaluación', value: 'Exámenes externos más evaluación interna (IA) en cada asignatura' },
+            { label: 'Calificación', value: '1 a 7 por asignatura; 45 puntos máximo, 24 mínimo para el diploma' },
+            { label: 'Cómo apoyamos', value: 'Tutoría por asignatura y nivel, orientación en la IA y en la Monografía, preparación de exámenes' }
+          ]
+        }
       ]
     },
-    {
-      slug: 'igcse', kicker: 'Cambridge', title: 'IGCSE',
-      intro: 'El IGCSE (International General Certificate of Secondary Education) es la certificación internacional de educación media de Cambridge. Se cursa habitualmente entre los 14 y 16 años y funciona como base para A-Level o para el IB Diploma.',
-      intro2: 'Cada asignatura se certifica por separado, con su propio código y syllabus. Un estudiante típico rinde entre seis y diez asignaturas, y varias ofrecen dos niveles: Core (hasta grado C) y Extended (hasta grado A*).',
-      facts: [
-        { label: 'Etapa', value: 'Años 10 y 11 del sistema británico (aprox. 1° y 2° medio)' },
-        { label: 'Estructura', value: 'Asignaturas independientes con syllabus y código propio' },
-        { label: 'Niveles', value: 'Core y Extended en varias asignaturas' },
-        { label: 'Evaluación', value: 'Exámenes externos en las series de mayo/junio y octubre/noviembre; papers teóricos y prácticos' },
-        { label: 'Calificación', value: 'Escala A* a G (y 9-1 en algunas variantes)' },
-        { label: 'Cómo apoyamos', value: 'Tutoría por asignatura alineada al syllabus vigente, práctica con past papers y mark schemes' }
-      ]
-    },
-    {
-      slug: 'a-level', kicker: 'Cambridge', title: 'A-Level',
-      intro: 'Los A Level son la etapa final del sistema británico: dos años de especialización en tres o cuatro asignaturas estudiadas en profundidad. Sus calificaciones son la moneda de cambio para postular a universidades del Reino Unido y de buena parte del mundo.',
-      intro2: 'El primer año (AS) puede certificarse por separado; el segundo (A2) completa el A Level. El salto de exigencia respecto de IGCSE es grande, sobre todo en el nivel de análisis y en la extensión de las respuestas escritas.',
-      facts: [
-        { label: 'Etapa', value: 'Años 12 y 13 (aprox. 3° y 4° medio)' },
-        { label: 'Estructura', value: 'AS en el primer año, A2 en el segundo; 3 o 4 asignaturas' },
-        { label: 'Evaluación', value: 'Exámenes externos por paper, incluyendo componentes prácticos en ciencias' },
-        { label: 'Calificación', value: 'Escala A* a E' },
-        { label: 'Uso', value: 'Requisito de admisión en universidades del Reino Unido y aceptado internacionalmente' },
-        { label: 'Cómo apoyamos', value: 'Tutoría por paper, técnica de respuesta extendida y preparación de componentes prácticos' }
-      ]
-    },
-    {
-      slug: 'ib-dp', kicker: 'International Baccalaureate', title: 'IB Diploma Programme',
-      intro: 'El IB Diploma Programme es un currículum de dos años que combina seis asignaturas de distintas áreas del conocimiento con tres componentes centrales: Teoría del Conocimiento (TOK), la Monografía (Extended Essay) y CAS.',
-      intro2: 'De las seis asignaturas, tres se cursan en Nivel Superior (HL) y tres en Nivel Medio (SL). El puntaje máximo es 45: 42 puntos por asignaturas y hasta 3 puntos adicionales por TOK y la Monografía.',
-      facts: [
-        { label: 'Etapa', value: 'Dos últimos años de enseñanza media' },
-        { label: 'Estructura', value: '6 asignaturas (3 HL + 3 SL) de los grupos 1 a 6' },
-        { label: 'Núcleo', value: 'Teoría del Conocimiento, Monografía y CAS' },
-        { label: 'Evaluación', value: 'Exámenes externos más evaluación interna (IA) en cada asignatura' },
-        { label: 'Calificación', value: '1 a 7 por asignatura; 45 puntos máximo, 24 mínimo para el diploma' },
-        { label: 'Cómo apoyamos', value: 'Tutoría por asignatura y nivel, orientación en la IA y en la Monografía, preparación de exámenes' }
+    en: {
+      navHome: 'Home', navSubjects: 'Subjects', navResources: 'Resources', navCta: 'Book a meeting',
+      kicker: 'Programmes',
+      title: 'The four curricula we work with',
+      intro: 'Each programme has its own assessment logic, calendar and demands. This page explains in detail how each one works and what it means for the student and the family.',
+      askAbout: 'Ask about this programme',
+      ctaTitle: 'Not sure which one applies to you?',
+      ctaBody: 'In the first meeting we review the school, the year group and the deadlines, and tell you which programme to work with.',
+      ctaButton: 'Book a free meeting',
+      footer: 'Fully online, in Chile and abroad.',
+      programs: [
+        {
+          slug: 'plan-nacional', kicker: 'Chilean curriculum', title: 'National Curriculum',
+          intro: 'The national curriculum is defined by the Chilean Ministry of Education for primary and secondary school. It organises subjects around learning objectives and, for students applying to university, culminates in the PAES.',
+          intro2: 'We support both the school year itself (content, tests, grade average) and specific PAES preparation by topic area.',
+          facts: [
+            { label: 'Stage', value: 'Year 1 of primary to the final year of secondary school' },
+            { label: 'Structure', value: 'Compulsory subjects per year, set out in the national curriculum framework' },
+            { label: 'Assessment', value: 'Grades from 1.0 to 7.0 through the year; PAES at the end of secondary school' },
+            { label: 'Entrance exam', value: 'PAES: Reading, Mathematics M1 and M2, Sciences and History' },
+            { label: 'How we help', value: 'Subject catch-up, test preparation and PAES mocks with score tracking' }
+          ]
+        },
+        {
+          slug: 'lower-secondary', kicker: 'Cambridge', title: 'Lower Secondary',
+          intro: 'Cambridge Lower Secondary covers stages 7, 8 and 9 of the British system, roughly equivalent to years 6 to 8 of Chilean primary school. It is the programme that precedes IGCSE and sets the base of content and academic language used later in international secondary education.',
+          intro2: 'The main subjects are English, Mathematics and Science. Science is a single subject, but its curriculum is organised into Biology, Chemistry and Physics strands, so we work on each strand separately. At the end of stage 9 schools usually sit the Cambridge Checkpoint tests.',
+          facts: [
+            { label: 'Stage', value: 'Stages 7, 8 and 9 (ages 11 to 14)' },
+            { label: 'Subjects', value: 'English (1111) or English as a Second Language (1110), Mathematics (1112) and Science (1113)' },
+            { label: 'Science', value: 'A single subject with Biology, Chemistry and Physics strands, plus Earth and Space' },
+            { label: 'Assessment', value: 'School assessment through each stage and Cambridge Checkpoint at the end of stage 9' },
+            { label: 'How we help', value: 'Tutoring by science strand, mathematics and English, with specific Checkpoint preparation' }
+          ]
+        },
+        {
+          slug: 'igcse', kicker: 'Cambridge', title: 'IGCSE',
+          intro: 'The IGCSE (International General Certificate of Secondary Education) is Cambridge’s international secondary qualification. It is usually taken between ages 14 and 16 and serves as a base for A-Level or the IB Diploma.',
+          intro2: 'Each subject is certified separately, with its own code and syllabus. A typical student sits between six and ten subjects, and several offer two levels: Core (up to grade C) and Extended (up to grade A*).',
+          facts: [
+            { label: 'Stage', value: 'Years 10 and 11 of the British system' },
+            { label: 'Structure', value: 'Independent subjects, each with its own syllabus and code' },
+            { label: 'Levels', value: 'Core and Extended in several subjects' },
+            { label: 'Assessment', value: 'External examinations in the May/June and October/November series; theory and practical papers' },
+            { label: 'Grading', value: 'A* to G scale (and 9-1 in some variants)' },
+            { label: 'How we help', value: 'Subject tutoring aligned to the current syllabus, with past-paper and mark-scheme practice' }
+          ]
+        },
+        {
+          slug: 'a-level', kicker: 'Cambridge', title: 'A-Level',
+          intro: 'A Levels are the final stage of the British system: two years of specialisation in three or four subjects studied in depth. The grades are the currency for applying to universities in the UK and much of the world.',
+          intro2: 'The first year (AS) can be certified separately; the second (A2) completes the A Level. The step up from IGCSE is significant, especially in the level of analysis and the length of written answers.',
+          facts: [
+            { label: 'Stage', value: 'Years 12 and 13' },
+            { label: 'Structure', value: 'AS in the first year, A2 in the second; 3 or 4 subjects' },
+            { label: 'Assessment', value: 'External examinations per paper, including practical components in the sciences' },
+            { label: 'Grading', value: 'A* to E scale' },
+            { label: 'Use', value: 'An admission requirement in UK universities and accepted internationally' },
+            { label: 'How we help', value: 'Tutoring per paper, extended-response technique and preparation for practical components' }
+          ]
+        },
+        {
+          slug: 'ib-dp', kicker: 'International Baccalaureate', title: 'IB Diploma Programme',
+          intro: 'The IB Diploma Programme is a two-year curriculum combining six subjects from different areas of knowledge with three core components: Theory of Knowledge (TOK), the Extended Essay and CAS.',
+          intro2: 'Of the six subjects, three are taken at Higher Level (HL) and three at Standard Level (SL). The maximum score is 45: 42 points from subjects and up to 3 additional points from TOK and the Extended Essay.',
+          facts: [
+            { label: 'Stage', value: 'The final two years of secondary school' },
+            { label: 'Structure', value: '6 subjects (3 HL + 3 SL) from groups 1 to 6' },
+            { label: 'Core', value: 'Theory of Knowledge, Extended Essay and CAS' },
+            { label: 'Assessment', value: 'External examinations plus internal assessment (IA) in each subject' },
+            { label: 'Grading', value: '1 to 7 per subject; 45 points maximum, 24 minimum for the diploma' },
+            { label: 'How we help', value: 'Tutoring by subject and level, guidance on the IA and Extended Essay, exam preparation' }
+          ]
+        }
       ]
     }
-  ];
+  };
+
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
 
   renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = this.D[lang];
+    const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     return {
-      nav: this.P.map(p => ({ label: p.title, href: '#' + p.slug })),
-      programs: this.P.map((p, i) => ({
+      t, lang,
+      esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
+      setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
+      nav: t.programs.map(p => ({ label: p.title, href: '#' + p.slug })),
+      programs: t.programs.map((p, i) => ({
         ...p,
         sectionStyle: i % 2 === 1 ? 'background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC' : 'background:#FFFFFF'
       }))
     };
   }
 }
-
 </script>
 </body>
 </html>

@@ -29,19 +29,25 @@
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
       <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
-        <a href="index.html" style="color:#2E4057">Inicio</a>
-        <a href="programas.html" style="color:#2E4057">Programas</a>
-        <a href="asignaturas.html" style="color:#2E4057">Asignaturas</a>
-        <a href="tutoria.html" style="color:#2E4057">Tutoría</a>
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
+        <a href="asignaturas.html" style="color:#2E4057">{{ t.navSubjects }}</a>
+        <a href="tutoria.html" style="color:#2E4057">{{ t.navTutoring }}</a>
       </nav>
-      <a href="index.html#contacto" style="margin-left:auto;background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">Agendar reunión</a>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="index.html#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
     </div>
   </header>
 
   <section style="max-width:1140px;margin:0 auto;padding:76px 24px 40px">
-    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">Material</div>
-    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">Elige programa, asignatura y tópico</h1>
-    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">El material gratuito está disponible para descarga directa. El material premium incluye las mismas asignaturas con ejercicios y past papers resueltos paso a paso, más acceso a FEDbot.</p>
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">{{ t.kicker }}</div>
+    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.title }}</h1>
+    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">{{ t.intro }}</p>
   </section>
 
   <section style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
@@ -54,7 +60,7 @@
 
       <div style="display:grid;gap:26px">
         <div>
-          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:12px">1 · Programa</div>
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:12px">{{ t.step1 }}</div>
           <div style="display:flex;flex-wrap:wrap;gap:8px">
             <sc-for list="{{ progs }}" as="p" hint-placeholder-count="4">
               <button onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button>
@@ -62,7 +68,7 @@
           </div>
         </div>
         <div>
-          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:12px">2 · Asignatura</div>
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:12px">{{ t.step2 }}</div>
           <div style="display:flex;flex-wrap:wrap;gap:8px">
             <sc-for list="{{ subs }}" as="s" hint-placeholder-count="5">
               <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
@@ -82,20 +88,20 @@
   </section>
 
   <section style="max-width:1140px;margin:0 auto;padding:0 24px 20px">
-    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">3 · Tópicos</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
-      <sc-for list="{{ topics }}" as="t" hint-placeholder-count="5">
-        <a href="{{ t.href }}" style="background:#FFFFFF;padding:24px;display:flex;flex-direction:column;gap:10px;min-height:130px;transition:background .25s ease" style-hover="background:#F9F9F9">
-          <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:16px;line-height:1.35;color:#17365B;text-wrap:pretty">{{ t.title }}</div>
-          <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.meta }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.cta }}</span></div>
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ t.step3 }}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+      <sc-for list="{{ topics }}" as="tp" hint-placeholder-count="5">
+        <a href="{{ tp.href }}" style="background:#FFFFFF;padding:24px;display:flex;flex-direction:column;gap:10px;min-height:130px;transition:background .25s ease" style-hover="background:#F9F9F9">
+          <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:16px;line-height:1.35;color:#17365B;text-wrap:pretty">{{ tp.title }}</div>
+          <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ tp.meta }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ tp.cta }}</span></div>
         </a>
       </sc-for>
     </div>
   </section>
 
   <section style="max-width:1140px;margin:0 auto;padding:44px 24px 72px">
-    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">4 · Past papers</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ t.step4 }}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
       <sc-for list="{{ papers }}" as="p" hint-placeholder-count="4">
         <a href="{{ p.href }}" style="background:#FFFFFF;padding:24px;display:flex;flex-direction:column;gap:10px;min-height:130px;transition:background .25s ease" style-hover="background:#F9F9F9">
           <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:16px;line-height:1.35;color:#17365B;text-wrap:pretty">{{ p.title }}</div>
@@ -107,12 +113,12 @@
 
   <sc-if value="{{ isPremium }}" hint-placeholder-val="{{ false }}">
     <section style="background:#17365B;color:#FFFFFF">
-      <div style="max-width:1140px;margin:0 auto;padding:76px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start">
+      <div style="max-width:1140px;margin:0 auto;padding:76px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:48px;align-items:start">
         <div>
-          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">Premium</div>
-          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:pretty">Qué incluye la suscripción</h2>
-          <p style="font-size:17px;line-height:1.65;color:#C9D0DA;margin:20px 0 0;max-width:46ch;text-wrap:pretty">Mismo catálogo de asignaturas, con la solución completa de cada ejercicio y past paper, y acceso a FEDbot para resolver dudas mientras estudias.</p>
-          <a href="index.html#contacto" style="display:inline-block;margin-top:30px;background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">Solicitar acceso premium</a>
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ t.premiumLabel }}</div>
+          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:pretty">{{ t.premiumTitle }}</h2>
+          <p style="font-size:17px;line-height:1.65;color:#C9D0DA;margin:20px 0 0;max-width:46ch;text-wrap:pretty">{{ t.premiumBody }}</p>
+          <a href="index.html#contacto" style="display:inline-block;margin-top:30px;background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">{{ t.premiumCta }}</a>
         </div>
         <div style="display:grid;gap:1px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.18)">
           <sc-for list="{{ premiumPerks }}" as="pk" hint-placeholder-count="4">
@@ -132,121 +138,187 @@
         <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
-      <div style="font-size:14px;color:#A3ABB6">100% online, en Chile y en el extranjero.</div>
+      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
     </div>
   </footer>
 </div>
-
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { tier: 'free', prog: 'igcse', subj: 'fisica' };
+  state = { tier: 'free', prog: 'igcse', subj: 'fisica', lang: null };
 
   PROG = [
-    { slug: 'plan-nacional', label: 'Plan Nacional' },
-    { slug: 'igcse', label: 'IGCSE' },
-    { slug: 'a-level', label: 'A-Level' },
-    { slug: 'ib-dp', label: 'IB DP' }
+    { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
+    { slug: 'lower-secondary', es: 'Lower Secondary', en: 'Lower Secondary' },
+    { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
+    { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
+    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' }
   ];
   SUBJ = [
-    { slug: 'biologia', label: 'Biología' },
-    { slug: 'quimica', label: 'Química' },
-    { slug: 'fisica', label: 'Física' },
-    { slug: 'matematicas', label: 'Matemáticas' },
-    { slug: 'ingles', label: 'Inglés' }
+    { slug: 'biologia', es: 'Biología', en: 'Biology' },
+    { slug: 'quimica', es: 'Química', en: 'Chemistry' },
+    { slug: 'fisica', es: 'Física', en: 'Physics' },
+    { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics' },
+    { slug: 'ingles', es: 'Inglés', en: 'English' }
   ];
+
+  UI = {
+    es: {
+      navHome: 'Inicio', navPrograms: 'Programas', navSubjects: 'Asignaturas', navTutoring: 'Tutoría', navCta: 'Agendar reunión',
+      kicker: 'Material',
+      title: 'Elige programa, asignatura y tópico',
+      intro: 'El material gratuito está disponible para descarga directa. El material premium incluye las mismas asignaturas con ejercicios y past papers resueltos paso a paso, más acceso a FEDbot.',
+      step1: '1 · Programa', step2: '2 · Asignatura', step3: '3 · Tópicos', step4: '4 · Past papers',
+      tierFree: 'Material gratuito', tierPremium: 'Material premium',
+      noteFree: 'Descarga libre', notePremium: 'Acceso premium',
+      selectionFree: 'Guías y ejercicios de práctica en PDF, sin registro. Las soluciones desarrolladas están en el material premium.',
+      selectionPremium: 'Cada recurso incluye el desarrollo completo y acceso a FEDbot para consultar dudas sobre ese tópico.',
+      ctaFree: 'Descargar', ctaPremium: 'Resuelto',
+      metaTopicFree: 'Guía en PDF', metaTopicPremium: 'Guía + ejercicios resueltos',
+      metaPaperFree: 'Enunciado en PDF', metaPaperPremium: 'Con resolución paso a paso',
+      premiumLabel: 'Premium', premiumTitle: 'Qué incluye la suscripción',
+      premiumBody: 'Mismo catálogo de asignaturas, con la solución completa de cada ejercicio y past paper, y acceso a FEDbot para resolver dudas mientras estudias.',
+      premiumCta: 'Solicitar acceso premium',
+      footer: '100% online, en Chile y en el extranjero.',
+      perks: [
+        { title: 'Ejercicios resueltos', body: 'Cada tópico con desarrollo completo, no solo la respuesta final.' },
+        { title: 'Past papers con solución', body: 'Resolución paso a paso junto al mark scheme oficial comentado.' },
+        { title: 'FEDbot', body: 'Asistente de estudio entrenado con nuestro material: pregunta dudas mientras resuelves.' },
+        { title: 'Material nuevo cada mes', body: 'Se agregan tópicos y series de exámenes durante todo el año escolar.' }
+      ]
+    },
+    en: {
+      navHome: 'Home', navPrograms: 'Programmes', navSubjects: 'Subjects', navTutoring: 'Tutoring', navCta: 'Book a meeting',
+      kicker: 'Material',
+      title: 'Choose programme, subject and topic',
+      intro: 'The free material is available for direct download. The premium material covers the same subjects with exercises and past papers worked step by step, plus access to FEDbot.',
+      step1: '1 · Programme', step2: '2 · Subject', step3: '3 · Topics', step4: '4 · Past papers',
+      tierFree: 'Free material', tierPremium: 'Premium material',
+      noteFree: 'Free download', notePremium: 'Premium access',
+      selectionFree: 'Guides and practice exercises in PDF, no sign-up. Worked solutions are in the premium material.',
+      selectionPremium: 'Every resource includes the full worked solution and access to FEDbot for questions on that topic.',
+      ctaFree: 'Download', ctaPremium: 'Worked',
+      metaTopicFree: 'Guide in PDF', metaTopicPremium: 'Guide + worked exercises',
+      metaPaperFree: 'Question paper in PDF', metaPaperPremium: 'With step-by-step solution',
+      premiumLabel: 'Premium', premiumTitle: 'What the subscription includes',
+      premiumBody: 'The same subject catalogue, with the full solution to every exercise and past paper, and access to FEDbot to resolve questions while you study.',
+      premiumCta: 'Request premium access',
+      footer: 'Fully online, in Chile and abroad.',
+      perks: [
+        { title: 'Worked exercises', body: 'Every topic with the full working, not just the final answer.' },
+        { title: 'Past papers with solutions', body: 'Step-by-step solutions alongside the official mark scheme, annotated.' },
+        { title: 'FEDbot', body: 'A study assistant trained on our material: ask questions as you work.' },
+        { title: 'New material every month', body: 'Topics and exam series are added throughout the school year.' }
+      ]
+    }
+  };
 
   TOPICS = {
     biologia: {
-      'plan-nacional': ['Célula y metabolismo', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología'],
-      'igcse': ['Características de los seres vivos', 'Nutrición y transporte', 'Reproducción y herencia', 'Organismos y ambiente'],
-      'a-level': ['Estructura celular y biomoléculas', 'Fisiología y transporte', 'Genética molecular', 'Selección natural y biodiversidad'],
-      'ib-dp': ['Unidad y diversidad', 'Forma y función', 'Interacción e interdependencia', 'Continuidad y cambio']
+      'plan-nacional': { es: ['Célula y metabolismo', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología'], en: ['Cells and metabolism', 'Genetics and inheritance', 'Human body systems', 'Ecology'] },
+      'lower-secondary': { es: ['Células y organismos', 'Estructura y función de los seres vivos', 'Fotosíntesis y respiración', 'Ecosistemas, variación y herencia'], en: ['Cells and organisms', 'Structure and function of living things', 'Photosynthesis and respiration', 'Ecosystems, variation and inheritance'] },
+      'igcse': { es: ['Características de los seres vivos', 'Nutrición y transporte', 'Reproducción y herencia', 'Organismos y ambiente'], en: ['Characteristics of living organisms', 'Nutrition and transport', 'Reproduction and inheritance', 'Organisms and environment'] },
+      'a-level': { es: ['Estructura celular y biomoléculas', 'Fisiología y transporte', 'Genética molecular', 'Selección natural y biodiversidad'], en: ['Cell structure and biomolecules', 'Physiology and transport', 'Molecular genetics', 'Natural selection and biodiversity'] },
+      'ib-dp': { es: ['Unidad y diversidad', 'Forma y función', 'Interacción e interdependencia', 'Continuidad y cambio'], en: ['Unity and diversity', 'Form and function', 'Interaction and interdependence', 'Continuity and change'] }
     },
     quimica: {
-      'plan-nacional': ['Estructura atómica y enlace', 'Estequiometría', 'Reacciones químicas', 'Química orgánica básica'],
-      'igcse': ['Partículas y enlace', 'Estequiometría', 'Electroquímica y energía', 'Química orgánica'],
-      'a-level': ['Equilibrio y cinética', 'Termodinámica y electroquímica', 'Química inorgánica de grupos', 'Mecanismos orgánicos'],
-      'ib-dp': ['Modelos de estructura', 'Enlace y propiedades', 'Cambio químico y energía', 'Reactividad orgánica']
+      'plan-nacional': { es: ['Estructura atómica y enlace', 'Estequiometría', 'Reacciones químicas', 'Química orgánica básica'], en: ['Atomic structure and bonding', 'Stoichiometry', 'Chemical reactions', 'Basic organic chemistry'] },
+      'lower-secondary': { es: ['Estados de la materia y modelo de partículas', 'Elementos, compuestos y mezclas', 'Átomos y tabla periódica', 'Reacciones, ácidos y bases'], en: ['States of matter and the particle model', 'Elements, compounds and mixtures', 'Atoms and the periodic table', 'Reactions, acids and bases'] },
+      'igcse': { es: ['Partículas y enlace', 'Estequiometría', 'Electroquímica y energía', 'Química orgánica'], en: ['Particles and bonding', 'Stoichiometry', 'Electrochemistry and energy', 'Organic chemistry'] },
+      'a-level': { es: ['Equilibrio y cinética', 'Termodinámica y electroquímica', 'Química inorgánica de grupos', 'Mecanismos orgánicos'], en: ['Equilibrium and kinetics', 'Thermodynamics and electrochemistry', 'Inorganic group chemistry', 'Organic mechanisms'] },
+      'ib-dp': { es: ['Modelos de estructura', 'Enlace y propiedades', 'Cambio químico y energía', 'Reactividad orgánica'], en: ['Models of structure', 'Bonding and properties', 'Chemical change and energy', 'Organic reactivity'] }
     },
     fisica: {
-      'plan-nacional': ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'],
-      'igcse': ['Movimiento, fuerzas y energía', 'Fenómenos térmicos', 'Ondas y luz', 'Electricidad y física nuclear'],
-      'a-level': ['Mecánica y materiales', 'Campos gravitacional y eléctrico', 'Oscilaciones y ondas', 'Física cuántica y nuclear'],
-      'ib-dp': ['Espacio, tiempo y movimiento', 'Partículas y energía', 'Campos y ondas', 'Física nuclear y cuántica']
+      'plan-nacional': { es: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'], en: ['Motion and forces', 'Energy and work', 'Waves and sound', 'Electricity and magnetism'] },
+      'lower-secondary': { es: ['Fuerzas y movimiento', 'Energía y sus transferencias', 'Luz y sonido', 'Electricidad, magnetismo y Tierra y Espacio'], en: ['Forces and motion', 'Energy and energy transfers', 'Light and sound', 'Electricity, magnetism and Earth and Space'] },
+      'igcse': { es: ['Movimiento, fuerzas y energía', 'Fenómenos térmicos', 'Ondas y luz', 'Electricidad y física nuclear'], en: ['Motion, forces and energy', 'Thermal physics', 'Waves and light', 'Electricity and nuclear physics'] },
+      'a-level': { es: ['Mecánica y materiales', 'Campos gravitacional y eléctrico', 'Oscilaciones y ondas', 'Física cuántica y nuclear'], en: ['Mechanics and materials', 'Gravitational and electric fields', 'Oscillations and waves', 'Quantum and nuclear physics'] },
+      'ib-dp': { es: ['Espacio, tiempo y movimiento', 'Partículas y energía', 'Campos y ondas', 'Física nuclear y cuántica'], en: ['Space, time and motion', 'Particles and energy', 'Fields and waves', 'Nuclear and quantum physics'] }
     },
     matematicas: {
-      'plan-nacional': ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'],
-      'igcse': ['Número y álgebra', 'Ecuaciones y funciones', 'Geometría y trigonometría', 'Estadística y probabilidad'],
-      'a-level': ['Pure 1', 'Pure 3', 'Mechanics', 'Probability & Statistics'],
-      'ib-dp': ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Cálculo y estadística']
+      'plan-nacional': { es: ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'], en: ['Numbers and proportionality', 'Algebra and functions', 'Geometry', 'Probability and statistics'] },
+      'lower-secondary': { es: ['Número', 'Álgebra', 'Geometría y medida', 'Estadística y probabilidad'], en: ['Number', 'Algebra', 'Geometry and measure', 'Statistics and probability'] },
+      'igcse': { es: ['Número y álgebra', 'Ecuaciones y funciones', 'Geometría y trigonometría', 'Estadística y probabilidad'], en: ['Number and algebra', 'Equations and functions', 'Geometry and trigonometry', 'Statistics and probability'] },
+      'a-level': { es: ['Pure 1', 'Pure 3', 'Mechanics', 'Probability & Statistics'], en: ['Pure 1', 'Pure 3', 'Mechanics', 'Probability & Statistics'] },
+      'ib-dp': { es: ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Cálculo y estadística'], en: ['Number and algebra', 'Functions', 'Geometry and trigonometry', 'Calculus and statistics'] }
     },
     ingles: {
-      'plan-nacional': ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva'],
-      'igcse': ['Reading passages', 'Directed writing', 'Escritura narrativa y descriptiva', 'Speaking y listening'],
-      'a-level': ['Análisis de textos', 'Escritura dirigida', 'Poesía, prosa y drama', 'Ensayo comparativo'],
-      'ib-dp': ['Análisis textual guiado', 'Ensayo comparativo (Paper 2)', 'Oral individual', 'HL essay']
+      'plan-nacional': { es: ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva'], en: ['Reading comprehension', 'Grammar and usage', 'Written expression', 'Listening comprehension'] },
+      'lower-secondary': { es: ['Lectura y comprensión de textos', 'Escritura y uso del lenguaje', 'Speaking y listening', 'Preparación IELTS, FCE y CAE'], en: ['Reading and text comprehension', 'Writing and language use', 'Speaking and listening', 'IELTS, FCE and CAE preparation'] },
+      'igcse': { es: ['Reading passages', 'Directed writing', 'Escritura narrativa y descriptiva', 'Speaking y listening'], en: ['Reading passages', 'Directed writing', 'Narrative and descriptive writing', 'Speaking and listening'] },
+      'a-level': { es: ['Análisis de textos', 'Escritura dirigida', 'Poesía, prosa y drama', 'Ensayo comparativo'], en: ['Text analysis', 'Directed writing', 'Poetry, prose and drama', 'Comparative essay'] },
+      'ib-dp': { es: ['Análisis textual guiado', 'Ensayo comparativo (Paper 2)', 'Oral individual', 'HL essay'], en: ['Guided textual analysis', 'Comparative essay (Paper 2)', 'Individual oral', 'HL essay'] }
     }
   };
 
   PAPERS = {
-    'plan-nacional': ['Ensayo PAES 2024 · Forma A', 'Ensayo PAES 2023 · Forma B', 'Ensayo PAES 2022 · Forma A'],
-    'igcse': ['Mayo/Junio 2024 · Paper 2', 'Mayo/Junio 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 6'],
-    'a-level': ['Mayo/Junio 2024 · Paper 1', 'Mayo/Junio 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 5'],
-    'ib-dp': ['Mayo 2024 · Paper 1', 'Mayo 2024 · Paper 2', 'Noviembre 2023 · Paper 1', 'Noviembre 2023 · Paper 3']
+    'plan-nacional': { es: ['Ensayo PAES 2024 · Forma A', 'Ensayo PAES 2023 · Forma B', 'Ensayo PAES 2022 · Forma A'], en: ['PAES mock 2024 · Form A', 'PAES mock 2023 · Form B', 'PAES mock 2022 · Form A'] },
+    'lower-secondary': { es: ['Checkpoint 2024 · Paper 1', 'Checkpoint 2024 · Paper 2', 'Checkpoint 2023 · Paper 1', 'Checkpoint 2023 · Paper 2'], en: ['Checkpoint 2024 · Paper 1', 'Checkpoint 2024 · Paper 2', 'Checkpoint 2023 · Paper 1', 'Checkpoint 2023 · Paper 2'] },
+    'igcse': { es: ['Mayo/Junio 2024 · Paper 2', 'Mayo/Junio 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 6'], en: ['May/June 2024 · Paper 2', 'May/June 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 6'] },
+    'a-level': { es: ['Mayo/Junio 2024 · Paper 1', 'Mayo/Junio 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 5'], en: ['May/June 2024 · Paper 1', 'May/June 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 5'] },
+    'ib-dp': { es: ['Mayo 2024 · Paper 1', 'Mayo 2024 · Paper 2', 'Noviembre 2023 · Paper 1', 'Noviembre 2023 · Paper 3'], en: ['May 2024 · Paper 1', 'May 2024 · Paper 2', 'November 2023 · Paper 1', 'November 2023 · Paper 3'] }
   };
 
-  PERKS = [
-    { title: 'Ejercicios resueltos', body: 'Cada tópico con desarrollo completo, no solo la respuesta final.' },
-    { title: 'Past papers con solución', body: 'Resolución paso a paso junto al mark scheme oficial comentado.' },
-    { title: 'FEDbot', body: 'Asistente de estudio entrenado con nuestro material: pregunta dudas mientras resuelves.' },
-    { title: 'Material nuevo cada mes', body: 'Se agregan tópicos y series de exámenes durante todo el año escolar.' }
-  ];
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
 
   btn(active) {
     return `border:1px solid ${active ? '#17365B' : '#E7E9EC'};background:${active ? '#17365B' : '#FFFFFF'};color:${active ? '#FFFFFF' : '#2E4057'};padding:10px 17px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`;
   }
 
   renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = this.UI[lang];
     const { tier, prog, subj } = this.state;
     const premium = tier === 'premium';
-    const progLabel = (this.PROG.find(p => p.slug === prog) || {}).label;
-    const subjLabel = (this.SUBJ.find(s => s.slug === subj) || {}).label;
-    const cta = premium ? 'Resuelto' : 'Descargar';
+    const progLabel = (this.PROG.find(p => p.slug === prog) || {})[lang];
+    const subjLabel = (this.SUBJ.find(s => s.slug === subj) || {})[lang];
+    const cta = premium ? t.ctaPremium : t.ctaFree;
+    const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     return {
-      isPremium: premium,
+      t, lang, isPremium: premium,
+      esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
+      setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       tiers: [
-        { slug: 'free', label: 'Material gratuito' },
-        { slug: 'premium', label: 'Material premium' }
+        { slug: 'free', label: t.tierFree },
+        { slug: 'premium', label: t.tierPremium }
       ].map(x => ({
         label: x.label,
         onClick: () => this.setState({ tier: x.slug }),
         style: `border:0;background:${tier === x.slug ? '#17365B' : 'transparent'};color:${tier === x.slug ? '#FFFFFF' : '#7F8996'};padding:13px 24px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s ease`
       })),
-      progs: this.PROG.map(p => ({ label: p.label, onClick: () => this.setState({ prog: p.slug }), style: this.btn(prog === p.slug) })),
-      subs: this.SUBJ.map(s => ({ label: s.label, onClick: () => this.setState({ subj: s.slug }), style: this.btn(subj === s.slug) })),
+      progs: this.PROG.map(p => ({ label: p[lang], onClick: () => this.setState({ prog: p.slug }), style: this.btn(prog === p.slug) })),
+      subs: this.SUBJ.map(s => ({ label: s[lang], onClick: () => this.setState({ subj: s.slug }), style: this.btn(subj === s.slug) })),
       selectionTitle: subjLabel + ' · ' + progLabel,
-      tierNote: premium ? 'Acceso premium' : 'Descarga libre',
-      selectionNote: premium
-        ? 'Cada recurso incluye el desarrollo completo y acceso a FEDbot para consultar dudas sobre ese tópico.'
-        : 'Guías y ejercicios de práctica en PDF, sin registro. Las soluciones desarrolladas están en el material premium.',
-      topics: (this.TOPICS[subj][prog] || []).map(t => ({
-        title: t,
-        meta: premium ? 'Guía + ejercicios resueltos' : 'Guía en PDF',
+      tierNote: premium ? t.notePremium : t.noteFree,
+      selectionNote: premium ? t.selectionPremium : t.selectionFree,
+      topics: (this.TOPICS[subj][prog][lang] || []).map(x => ({
+        title: x,
+        meta: premium ? t.metaTopicPremium : t.metaTopicFree,
         cta,
         href: premium ? 'index.html#contacto' : '#'
       })),
-      papers: (this.PAPERS[prog] || []).map(p => ({
-        title: subjLabel + ' · ' + p,
-        meta: premium ? 'Con resolución paso a paso' : 'Enunciado en PDF',
+      papers: (this.PAPERS[prog][lang] || []).map(x => ({
+        title: subjLabel + ' · ' + x,
+        meta: premium ? t.metaPaperPremium : t.metaPaperFree,
         cta,
         href: premium ? 'index.html#contacto' : '#'
       })),
-      premiumPerks: this.PERKS
+      premiumPerks: t.perks
     };
   }
 }
-
 </script>
 </body>
 </html>

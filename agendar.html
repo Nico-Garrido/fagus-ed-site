@@ -30,11 +30,15 @@
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
       <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
-        <a href="index.html" style="color:#2E4057">Inicio</a>
-        <a href="programas.html" style="color:#2E4057">Programas</a>
-        <a href="material.html" style="color:#2E4057">Material</a>
-        <a href="tutoria.html" style="color:#2E4057">Tutoría</a>
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
+        <a href="material.html" style="color:#2E4057">{{ t.navMaterial }}</a>
+        <a href="tutoria.html" style="color:#2E4057">{{ t.navTutoring }}</a>
       </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+        <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+        <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+      </div>
     </div>
   </header>
 
@@ -50,31 +54,31 @@
   </section>
 
   <section style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
-    <div style="max-width:1140px;margin:0 auto;padding:52px 24px 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:44px;align-items:start">
+    <div style="max-width:1140px;margin:0 auto;padding:52px 24px 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:44px;align-items:start">
 
       <div>
-        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">1 · Tus datos</div>
+        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ t.step1 }}</div>
         <div style="display:grid;gap:16px">
-          <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">NOMBRE Y APELLIDO
+          <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">{{ t.fName }}
             <input value="{{ name }}" onChange="{{ onName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif">
           </label>
-          <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">EMAIL
+          <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">{{ t.fEmail }}
             <input type="email" value="{{ email }}" onChange="{{ onEmail }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif">
           </label>
-          <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">TELÉFONO
+          <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">{{ t.fPhone }}
             <input value="{{ phone }}" onChange="{{ onPhone }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif">
           </label>
           <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">{{ extraLabel }}
             <input value="{{ extra }}" onChange="{{ onExtra }}" placeholder="{{ extraPlaceholder }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif">
           </label>
-          <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">EN QUÉ NECESITAS APOYO
+          <label style="display:flex;flex-direction:column;gap:7px;font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.1em;color:#7F8996">{{ t.fNeeds }}
             <textarea rows="4" value="{{ notes }}" onChange="{{ onNotes }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:12px 14px;font-size:15px;font-family:'Source Sans 3',sans-serif;resize:vertical"></textarea>
           </label>
         </div>
       </div>
 
       <div>
-        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">2 · Elige un horario</div>
+        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ t.step2 }}</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px">
           <sc-for list="{{ days }}" as="d" hint-placeholder-count="6">
             <button onClick="{{ d.onClick }}" style="{{ d.style }}">
@@ -90,7 +94,7 @@
           </sc-for>
         </div>
         <div style="margin-top:26px;background:#FFFFFF;border:1px solid #E7E9EC;padding:24px">
-          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">Resumen</div>
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ t.summary }}</div>
           <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:18px;margin-top:10px;color:#17365B;text-wrap:pretty">{{ summary }}</div>
           <div style="font-size:14px;color:#7F8996;margin-top:6px">{{ summaryNote }}</div>
           <button onClick="{{ onBook }}" style="{{ bookStyle }}">{{ bookLabel }}</button>
@@ -102,7 +106,7 @@
   </section>
 
   <section style="max-width:1140px;margin:0 auto;padding:64px 24px 80px">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
       <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
         <div style="background:#FFFFFF;padding:28px 26px">
           <div style="font-family:Figtree,sans-serif;font-size:12px;color:#A3ABB6;letter-spacing:.1em">{{ st.num }}</div>
@@ -119,67 +123,133 @@
         <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
-      <div style="font-size:14px;color:#A3ABB6">Horario de atención: lunes a viernes, 9:00 a 19:00 (Chile).</div>
+      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
     </div>
   </footer>
 </div>
-
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { kind: null, dayIdx: 0, time: null, name: '', email: '', phone: '', extra: '', notes: '', booked: false };
+  state = { kind: null, dayIdx: 0, time: null, name: '', email: '', phone: '', extra: '', notes: '', booked: false, lang: null };
 
-  KINDS = {
-    familias: {
-      label: 'Asesoría a familias',
-      kicker: 'Asesoría a familias',
-      title: 'Agenda una asesoría para tu familia',
-      intro: 'Completa el formulario y elige un horario disponible. Confirmamos por correo con la invitación de Google Calendar y el enlace de la videollamada.',
-      extraLabel: 'CURSO Y COLEGIO ACTUAL',
-      extraPlaceholder: 'Ej: 7° básico, Colegio San Pedro',
-      duration: 45,
-      event: 'Asesoría a familias · Fagus Ed'
+  UI = {
+    es: {
+      navHome: 'Inicio', navPrograms: 'Programas', navMaterial: 'Material', navTutoring: 'Tutoría',
+      step1: '1 · Tus datos', step2: '2 · Elige un horario',
+      fName: 'NOMBRE Y APELLIDO', fEmail: 'EMAIL', fPhone: 'TELÉFONO', fNeeds: 'EN QUÉ NECESITAS APOYO',
+      summary: 'Resumen', pickTime: 'Selecciona un horario', videocall: 'videollamada',
+      bookLabel: 'Agendar en Google Calendar', bookLabelBusy: 'Abriendo Google Calendar…',
+      bookHintReady: 'Se abrirá Google Calendar con la reunión precargada. Nosotros confirmamos por correo dentro del día hábil siguiente.',
+      bookHintIdle: 'Completa nombre, email y horario para habilitar el botón.',
+      footer: 'Horario de atención: lunes a viernes, 9:00 a 19:00 (Chile).',
+      dow: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+      mon: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+      steps: [
+        { num: '01', title: 'Envías la solicitud', body: 'Con tus datos y el horario que prefieres, sujeto a confirmación.' },
+        { num: '02', title: 'Confirmamos por correo', body: 'Recibes la invitación de Google Calendar con el enlace de la videollamada.' },
+        { num: '03', title: 'Sesión y resumen', body: 'Después de la reunión enviamos un resumen escrito con las recomendaciones.' }
+      ],
+      kinds: {
+        familias: {
+          label: 'Asesoría a familias', kicker: 'Asesoría a familias',
+          title: 'Agenda una asesoría para tu familia',
+          intro: 'Completa el formulario y elige un horario disponible. Confirmamos por correo con la invitación de Google Calendar y el enlace de la videollamada.',
+          extraLabel: 'CURSO Y COLEGIO ACTUAL', extraPlaceholder: 'Ej: 7° básico, Colegio San Pedro',
+          event: 'Asesoría a familias · Fagus Ed'
+        },
+        vocacional: {
+          label: 'Orientación vocacional en Chile', kicker: 'Orientación vocacional',
+          title: 'Agenda tu sesión de orientación vocacional',
+          intro: 'Cuéntanos en qué etapa estás y elige un horario. La primera sesión revisa intereses, alternativas de carrera y puntajes de referencia.',
+          extraLabel: 'CURSO ACTUAL', extraPlaceholder: 'Ej: 3° medio',
+          event: 'Orientación vocacional · Fagus Ed'
+        },
+        admision: {
+          label: 'Admisión en el extranjero', kicker: 'Admisión en el extranjero',
+          title: 'Agenda tu sesión de admisión en el extranjero',
+          intro: 'Indica los países o universidades que te interesan y elige un horario. Revisamos requisitos, plazos y qué falta en tu perfil.',
+          extraLabel: 'PAÍSES O UNIVERSIDADES DE INTERÉS', extraPlaceholder: 'Ej: Reino Unido, España',
+          event: 'Admisión en el extranjero · Fagus Ed'
+        },
+        tutoria: {
+          label: 'Diagnóstico de tutoría', kicker: 'Tutoría privada',
+          title: 'Agenda tu diagnóstico de tutoría',
+          intro: 'Treinta minutos para ubicar el nivel actual en la asignatura y proponer un plan de sesiones.',
+          extraLabel: 'ASIGNATURA Y PROGRAMA', extraPlaceholder: 'Ej: Física IGCSE',
+          event: 'Diagnóstico de tutoría · Fagus Ed'
+        }
+      }
     },
-    vocacional: {
-      label: 'Orientación vocacional en Chile',
-      kicker: 'Orientación vocacional',
-      title: 'Agenda tu sesión de orientación vocacional',
-      intro: 'Cuéntanos en qué etapa estás y elige un horario. La primera sesión revisa intereses, alternativas de carrera y puntajes de referencia.',
-      extraLabel: 'CURSO ACTUAL',
-      extraPlaceholder: 'Ej: 3° medio',
-      duration: 60,
-      event: 'Orientación vocacional · Fagus Ed'
-    },
-    admision: {
-      label: 'Admisión en el extranjero',
-      kicker: 'Admisión en el extranjero',
-      title: 'Agenda tu sesión de admisión en el extranjero',
-      intro: 'Indica los países o universidades que te interesan y elige un horario. Revisamos requisitos, plazos y qué falta en tu perfil.',
-      extraLabel: 'PAÍSES O UNIVERSIDADES DE INTERÉS',
-      extraPlaceholder: 'Ej: Reino Unido, España',
-      duration: 60,
-      event: 'Admisión en el extranjero · Fagus Ed'
-    },
-    tutoria: {
-      label: 'Diagnóstico de tutoría',
-      kicker: 'Tutoría privada',
-      title: 'Agenda tu diagnóstico de tutoría',
-      intro: 'Treinta minutos para ubicar el nivel actual en la asignatura y proponer un plan de sesiones.',
-      extraLabel: 'ASIGNATURA Y PROGRAMA',
-      extraPlaceholder: 'Ej: Física IGCSE',
-      duration: 30,
-      event: 'Diagnóstico de tutoría · Fagus Ed'
+    en: {
+      navHome: 'Home', navPrograms: 'Programmes', navMaterial: 'Material', navTutoring: 'Tutoring',
+      step1: '1 · Your details', step2: '2 · Choose a time',
+      fName: 'FULL NAME', fEmail: 'EMAIL', fPhone: 'PHONE', fNeeds: 'WHERE YOU NEED SUPPORT',
+      summary: 'Summary', pickTime: 'Select a time', videocall: 'video call',
+      bookLabel: 'Book in Google Calendar', bookLabelBusy: 'Opening Google Calendar…',
+      bookHintReady: 'Google Calendar will open with the meeting pre-filled. We confirm by email within the next working day.',
+      bookHintIdle: 'Fill in name, email and a time to enable the button.',
+      footer: 'Opening hours: Monday to Friday, 9:00–19:00 (Chile).',
+      dow: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      mon: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      steps: [
+        { num: '01', title: 'You send the request', body: 'With your details and your preferred time, subject to confirmation.' },
+        { num: '02', title: 'We confirm by email', body: 'You receive the Google Calendar invitation with the video-call link.' },
+        { num: '03', title: 'Session and summary', body: 'After the meeting we send a written summary with our recommendations.' }
+      ],
+      kinds: {
+        familias: {
+          label: 'Family guidance', kicker: 'Family guidance',
+          title: 'Book a guidance session for your family',
+          intro: 'Fill in the form and choose an available time. We confirm by email with the Google Calendar invitation and the video-call link.',
+          extraLabel: 'CURRENT YEAR GROUP AND SCHOOL', extraPlaceholder: 'e.g. Year 8, St Peter’s School',
+          event: 'Family guidance · Fagus Ed'
+        },
+        vocacional: {
+          label: 'University guidance in Chile', kicker: 'University guidance',
+          title: 'Book your university guidance session',
+          intro: 'Tell us what stage you are at and choose a time. The first session reviews interests, degree options and reference scores.',
+          extraLabel: 'CURRENT YEAR GROUP', extraPlaceholder: 'e.g. Year 11',
+          event: 'University guidance · Fagus Ed'
+        },
+        admision: {
+          label: 'Admissions abroad', kicker: 'Admissions abroad',
+          title: 'Book your admissions abroad session',
+          intro: 'Tell us the countries or universities you are interested in and choose a time. We review requirements, deadlines and what your profile is missing.',
+          extraLabel: 'COUNTRIES OR UNIVERSITIES OF INTEREST', extraPlaceholder: 'e.g. United Kingdom, Spain',
+          event: 'Admissions abroad · Fagus Ed'
+        },
+        tutoria: {
+          label: 'Tutoring diagnostic', kicker: 'Private tutoring',
+          title: 'Book your tutoring diagnostic',
+          intro: 'Thirty minutes to place the current level in the subject and propose a plan of sessions.',
+          extraLabel: 'SUBJECT AND PROGRAMME', extraPlaceholder: 'e.g. IGCSE Physics',
+          event: 'Tutoring diagnostic · Fagus Ed'
+        }
+      }
     }
   };
 
+  DURATION = { familias: 45, vocacional: 60, admision: 60, tutoria: 30 };
   TIMES = ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00'];
-  DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-  MON = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
 
   currentKind() {
     if (this.state.kind) return this.state.kind;
     const m = (typeof location !== 'undefined' ? location.search : '').match(/[?&]s=([a-z]+)/);
-    return m && this.KINDS[m[1]] ? m[1] : 'familias';
+    return m && this.DURATION[m[1]] ? m[1] : 'familias';
   }
 
   weekdays(n) {
@@ -200,43 +270,50 @@ class Component extends DCLogic {
   }
 
   renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = this.UI[lang];
     const key = this.currentKind();
-    const k = this.KINDS[key];
+    const k = t.kinds[key];
+    const duration = this.DURATION[key];
     const days = this.weekdays(8);
     const day = days[this.state.dayIdx] || days[0];
     const time = this.state.time;
     const ready = !!(time && this.state.name.trim() && this.state.email.trim());
 
     const chip = (active) => `border:1px solid ${active ? '#17365B' : '#E7E9EC'};background:${active ? '#17365B' : '#FFFFFF'};color:${active ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`;
+    const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
 
     const book = () => {
       if (!ready) return;
       const [hh, mm] = time.split(':').map(Number);
       const start = new Date(day);
       start.setHours(hh, mm, 0, 0);
-      const end = new Date(start.getTime() + k.duration * 60000);
+      const end = new Date(start.getTime() + duration * 60000);
       const details = [
-        'Solicitud enviada desde el sitio de Fagus Ed.',
-        'Nombre: ' + this.state.name,
+        lang === 'en' ? 'Request sent from the Fagus Ed website.' : 'Solicitud enviada desde el sitio de Fagus Ed.',
+        (lang === 'en' ? 'Name: ' : 'Nombre: ') + this.state.name,
         'Email: ' + this.state.email,
-        this.state.phone ? 'Teléfono: ' + this.state.phone : '',
+        this.state.phone ? (lang === 'en' ? 'Phone: ' : 'Teléfono: ') + this.state.phone : '',
         this.state.extra ? k.extraLabel + ': ' + this.state.extra : '',
-        this.state.notes ? 'Notas: ' + this.state.notes : ''
+        this.state.notes ? (lang === 'en' ? 'Notes: ' : 'Notas: ') + this.state.notes : ''
       ].filter(Boolean).join('\n');
       const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
         + '&text=' + encodeURIComponent(k.event)
         + '&dates=' + this.gcalStamp(start) + '/' + this.gcalStamp(end)
         + '&details=' + encodeURIComponent(details)
-        + '&location=' + encodeURIComponent('Videollamada');
+        + '&location=' + encodeURIComponent(lang === 'en' ? 'Video call' : 'Videollamada');
       window.open(url, '_blank', 'noopener');
       this.setState({ booked: true });
     };
 
     return {
+      t, lang,
+      esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
+      setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       kicker: k.kicker, title: k.title, intro: k.intro,
       extraLabel: k.extraLabel, extraPlaceholder: k.extraPlaceholder,
-      kinds: Object.keys(this.KINDS).map(id => ({
-        label: this.KINDS[id].label,
+      kinds: Object.keys(t.kinds).map(id => ({
+        label: t.kinds[id].label,
         onClick: () => this.setState({ kind: id, booked: false }),
         style: chip(id === key)
       })),
@@ -248,7 +325,7 @@ class Component extends DCLogic {
       onExtra: (e) => this.setState({ extra: e.target.value }),
       onNotes: (e) => this.setState({ notes: e.target.value }),
       days: days.map((d, i) => ({
-        dow: this.DOW[d.getDay()], dom: d.getDate(), mon: this.MON[d.getMonth()],
+        dow: t.dow[d.getDay()], dom: d.getDate(), mon: t.mon[d.getMonth()],
         onClick: () => this.setState({ dayIdx: i, time: null, booked: false }),
         style: `border:1px solid ${i === this.state.dayIdx ? '#17365B' : '#E7E9EC'};background:${i === this.state.dayIdx ? '#17365B' : '#FFFFFF'};color:${i === this.state.dayIdx ? '#FFFFFF' : '#2E4057'};padding:11px 14px;min-width:66px;font-family:Figtree,sans-serif;cursor:pointer;text-align:center;transition:all .25s ease`
       })),
@@ -258,24 +335,17 @@ class Component extends DCLogic {
         style: chip(time === tm) + ';text-align:center'
       })),
       summary: time
-        ? this.DOW[day.getDay()] + ' ' + day.getDate() + ' ' + this.MON[day.getMonth()] + ', ' + time + ' h · ' + k.duration + ' min'
-        : 'Selecciona un horario',
-      summaryNote: k.label + ' · videollamada',
-      bookLabel: this.state.booked ? 'Abriendo Google Calendar…' : 'Agendar en Google Calendar',
+        ? t.dow[day.getDay()] + ' ' + day.getDate() + ' ' + t.mon[day.getMonth()] + ', ' + time + ' · ' + duration + ' min'
+        : t.pickTime,
+      summaryNote: k.label + ' · ' + t.videocall,
+      bookLabel: this.state.booked ? t.bookLabelBusy : t.bookLabel,
       bookStyle: `margin-top:20px;width:100%;border:0;background:${ready ? '#17365B' : '#C9D0DA'};color:#FFFFFF;padding:14px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px;cursor:${ready ? 'pointer' : 'not-allowed'};transition:background .25s ease`,
       onBook: book,
-      bookHint: ready
-        ? 'Se abrirá Google Calendar con la reunión precargada. Nosotros confirmamos por correo dentro del día hábil siguiente.'
-        : 'Completa nombre, email y horario para habilitar el botón.',
-      steps: [
-        { num: '01', title: 'Envías la solicitud', body: 'Con tus datos y el horario que prefieres, sujeto a confirmación.' },
-        { num: '02', title: 'Confirmamos por correo', body: 'Recibes la invitación de Google Calendar con el enlace de la videollamada.' },
-        { num: '03', title: 'Sesión y resumen', body: 'Después de la reunión enviamos un resumen escrito con las recomendaciones.' }
-      ]
+      bookHint: ready ? t.bookHintReady : t.bookHintIdle,
+      steps: t.steps
     };
   }
 }
-
 </script>
 </body>
 </html>

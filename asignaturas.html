@@ -30,18 +30,24 @@
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
       <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
-        <a href="index.html" style="color:#2E4057">Inicio</a>
-        <a href="programas.html" style="color:#2E4057">Programas</a>
-        <a href="recursos.html" style="color:#2E4057">Recursos</a>
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
+        <a href="recursos.html" style="color:#2E4057">{{ t.navResources }}</a>
       </nav>
-      <a href="index.html#contacto" style="margin-left:auto;background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">Agendar reunión</a>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="index.html#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
     </div>
   </header>
 
   <section style="max-width:1140px;margin:0 auto;padding:80px 24px 52px">
-    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">Asignaturas</div>
-    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">Qué cubrimos en cada asignatura, programa por programa</h1>
-    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">La misma asignatura cambia de contenido, de nivel y de forma de evaluación según el currículum. Aquí está el detalle por combinación.</p>
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">{{ t.kicker }}</div>
+    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.title }}</h1>
+    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">{{ t.intro }}</p>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:36px">
       <sc-for list="{{ index }}" as="n" hint-placeholder-count="5">
         <a href="{{ n.href }}" style="border:1px solid #E7E9EC;padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;color:#2E4057" style-hover="background:#F9F9F9;border-color:#17365B">{{ n.label }}</a>
@@ -56,7 +62,7 @@
           <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);letter-spacing:-.02em;margin:0">{{ s.name }}</h2>
           <div style="font-size:16px;color:#7F8996;max-width:56ch;text-wrap:pretty">{{ s.blurb }}</div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC;border-top:0">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC;border-top:0">
           <sc-for list="{{ s.entries }}" as="e" hint-placeholder-count="4">
             <div id="{{ e.id }}" style="background:#FFFFFF;padding:30px 26px;display:flex;flex-direction:column">
               <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
@@ -65,7 +71,7 @@
               </div>
               <p style="font-size:15px;line-height:1.6;color:#5A6675;margin:14px 0 0;text-wrap:pretty">{{ e.desc }}</p>
               <div style="margin-top:auto;padding-top:20px">
-                <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:10px">Contenidos clave</div>
+                <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:10px">{{ t.keyContent }}</div>
                 <ul style="margin:0;padding-left:18px;font-size:15px;line-height:1.7;color:#2E4057">
                   <sc-for list="{{ e.topics }}" as="tp" hint-placeholder-count="4">
                     <li>{{ tp }}</li>
@@ -82,10 +88,10 @@
   <section style="background:#17365B;color:#FFFFFF">
     <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
       <div>
-        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">Tutoría por asignatura, 100% online</h2>
-        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">Cuéntanos la asignatura, el programa y la fecha del examen. Armamos el plan desde ahí.</p>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em">{{ t.ctaTitle }}</h2>
+        <p style="font-size:17px;line-height:1.6;color:#C9D0DA;margin:14px 0 0;max-width:56ch">{{ t.ctaBody }}</p>
       </div>
-      <a href="index.html#contacto" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">Agendar reunión gratuita</a>
+      <a href="index.html#contacto" style="background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">{{ t.ctaButton }}</a>
     </div>
   </section>
 
@@ -95,92 +101,258 @@
         <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
-      <div style="font-size:14px;color:#A3ABB6">100% online, en Chile y en el extranjero.</div>
+      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
     </div>
   </footer>
 </div>
-
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
+  state = { lang: null };
+
   PROG = [
-    { slug: 'plan-nacional', name: 'Plan Nacional' },
-    { slug: 'igcse', name: 'IGCSE' },
-    { slug: 'a-level', name: 'A-Level' },
-    { slug: 'ib-dp', name: 'IB DP' }
+    { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
+    { slug: 'lower-secondary', es: 'Lower Secondary', en: 'Lower Secondary' },
+    { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
+    { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
+    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' }
   ];
+
+  UI = {
+    es: {
+      navHome: 'Inicio', navPrograms: 'Programas', navResources: 'Recursos', navCta: 'Agendar reunión',
+      kicker: 'Asignaturas',
+      title: 'Qué cubrimos en cada asignatura, programa por programa',
+      intro: 'La misma asignatura cambia de contenido, de nivel y de forma de evaluación según el currículum. Aquí está el detalle por combinación.',
+      keyContent: 'Contenidos clave',
+      ctaTitle: 'Tutoría por asignatura, 100% online',
+      ctaBody: 'Cuéntanos la asignatura, el programa y la fecha del examen. Armamos el plan desde ahí.',
+      ctaButton: 'Agendar reunión gratuita',
+      footer: '100% online, en Chile y en el extranjero.'
+    },
+    en: {
+      navHome: 'Home', navPrograms: 'Programmes', navResources: 'Resources', navCta: 'Book a meeting',
+      kicker: 'Subjects',
+      title: 'What we cover in each subject, programme by programme',
+      intro: 'The same subject changes in content, level and assessment depending on the curriculum. Here is the detail for each combination.',
+      keyContent: 'Key content',
+      ctaTitle: 'Subject tutoring, fully online',
+      ctaBody: 'Tell us the subject, the programme and the exam date. We build the plan from there.',
+      ctaButton: 'Book a free meeting',
+      footer: 'Fully online, in Chile and abroad.'
+    }
+  };
 
   S = [
     {
-      slug: 'biologia', name: 'Biología',
-      blurb: 'Desde los ejes del currículum nacional hasta los papers de Cambridge y la evaluación interna del IB.',
+      slug: 'biologia', name: { es: 'Biología', en: 'Biology' },
+      blurb: { es: 'Desde los ejes del currículum nacional hasta los papers de Cambridge y la evaluación interna del IB.', en: 'From the national curriculum strands to the Cambridge papers and the IB internal assessment.' },
       data: {
-        'plan-nacional': { code: 'Ciencias PAES', desc: 'Contenidos de biología de 1° a 4° medio y el eje de Biología de la prueba de Ciencias de la PAES.', topics: ['Célula y procesos metabólicos', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología y organismo-ambiente'] },
-        'igcse': { code: '0610', desc: 'Veintiún temas del syllabus de Cambridge, con papers teóricos y componente práctico alternativo.', topics: ['Características de los seres vivos', 'Nutrición y transporte', 'Reproducción y herencia', 'Organismos y su ambiente'] },
-        'a-level': { code: '9700', desc: 'AS y A2 con mayor profundidad experimental y análisis de datos en los papers 3 a 5.', topics: ['Estructura celular y biomoléculas', 'Fisiología y transporte', 'Genética molecular y control génico', 'Selección natural y biodiversidad'] },
-        'ib-dp': { code: 'SL / HL', desc: 'Currículum por temas más la evaluación interna y el trabajo de conceptos transversales.', topics: ['Unidad y diversidad', 'Forma y función', 'Interacción e interdependencia', 'Continuidad y cambio'] }
+        'plan-nacional': {
+          code: { es: 'Ciencias PAES', en: 'PAES Sciences' },
+          desc: { es: 'Contenidos de biología de 1° a 4° medio y el eje de Biología de la prueba de Ciencias de la PAES.', en: 'Secondary-school biology content and the Biology strand of the PAES Sciences test.' },
+          topics: { es: ['Célula y procesos metabólicos', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología y organismo-ambiente'], en: ['Cells and metabolic processes', 'Genetics and inheritance', 'Human body systems', 'Ecology and organism-environment'] }
+        },
+        'lower-secondary': {
+          code: { es: 'Science 1113 · eje Biología', en: 'Science 1113 · Biology strand' },
+          desc: { es: 'En Lower Secondary las ciencias son una sola asignatura; aquí trabajamos el eje de Biología de las etapas 7 a 9 y su parte en el Checkpoint.', en: 'In Lower Secondary science is a single subject; here we work the Biology strand of stages 7 to 9 and its part of the Checkpoint.' },
+          topics: { es: ['Células y organismos', 'Estructura y función de los seres vivos', 'Fotosíntesis y respiración', 'Ecosistemas, variación y herencia'], en: ['Cells and organisms', 'Structure and function of living things', 'Photosynthesis and respiration', 'Ecosystems, variation and inheritance'] }
+        },
+        'igcse': {
+          code: { es: '0610', en: '0610' },
+          desc: { es: 'Veintiún temas del syllabus de Cambridge, con papers teóricos y componente práctico alternativo.', en: 'Twenty-one topics of the Cambridge syllabus, with theory papers and the alternative practical component.' },
+          topics: { es: ['Características de los seres vivos', 'Nutrición y transporte', 'Reproducción y herencia', 'Organismos y su ambiente'], en: ['Characteristics of living organisms', 'Nutrition and transport', 'Reproduction and inheritance', 'Organisms and their environment'] }
+        },
+        'a-level': {
+          code: { es: '9700', en: '9700' },
+          desc: { es: 'AS y A2 con mayor profundidad experimental y análisis de datos en los papers 3 a 5.', en: 'AS and A2 with greater experimental depth and data analysis in papers 3 to 5.' },
+          topics: { es: ['Estructura celular y biomoléculas', 'Fisiología y transporte', 'Genética molecular y control génico', 'Selección natural y biodiversidad'], en: ['Cell structure and biomolecules', 'Physiology and transport', 'Molecular genetics and gene control', 'Natural selection and biodiversity'] }
+        },
+        'ib-dp': {
+          code: { es: 'SL / HL', en: 'SL / HL' },
+          desc: { es: 'Currículum por temas más la evaluación interna y el trabajo de conceptos transversales.', en: 'The thematic curriculum plus the internal assessment and work on cross-cutting concepts.' },
+          topics: { es: ['Unidad y diversidad', 'Forma y función', 'Interacción e interdependencia', 'Continuidad y cambio'], en: ['Unity and diversity', 'Form and function', 'Interaction and interdependence', 'Continuity and change'] }
+        }
       }
     },
     {
-      slug: 'quimica', name: 'Química',
-      blurb: 'Cálculo estequiométrico, química orgánica y trabajo de laboratorio según el programa.',
+      slug: 'quimica', name: { es: 'Química', en: 'Chemistry' },
+      blurb: { es: 'Cálculo estequiométrico, química orgánica y trabajo de laboratorio según el programa.', en: 'Stoichiometric calculation, organic chemistry and lab work according to the programme.' },
       data: {
-        'plan-nacional': { code: 'Ciencias PAES', desc: 'Eje de Química del currículum nacional y su versión en la prueba de Ciencias.', topics: ['Estructura atómica y enlace', 'Estequiometría y disoluciones', 'Reacciones químicas', 'Química orgánica básica'] },
-        'igcse': { code: '0620', desc: 'Syllabus de Cambridge con niveles Core y Extended, más el paper práctico o alternativo.', topics: ['Partículas y enlace químico', 'Estequiometría', 'Electroquímica y energía', 'Química orgánica e industrial'] },
-        'a-level': { code: '9701', desc: 'Química física, inorgánica y orgánica en dos años, con énfasis en mecanismos y análisis.', topics: ['Equilibrio y cinética', 'Termodinámica y electroquímica', 'Química inorgánica de los grupos', 'Mecanismos orgánicos y espectroscopía'] },
-        'ib-dp': { code: 'SL / HL', desc: 'Estructura y reactividad como ejes, con la evaluación interna como componente central.', topics: ['Modelos de estructura', 'Enlace y propiedades', 'Cambio químico y energía', 'Reactividad orgánica'] }
+        'plan-nacional': {
+          code: { es: 'Ciencias PAES', en: 'PAES Sciences' },
+          desc: { es: 'Eje de Química del currículum nacional y su versión en la prueba de Ciencias.', en: 'The Chemistry strand of the national curriculum and its version in the Sciences test.' },
+          topics: { es: ['Estructura atómica y enlace', 'Estequiometría y disoluciones', 'Reacciones químicas', 'Química orgánica básica'], en: ['Atomic structure and bonding', 'Stoichiometry and solutions', 'Chemical reactions', 'Basic organic chemistry'] }
+        },
+        'lower-secondary': {
+          code: { es: 'Science 1113 · eje Química', en: 'Science 1113 · Chemistry strand' },
+          desc: { es: 'Eje de Química del currículum de ciencias de Lower Secondary, base directa de los primeros temas de IGCSE.', en: 'The Chemistry strand of the Lower Secondary science curriculum, a direct base for the first IGCSE topics.' },
+          topics: { es: ['Estados de la materia y modelo de partículas', 'Elementos, compuestos y mezclas', 'Átomos y tabla periódica', 'Reacciones químicas, ácidos y bases'], en: ['States of matter and the particle model', 'Elements, compounds and mixtures', 'Atoms and the periodic table', 'Chemical reactions, acids and bases'] }
+        },
+        'igcse': {
+          code: { es: '0620', en: '0620' },
+          desc: { es: 'Syllabus de Cambridge con niveles Core y Extended, más el paper práctico o alternativo.', en: 'The Cambridge syllabus at Core and Extended level, plus the practical or alternative paper.' },
+          topics: { es: ['Partículas y enlace químico', 'Estequiometría', 'Electroquímica y energía', 'Química orgánica e industrial'], en: ['Particles and chemical bonding', 'Stoichiometry', 'Electrochemistry and energy', 'Organic and industrial chemistry'] }
+        },
+        'a-level': {
+          code: { es: '9701', en: '9701' },
+          desc: { es: 'Química física, inorgánica y orgánica en dos años, con énfasis en mecanismos y análisis.', en: 'Physical, inorganic and organic chemistry over two years, with emphasis on mechanisms and analysis.' },
+          topics: { es: ['Equilibrio y cinética', 'Termodinámica y electroquímica', 'Química inorgánica de los grupos', 'Mecanismos orgánicos y espectroscopía'], en: ['Equilibrium and kinetics', 'Thermodynamics and electrochemistry', 'Inorganic group chemistry', 'Organic mechanisms and spectroscopy'] }
+        },
+        'ib-dp': {
+          code: { es: 'SL / HL', en: 'SL / HL' },
+          desc: { es: 'Estructura y reactividad como ejes, con la evaluación interna como componente central.', en: 'Structure and reactivity as the main strands, with the internal assessment as a core component.' },
+          topics: { es: ['Modelos de estructura', 'Enlace y propiedades', 'Cambio químico y energía', 'Reactividad orgánica'], en: ['Models of structure', 'Bonding and properties', 'Chemical change and energy', 'Organic reactivity'] }
+        }
       }
     },
     {
-      slug: 'fisica', name: 'Física',
-      blurb: 'Mecánica, ondas y electricidad, con el nivel de formalismo matemático que exige cada currículum.',
+      slug: 'fisica', name: { es: 'Física', en: 'Physics' },
+      blurb: { es: 'Mecánica, ondas y electricidad, con el nivel de formalismo matemático que exige cada currículum.', en: 'Mechanics, waves and electricity, with the level of mathematical formalism each curriculum demands.' },
       data: {
-        'plan-nacional': { code: 'Ciencias PAES', desc: 'Eje de Física del currículum nacional y su presencia en la prueba de Ciencias.', topics: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'] },
-        'igcse': { code: '0625', desc: 'Seis temas del syllabus de Cambridge, con papers teóricos y práctico alternativo.', topics: ['Movimiento, fuerzas y energía', 'Fenómenos térmicos', 'Ondas y luz', 'Electricidad, magnetismo y física nuclear'] },
-        'a-level': { code: '9702', desc: 'AS y A2 con tratamiento formal, incertidumbres experimentales y el paper práctico avanzado.', topics: ['Mecánica y materiales', 'Campos gravitacional, eléctrico y magnético', 'Oscilaciones y ondas', 'Física cuántica y nuclear'] },
-        'ib-dp': { code: 'SL / HL', desc: 'Temas del programa con la evaluación interna y el trabajo con datos experimentales.', topics: ['Espacio, tiempo y movimiento', 'Partículas y transferencia de energía', 'Campos y ondas', 'Física nuclear y cuántica'] }
+        'plan-nacional': {
+          code: { es: 'Ciencias PAES', en: 'PAES Sciences' },
+          desc: { es: 'Eje de Física del currículum nacional y su presencia en la prueba de Ciencias.', en: 'The Physics strand of the national curriculum and its presence in the Sciences test.' },
+          topics: { es: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'], en: ['Motion and forces', 'Energy and work', 'Waves and sound', 'Electricity and magnetism'] }
+        },
+        'lower-secondary': {
+          code: { es: 'Science 1113 · eje Física', en: 'Science 1113 · Physics strand' },
+          desc: { es: 'Eje de Física del currículum de ciencias de Lower Secondary, incluyendo los contenidos de Tierra y Espacio.', en: 'The Physics strand of the Lower Secondary science curriculum, including the Earth and Space content.' },
+          topics: { es: ['Fuerzas y movimiento', 'Energía y sus transferencias', 'Luz y sonido', 'Electricidad, magnetismo y Tierra y Espacio'], en: ['Forces and motion', 'Energy and energy transfers', 'Light and sound', 'Electricity, magnetism and Earth and Space'] }
+        },
+        'igcse': {
+          code: { es: '0625', en: '0625' },
+          desc: { es: 'Seis temas del syllabus de Cambridge, con papers teóricos y práctico alternativo.', en: 'Six topics of the Cambridge syllabus, with theory papers and the alternative practical.' },
+          topics: { es: ['Movimiento, fuerzas y energía', 'Fenómenos térmicos', 'Ondas y luz', 'Electricidad, magnetismo y física nuclear'], en: ['Motion, forces and energy', 'Thermal physics', 'Waves and light', 'Electricity, magnetism and nuclear physics'] }
+        },
+        'a-level': {
+          code: { es: '9702', en: '9702' },
+          desc: { es: 'AS y A2 con tratamiento formal, incertidumbres experimentales y el paper práctico avanzado.', en: 'AS and A2 with formal treatment, experimental uncertainties and the advanced practical paper.' },
+          topics: { es: ['Mecánica y materiales', 'Campos gravitacional, eléctrico y magnético', 'Oscilaciones y ondas', 'Física cuántica y nuclear'], en: ['Mechanics and materials', 'Gravitational, electric and magnetic fields', 'Oscillations and waves', 'Quantum and nuclear physics'] }
+        },
+        'ib-dp': {
+          code: { es: 'SL / HL', en: 'SL / HL' },
+          desc: { es: 'Temas del programa con la evaluación interna y el trabajo con datos experimentales.', en: 'The programme topics with the internal assessment and work on experimental data.' },
+          topics: { es: ['Espacio, tiempo y movimiento', 'Partículas y transferencia de energía', 'Campos y ondas', 'Física nuclear y cuántica'], en: ['Space, time and motion', 'Particles and energy transfer', 'Fields and waves', 'Nuclear and quantum physics'] }
+        }
       }
     },
     {
-      slug: 'matematicas', name: 'Matemáticas',
-      blurb: 'Álgebra, funciones y cálculo, con la variante de nivel que corresponda al programa.',
+      slug: 'matematicas', name: { es: 'Matemáticas', en: 'Mathematics' },
+      blurb: { es: 'Álgebra, funciones y cálculo, con la variante de nivel que corresponda al programa.', en: 'Algebra, functions and calculus, at the level variant the programme requires.' },
       data: {
-        'plan-nacional': { code: 'M1 / M2 PAES', desc: 'Contenidos de enseñanza media y preparación por eje para Competencia Matemática M1 y M2.', topics: ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'] },
-        'igcse': { code: '0580', desc: 'Mathematics de Cambridge en niveles Core y Extended; también trabajamos Additional Mathematics 0606.', topics: ['Número y álgebra', 'Ecuaciones y funciones', 'Geometría y trigonometría', 'Estadística y probabilidad'] },
-        'a-level': { code: '9709', desc: 'Pure Mathematics más los componentes de Mechanics o Probability & Statistics según la combinación del colegio.', topics: ['Pure 1 y Pure 3', 'Cálculo diferencial e integral', 'Mechanics', 'Probability & Statistics'] },
-        'ib-dp': { code: 'AA / AI, SL y HL', desc: 'Analysis and Approaches o Applications and Interpretation, en SL o HL, con exploración matemática (IA).', topics: ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Cálculo y estadística'] }
+        'plan-nacional': {
+          code: { es: 'M1 / M2 PAES', en: 'PAES M1 / M2' },
+          desc: { es: 'Contenidos de enseñanza media y preparación por eje para Competencia Matemática M1 y M2.', en: 'Secondary-school content and strand-by-strand preparation for Mathematics M1 and M2.' },
+          topics: { es: ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'], en: ['Numbers and proportionality', 'Algebra and functions', 'Geometry', 'Probability and statistics'] }
+        },
+        'lower-secondary': {
+          code: { es: 'Mathematics 1112', en: 'Mathematics 1112' },
+          desc: { es: 'Matemáticas de las etapas 7 a 9, con los cuatro ejes del currículum de Cambridge y preparación de Checkpoint.', en: 'Mathematics for stages 7 to 9, with the four strands of the Cambridge curriculum and Checkpoint preparation.' },
+          topics: { es: ['Número', 'Álgebra', 'Geometría y medida', 'Estadística y probabilidad'], en: ['Number', 'Algebra', 'Geometry and measure', 'Statistics and probability'] }
+        },
+        'igcse': {
+          code: { es: '0580', en: '0580' },
+          desc: { es: 'Mathematics de Cambridge en niveles Core y Extended; también trabajamos Additional Mathematics 0606.', en: 'Cambridge Mathematics at Core and Extended level; we also cover Additional Mathematics 0606.' },
+          topics: { es: ['Número y álgebra', 'Ecuaciones y funciones', 'Geometría y trigonometría', 'Estadística y probabilidad'], en: ['Number and algebra', 'Equations and functions', 'Geometry and trigonometry', 'Statistics and probability'] }
+        },
+        'a-level': {
+          code: { es: '9709', en: '9709' },
+          desc: { es: 'Pure Mathematics más los componentes de Mechanics o Probability & Statistics según la combinación del colegio.', en: 'Pure Mathematics plus the Mechanics or Probability & Statistics components, depending on the school’s combination.' },
+          topics: { es: ['Pure 1 y Pure 3', 'Cálculo diferencial e integral', 'Mechanics', 'Probability & Statistics'], en: ['Pure 1 and Pure 3', 'Differential and integral calculus', 'Mechanics', 'Probability & Statistics'] }
+        },
+        'ib-dp': {
+          code: { es: 'AA / AI, SL y HL', en: 'AA / AI, SL and HL' },
+          desc: { es: 'Analysis and Approaches o Applications and Interpretation, en SL o HL, con exploración matemática (IA).', en: 'Analysis and Approaches or Applications and Interpretation, at SL or HL, with the mathematical exploration (IA).' },
+          topics: { es: ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Cálculo y estadística'], en: ['Number and algebra', 'Functions', 'Geometry and trigonometry', 'Calculus and statistics'] }
+        }
       }
     },
     {
-      slug: 'ingles', name: 'Inglés',
-      blurb: 'Desde inglés escolar hasta lengua y literatura en nivel examen internacional.',
+      slug: 'ingles', name: { es: 'Inglés', en: 'English' },
+      blurb: { es: 'Desde inglés escolar hasta lengua y literatura en nivel examen internacional.', en: 'From school English to language and literature at international exam level.' },
       data: {
-        'plan-nacional': { code: 'Inglés escolar', desc: 'Apoyo en el inglés del currículum nacional y preparación de certificaciones externas.', topics: ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva y oral'] },
-        'igcse': { code: '0500 / 0510', desc: 'First Language English o English as a Second Language, según el colegio.', topics: ['Reading passages y comprensión', 'Directed writing', 'Escritura descriptiva y narrativa', 'Speaking y listening (0510)'] },
-        'a-level': { code: '9093 / 9695', desc: 'English Language o Literature in English, con foco en análisis y respuesta extendida.', topics: ['Análisis de textos', 'Escritura dirigida', 'Poesía, prosa y drama', 'Ensayo comparativo'] },
-        'ib-dp': { code: 'Lang A / Lang B', desc: 'Language A: Literature o Language and Literature, y Language B en SL o HL.', topics: ['Análisis textual guiado', 'Ensayo comparativo (Paper 2)', 'Oral individual', 'Producción escrita y HL essay'] }
-      }
+        'plan-nacional': {
+          code: { es: 'Inglés escolar', en: 'School English' },
+          desc: { es: 'Apoyo en el inglés del currículum nacional y preparación de certificaciones externas.', en: 'Support with English in the national curriculum and preparation for external certifications.' },
+          topics: { es: ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva y oral'], en: ['Reading comprehension', 'Grammar and usage', 'Written expression', 'Listening and speaking'] }
+        },
+        'lower-secondary': {
+          code: { es: 'English 1111 / ESL 1110', en: 'English 1111 / ESL 1110' },
+          desc: { es: 'English o English as a Second Language en las etapas 7 a 9, según el colegio, con preparación de Checkpoint.', en: 'English or English as a Second Language in stages 7 to 9, depending on the school, with Checkpoint preparation.' },
+          topics: { es: ['Lectura y comprensión de textos', 'Escritura y uso del lenguaje', 'Speaking y listening', 'Vocabulario académico'], en: ['Reading and text comprehension', 'Writing and language use', 'Speaking and listening', 'Academic vocabulary'] }
+        },
+        'igcse': {
+          code: { es: '0500 / 0510', en: '0500 / 0510' },
+          desc: { es: 'First Language English o English as a Second Language, según el colegio.', en: 'First Language English or English as a Second Language, depending on the school.' },
+          topics: { es: ['Reading passages y comprensión', 'Directed writing', 'Escritura descriptiva y narrativa', 'Speaking y listening (0510)'], en: ['Reading passages and comprehension', 'Directed writing', 'Descriptive and narrative writing', 'Speaking and listening (0510)'] }
+        },
+        'a-level': {
+          code: { es: '9093 / 9695', en: '9093 / 9695' },
+          desc: { es: 'English Language o Literature in English, con foco en análisis y respuesta extendida.', en: 'English Language or Literature in English, focused on analysis and extended response.' },
+          topics: { es: ['Análisis de textos', 'Escritura dirigida', 'Poesía, prosa y drama', 'Ensayo comparativo'], en: ['Text analysis', 'Directed writing', 'Poetry, prose and drama', 'Comparative essay'] }
+        },
+        'ib-dp': {
+          code: { es: 'Lang A / Lang B', en: 'Lang A / Lang B' },
+          desc: { es: 'Language A: Literature o Language and Literature, y Language B en SL o HL.', en: 'Language A: Literature or Language and Literature, and Language B at SL or HL.' },
+          topics: { es: ['Análisis textual guiado', 'Ensayo comparativo (Paper 2)', 'Oral individual', 'Producción escrita y HL essay'], en: ['Guided textual analysis', 'Comparative essay (Paper 2)', 'Individual oral', 'Written production and HL essay'] }
+        }
+      },
+      extra: [
+        {
+          id: 'ingles-certificaciones',
+          program: { es: 'Certificaciones', en: 'Certifications' },
+          code: { es: 'IELTS · FCE · CAE', en: 'IELTS · FCE · CAE' },
+          desc: { es: 'Preparación para los exámenes internacionales de inglés, con diagnóstico de nivel, práctica por sección y ensayos completos cronometrados.', en: 'Preparation for the international English examinations, with a level diagnostic, practice by section and full timed mock exams.' },
+          topics: { es: ['IELTS Academic y General Training', 'FCE (B2 First)', 'CAE (C1 Advanced)', 'Speaking y writing con corrección por criterios'], en: ['IELTS Academic and General Training', 'FCE (B2 First)', 'CAE (C1 Advanced)', 'Speaking and writing marked against the criteria'] }
+        }
+      ]
     }
   ];
 
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
+
   renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = this.UI[lang];
+    const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     return {
-      index: this.S.map(s => ({ label: s.name, href: '#' + s.slug })),
+      t, lang,
+      esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
+      setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
+      index: this.S.map(s => ({ label: s.name[lang], href: '#' + s.slug })),
       subjects: this.S.map((s, i) => ({
-        slug: s.slug, name: s.name, blurb: s.blurb,
+        slug: s.slug, name: s.name[lang], blurb: s.blurb[lang],
         sectionStyle: i % 2 === 1 ? 'background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC' : 'background:#FFFFFF',
         entries: this.PROG.map(p => ({
           id: s.slug + '-' + p.slug,
-          program: p.name,
-          code: s.data[p.slug].code,
-          desc: s.data[p.slug].desc,
-          topics: s.data[p.slug].topics
-        }))
+          program: p[lang],
+          code: s.data[p.slug].code[lang],
+          desc: s.data[p.slug].desc[lang],
+          topics: s.data[p.slug].topics[lang]
+        })).concat((s.extra || []).map(e => ({
+          id: e.id,
+          program: e.program[lang],
+          code: e.code[lang],
+          desc: e.desc[lang],
+          topics: e.topics[lang]
+        })))
       }))
     };
   }
 }
-
 </script>
 </body>
 </html>
