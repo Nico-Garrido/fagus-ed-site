@@ -51,10 +51,15 @@ async function getAccessToken() {
   if (cachedToken && cachedToken.exp - 60 > now) return cachedToken.token;
 
   const { client_email: email, private_key: privateKey } = loadServiceAccount();
+  // Impersonate the real calendar owner via Workspace Domain-Wide Delegation.
+  // Without this, a plain service account can't invite attendees or create
+  // Google Meet links on someone else's calendar.
+  const impersonate = process.env.GOOGLE_IMPERSONATE_EMAIL || process.env.GOOGLE_CALENDAR_ID;
 
   const header = { alg: 'RS256', typ: 'JWT' };
   const claim = {
     iss: email,
+    sub: impersonate,
     scope: SCOPE,
     aud: TOKEN_URL,
     iat: now,

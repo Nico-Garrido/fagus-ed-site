@@ -6,7 +6,7 @@
 import { zonedTimeToUtc, freeBusy, createEvent } from './_lib/google.js';
 
 const TIMEZONE = 'America/Santiago';
-const DURATION = { familias: 45, vocacional: 60, admision: 60, tutoria: 30 };
+const DURATION = { familias: 30, vocacional: 30, admision: 30, tutoria: 30 };
 const ADMIN_EMAIL = 'contacto@fagus-ed.cl';
 const FROM_EMAIL = 'Fagus Ed <reservas@fagus-ed.cl>'; // must be on a domain verified in Resend
 
@@ -84,16 +84,15 @@ export default async function handler(req, res) {
       notes ? (language === 'en' ? 'Notes: ' : 'Notas: ') + notes : ''
     ].filter(Boolean);
 
-    // NOTE: a plain service account (no Domain-Wide Delegation) cannot add
-    // attendees to a Calendar event — Google rejects that with a 403
-    // ("forbiddenForServiceAccounts"). So we create the event without an
-    // attendees list, and send the visitor their own confirmation email
-    // (with the Meet link) via Resend instead.
+    // With Domain-Wide Delegation (the service account impersonates
+    // contacto@fagus-ed.cl), we can invite the visitor as an attendee and
+    // auto-generate a Google Meet link.
     const event = await createEvent(calendarId, {
       summary: title,
       description: descLines.join('\n'),
       start: { dateTime: start.toISOString(), timeZone: 'UTC' },
       end: { dateTime: end.toISOString(), timeZone: 'UTC' },
+      attendees: [{ email }],
       conferenceData: {
         createRequest: {
           requestId: 'fagus-' + Date.now() + '-' + Math.random().toString(36).slice(2),
@@ -109,6 +108,9 @@ export default async function handler(req, res) {
         event.conferenceData.entryPoints[0].uri) ||
       null;
 
+    // Google already emails the attendee a native Calendar invite; this is a
+    // friendlier, branded confirmation on top of that (and a safety net in
+    // case the native invite is delayed or filtered).
     await sendConfirmationEmail({ language, name, email, title, start, duration, meetLink }).catch((e) =>
       console.error('confirmation email failed (event was still created):', e)
     );
