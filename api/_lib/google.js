@@ -3,11 +3,33 @@
 // with Node's built-in crypto module) so no build step / package.json is needed.
 //
 // Required environment variables (set in Vercel -> Settings -> Environment Variables):
-//   GOOGLE_SA_EMAIL         the service account's client_email
-//   GOOGLE_SA_PRIVATE_KEY   the service account's private_key (keep the \n escapes as-is)
-//   GOOGLE_CALENDAR_ID      the calendar to read/write, e.g. contacto@fagus-ed.cl
+//   GOOGLE_SA_KEY_BASE64   the ENTIRE downloaded service-account JSON file,
+//                          base64-encoded as a single line (see README instructions).
+//                          This avoids any risk of newlines inside the private key
+//                          getting mangled by a single-line env var text box.
+//   GOOGLE_CALENDAR_ID     the calendar to read/write, e.g. contacto@fagus-ed.cl
 
 import crypto from 'crypto';
+
+let cachedServiceAccount = null;
+
+function loadServiceAccount() {
+  if (cachedServiceAccount) return cachedServiceAccount;
+  const b64 = process.env.GOOGLE_SA_KEY_BASE64;
+  if (!b64) throw new Error('Missing GOOGLE_SA_KEY_BASE64');
+  let parsed;
+  try {
+    const json = Buffer.from(b64.trim(), 'base64').toString('utf8');
+    parsed = JSON.parse(json);
+  } catch (e) {
+    throw new Error('GOOGLE_SA_KEY_BASE64 is not valid base64-encoded JSON: ' + e.message);
+  }
+  if (!parsed.client_email || !parsed.private_key) {
+    throw new Error('Service account JSON is missing client_email or private_key');
+  }
+  cachedServiceAccount = parsed;
+  return parsed;
+}
 
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const SCOPE = 'https://www.googleapis.com/auth/calendar';
@@ -28,10 +50,7 @@ async function getAccessToken() {
   const now = Math.floor(Date.now() / 1000);
   if (cachedToken && cachedToken.exp - 60 > now) return cachedToken.token;
 
-  const email = process.env.GOOGLE_SA_EMAIL;
-  const rawKey = process.env.GOOGLE_SA_PRIVATE_KEY;
-  if (!email || !rawKey) throw new Error('Missing GOOGLE_SA_EMAIL or GOOGLE_SA_PRIVATE_KEY');
-  const privateKey = rawKey.replace(/\\n/g, '\n');
+  const { client_email: email, private_key: privateKey } = loadServiceAccount();
 
   const header = { alg: 'RS256', typ: 'JWT' };
   const claim = {
