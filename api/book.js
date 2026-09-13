@@ -7,6 +7,8 @@ import { zonedTimeToUtc, freeBusy, createEvent } from './_lib/google.js';
 
 const TIMEZONE = 'America/Santiago';
 const DURATION = { familias: 45, vocacional: 60, admision: 60, tutoria: 30 };
+const ADMIN_EMAIL = 'contacto@fagus-ed.cl';
+const FROM_EMAIL = 'Fagus Ed <reservas@fagus-ed.cl>'; // must be on a domain verified in Resend
 
 const EVENT_TITLES = {
   familias: { es: 'Asesoría a familias · Fagus Ed', en: 'Family guidance · Fagus Ed' },
@@ -82,12 +84,16 @@ export default async function handler(req, res) {
       notes ? (language === 'en' ? 'Notes: ' : 'Notas: ') + notes : ''
     ].filter(Boolean);
 
+    // NOTE: a plain service account (no Domain-Wide Delegation) cannot add
+    // attendees to a Calendar event — Google rejects that with a 403
+    // ("forbiddenForServiceAccounts"). So we create the event without an
+    // attendees list, and send the visitor their own confirmation email
+    // (with the Meet link) via Resend instead.
     const event = await createEvent(calendarId, {
       summary: title,
       description: descLines.join('\n'),
       start: { dateTime: start.toISOString(), timeZone: 'UTC' },
       end: { dateTime: end.toISOString(), timeZone: 'UTC' },
-      attendees: [{ email }],
       conferenceData: {
         createRequest: {
           requestId: 'fagus-' + Date.now() + '-' + Math.random().toString(36).slice(2),
@@ -103,9 +109,88 @@ export default async function handler(req, res) {
         event.conferenceData.entryPoints[0].uri) ||
       null;
 
+    await sendConfirmationEmail({ language, name, email, title, start, duration, meetLink }).catch((e) =>
+      console.error('confirmation email failed (event was still created):', e)
+    );
+
     return res.status(200).json({ ok: true, meetLink });
   } catch (err) {
     console.error('book error:', err);
     return res.status(502).json({ error: 'Could not create the booking' });
+  }
+}
+
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+async function sendConfirmationEmail({ language, name, email, title, start, duration, meetLink }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('Missing RESEND_API_KEY — skipping confirmation email');
+    return;
+  }
+
+  const whenText = start.toLocaleString(language === 'en' ? 'en-US' : 'es-CL', {
+    timeZone: TIMEZONE,
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  const subject =
+    (language === 'en' ? 'Meeting confirmed: ' : 'Reunión confirmada: ') + title;
+  const lines =
+    language === 'en'
+      ? [
+          `Hi ${name},`,
+          '',
+          `Your meeting is confirmed for ${whenText} (Chile time), ${duration} minutes.`,
+          meetLink ? `Video call link: ${meetLink}` : '',
+          '',
+          `Need to reschedule? Just reply to this email or write to ${ADMIN_EMAIL}.`,
+          '',
+          'Fagus Ed'
+        ]
+      : [
+          `Hola ${name},`,
+          '',
+          `Tu reunión quedó confirmada para el ${whenText} (hora de Chile), ${duration} minutos.`,
+          meetLink ? `Enlace de la videollamada: ${meetLink}` : '',
+          '',
+          `¿Necesitas reagendar? Responde este correo o escribe a ${ADMIN_EMAIL}.`,
+          '',
+          'Fagus Ed'
+        ];
+  const text = lines.filter((l) => l !== '').join('\n');
+  const html = lines
+    .filter((l) => l !== '')
+    .map((l) => `<p>${escapeHtml(l)}</p>`)
+    .join('');
+
+  const resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: FROM_EMAIL,
+      to: [email],
+      bcc: [ADMIN_EMAIL],
+      reply_to: ADMIN_EMAIL,
+      subject,
+      text,
+      html
+    })
+  });
+  if (!resp.ok) {
+    const errText = await resp.text().catch(() => '');
+    throw new Error('Resend API error: ' + resp.status + ' ' + errText);
   }
 }

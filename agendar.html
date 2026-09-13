@@ -151,9 +151,9 @@ class Component extends DCLogic {
       fName: 'NOMBRE Y APELLIDO', fEmail: 'EMAIL', fPhone: 'TELÉFONO', fNeeds: 'EN QUÉ NECESITAS APOYO',
       summary: 'Resumen', pickTime: 'Selecciona un horario', videocall: 'videollamada',
       bookLabel: 'Confirmar reunión', bookLabelBusy: 'Agendando…', bookedLabel: 'Reunión agendada',
-      bookHintReady: 'Al confirmar, se crea la reunión en nuestro calendario y te llega la invitación de Google Calendar con el enlace de la videollamada.',
+      bookHintReady: 'Al confirmar, se crea la reunión en nuestro calendario y te enviamos un correo de confirmación con el enlace de la videollamada.',
       bookHintIdle: 'Completa nombre, email y horario para habilitar el botón.',
-      bookedHint: '¡Listo! Revisa tu correo: ahí está la invitación de Google Calendar con el enlace de la videollamada.',
+      bookedHint: '¡Listo! Revisa tu correo: ahí está la confirmación con el enlace de la videollamada.',
       bookError: 'No se pudo agendar. Intenta de nuevo o escribe a contacto@fagus-ed.cl.',
       slotTaken: 'Ese horario se acaba de ocupar. Elige otro.',
       slotsLoading: 'Buscando horarios disponibles…',
@@ -163,7 +163,7 @@ class Component extends DCLogic {
       mon: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
       steps: [
         { num: '01', title: 'Envías la solicitud', body: 'Con tus datos y el horario que prefieres, sujeto a confirmación.' },
-        { num: '02', title: 'Confirmamos por correo', body: 'Recibes la invitación de Google Calendar con el enlace de la videollamada.' },
+        { num: '02', title: 'Confirmamos por correo', body: 'Recibes un correo de confirmación con el enlace de la videollamada.' },
         { num: '03', title: 'Sesión y resumen', body: 'Después de la reunión enviamos un resumen escrito con las recomendaciones.' }
       ],
       kinds: {
@@ -203,9 +203,9 @@ class Component extends DCLogic {
       fName: 'FULL NAME', fEmail: 'EMAIL', fPhone: 'PHONE', fNeeds: 'WHERE YOU NEED SUPPORT',
       summary: 'Summary', pickTime: 'Select a time', videocall: 'video call',
       bookLabel: 'Confirm meeting', bookLabelBusy: 'Booking…', bookedLabel: 'Meeting booked',
-      bookHintReady: 'On confirming, the meeting is created in our calendar and you\'ll receive the Google Calendar invite with the video-call link.',
+      bookHintReady: 'On confirming, the meeting is created in our calendar and we email you a confirmation with the video-call link.',
       bookHintIdle: 'Fill in name, email and a time to enable the button.',
-      bookedHint: 'All set! Check your email for the Google Calendar invite with the video-call link.',
+      bookedHint: 'All set! Check your email for the confirmation with the video-call link.',
       bookError: 'Could not book. Please try again or email contacto@fagus-ed.cl.',
       slotTaken: 'That time was just taken. Please choose another.',
       slotsLoading: 'Checking available times…',
@@ -215,7 +215,7 @@ class Component extends DCLogic {
       mon: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       steps: [
         { num: '01', title: 'You send the request', body: 'With your details and your preferred time, subject to confirmation.' },
-        { num: '02', title: 'We confirm by email', body: 'You receive the Google Calendar invitation with the video-call link.' },
+        { num: '02', title: 'We confirm by email', body: 'You receive a confirmation email with the video-call link.' },
         { num: '03', title: 'Session and summary', body: 'After the meeting we send a written summary with our recommendations.' }
       ],
       kinds: {
