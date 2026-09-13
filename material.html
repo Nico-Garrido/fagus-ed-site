@@ -52,12 +52,6 @@
 
   <section style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
     <div style="max-width:1140px;margin:0 auto;padding:40px 24px 52px">
-      <div style="display:flex;gap:0;border:1px solid #E7E9EC;background:#FFFFFF;width:fit-content;margin-bottom:36px">
-        <sc-for list="{{ tiers }}" as="ti" hint-placeholder-count="2">
-          <button onClick="{{ ti.onClick }}" style="{{ ti.style }}">{{ ti.label }}</button>
-        </sc-for>
-      </div>
-
       <div style="display:grid;gap:26px">
         <div>
           <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6;margin-bottom:12px">{{ t.step1 }}</div>
@@ -111,27 +105,6 @@
     </div>
   </section>
 
-  <sc-if value="{{ isPremium }}" hint-placeholder-val="{{ false }}">
-    <section style="background:#17365B;color:#FFFFFF">
-      <div style="max-width:1140px;margin:0 auto;padding:76px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:48px;align-items:start">
-        <div>
-          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ t.premiumLabel }}</div>
-          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:pretty">{{ t.premiumTitle }}</h2>
-          <p style="font-size:17px;line-height:1.65;color:#C9D0DA;margin:20px 0 0;max-width:46ch;text-wrap:pretty">{{ t.premiumBody }}</p>
-          <a href="index.html#contacto" style="display:inline-block;margin-top:30px;background:#FFFFFF;color:#17365B;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#F9F9F9;color:#17365B">{{ t.premiumCta }}</a>
-        </div>
-        <div style="display:grid;gap:1px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.18)">
-          <sc-for list="{{ premiumPerks }}" as="pk" hint-placeholder-count="4">
-            <div style="background:#17365B;padding:24px 26px">
-              <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;color:#FFFFFF">{{ pk.title }}</div>
-              <p style="font-size:15px;line-height:1.6;color:#C9D0DA;margin:8px 0 0;text-wrap:pretty">{{ pk.body }}</p>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-    </section>
-  </sc-if>
-
   <footer style="border-top:1px solid #E7E9EC">
     <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
       <div>
@@ -151,7 +124,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { tier: 'free', prog: 'igcse', subj: 'fisica', lang: null };
+  state = { prog: 'igcse', subj: 'fisica', lang: null };
 
   PROG = [
     { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
@@ -173,49 +146,27 @@ class Component extends DCLogic {
       navHome: 'Inicio', navPrograms: 'Programas', navSubjects: 'Asignaturas', navTutoring: 'Tutoría', navCta: 'Agendar reunión',
       kicker: 'Material',
       title: 'Elige programa, asignatura y tópico',
-      intro: 'El material gratuito está disponible para descarga directa. El material premium incluye las mismas asignaturas con ejercicios y past papers resueltos paso a paso, más acceso a FEDbot.',
+      intro: 'Guías, ejercicios de práctica y past papers en PDF, disponibles para descarga directa, sin registro.',
       step1: '1 · Programa', step2: '2 · Asignatura', step3: '3 · Tópicos', step4: '4 · Past papers',
-      tierFree: 'Material gratuito', tierPremium: 'Material premium',
-      noteFree: 'Descarga libre', notePremium: 'Acceso premium',
-      selectionFree: 'Guías y ejercicios de práctica en PDF, sin registro. Las soluciones desarrolladas están en el material premium.',
-      selectionPremium: 'Cada recurso incluye el desarrollo completo y acceso a FEDbot para consultar dudas sobre ese tópico.',
-      ctaFree: 'Descargar', ctaPremium: 'Resuelto',
-      metaTopicFree: 'Guía en PDF', metaTopicPremium: 'Guía + ejercicios resueltos',
-      metaPaperFree: 'Enunciado en PDF', metaPaperPremium: 'Con resolución paso a paso',
-      premiumLabel: 'Premium', premiumTitle: 'Qué incluye la suscripción',
-      premiumBody: 'Mismo catálogo de asignaturas, con la solución completa de cada ejercicio y past paper, y acceso a FEDbot para resolver dudas mientras estudias.',
-      premiumCta: 'Solicitar acceso premium',
-      footer: '100% online, en Chile y en el extranjero.', footerTagline: 'Educación que abra caminos',
-      perks: [
-        { title: 'Ejercicios resueltos', body: 'Cada tópico con desarrollo completo, no solo la respuesta final.' },
-        { title: 'Past papers con solución', body: 'Resolución paso a paso junto al mark scheme oficial comentado.' },
-        { title: 'FEDbot', body: 'Asistente de estudio entrenado con nuestro material: pregunta dudas mientras resuelves.' },
-        { title: 'Material nuevo cada mes', body: 'Se agregan tópicos y series de exámenes durante todo el año escolar.' }
-      ]
+      note: 'Descarga libre',
+      selectionNote: 'Guías y ejercicios de práctica en PDF, sin registro.',
+      cta: 'Descargar',
+      metaTopic: 'Guía en PDF',
+      metaPaper: 'Enunciado en PDF',
+      footer: '100% online, en Chile y en el extranjero.', footerTagline: 'Educación que abra caminos'
     },
     en: {
       navHome: 'Home', navPrograms: 'Programmes', navSubjects: 'Subjects', navTutoring: 'Tutoring', navCta: 'Book a meeting',
       kicker: 'Material',
       title: 'Choose programme, subject and topic',
-      intro: 'The free material is available for direct download. The premium material covers the same subjects with exercises and past papers worked step by step, plus access to FEDbot.',
+      intro: 'Guides, practice exercises and past papers in PDF, available for direct download, no sign-up.',
       step1: '1 · Programme', step2: '2 · Subject', step3: '3 · Topics', step4: '4 · Past papers',
-      tierFree: 'Free material', tierPremium: 'Premium material',
-      noteFree: 'Free download', notePremium: 'Premium access',
-      selectionFree: 'Guides and practice exercises in PDF, no sign-up. Worked solutions are in the premium material.',
-      selectionPremium: 'Every resource includes the full worked solution and access to FEDbot for questions on that topic.',
-      ctaFree: 'Download', ctaPremium: 'Worked',
-      metaTopicFree: 'Guide in PDF', metaTopicPremium: 'Guide + worked exercises',
-      metaPaperFree: 'Question paper in PDF', metaPaperPremium: 'With step-by-step solution',
-      premiumLabel: 'Premium', premiumTitle: 'What the subscription includes',
-      premiumBody: 'The same subject catalogue, with the full solution to every exercise and past paper, and access to FEDbot to resolve questions while you study.',
-      premiumCta: 'Request premium access',
-      footer: 'Fully online, in Chile and abroad.', footerTagline: 'Education that opens doors.',
-      perks: [
-        { title: 'Worked exercises', body: 'Every topic with the full working, not just the final answer.' },
-        { title: 'Past papers with solutions', body: 'Step-by-step solutions alongside the official mark scheme, annotated.' },
-        { title: 'FEDbot', body: 'A study assistant trained on our material: ask questions as you work.' },
-        { title: 'New material every month', body: 'Topics and exam series are added throughout the school year.' }
-      ]
+      note: 'Free download',
+      selectionNote: 'Guides and practice exercises in PDF, no sign-up.',
+      cta: 'Download',
+      metaTopic: 'Guide in PDF',
+      metaPaper: 'Question paper in PDF',
+      footer: 'Fully online, in Chile and abroad.', footerTagline: 'Education that opens doors.'
     }
   };
 
@@ -286,42 +237,31 @@ class Component extends DCLogic {
   renderVals() {
     const lang = this.state.lang || this.storedLang() || 'es';
     const t = this.UI[lang];
-    const { tier, prog, subj } = this.state;
-    const premium = tier === 'premium';
+    const { prog, subj } = this.state;
     const progLabel = (this.PROG.find(p => p.slug === prog) || {})[lang];
     const subjLabel = (this.SUBJ.find(s => s.slug === subj) || {})[lang];
-    const cta = premium ? t.ctaPremium : t.ctaFree;
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     return {
-      t, lang, isPremium: premium,
+      t, lang,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
-      tiers: [
-        { slug: 'free', label: t.tierFree },
-        { slug: 'premium', label: t.tierPremium }
-      ].map(x => ({
-        label: x.label,
-        onClick: () => this.setState({ tier: x.slug }),
-        style: `border:0;background:${tier === x.slug ? '#17365B' : 'transparent'};color:${tier === x.slug ? '#FFFFFF' : '#7F8996'};padding:13px 24px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s ease`
-      })),
       progs: this.PROG.map(p => ({ label: p[lang], onClick: () => this.setState({ prog: p.slug }), style: this.btn(prog === p.slug) })),
       subs: this.SUBJ.map(s => ({ label: s[lang], onClick: () => this.setState({ subj: s.slug }), style: this.btn(subj === s.slug) })),
       selectionTitle: subjLabel + ' · ' + progLabel,
-      tierNote: premium ? t.notePremium : t.noteFree,
-      selectionNote: premium ? t.selectionPremium : t.selectionFree,
+      tierNote: t.note,
+      selectionNote: t.selectionNote,
       topics: (this.TOPICS[subj][prog][lang] || []).map(x => ({
         title: x,
-        meta: premium ? t.metaTopicPremium : t.metaTopicFree,
-        cta,
-        href: premium ? 'index.html#contacto' : '#'
+        meta: t.metaTopic,
+        cta: t.cta,
+        href: '#'
       })),
       papers: (this.PAPERS[prog][lang] || []).map(x => ({
         title: subjLabel + ' · ' + x,
-        meta: premium ? t.metaPaperPremium : t.metaPaperFree,
-        cta,
-        href: premium ? 'index.html#contacto' : '#'
-      })),
-      premiumPerks: t.perks
+        meta: t.metaPaper,
+        cta: t.cta,
+        href: '#'
+      }))
     };
   }
 }

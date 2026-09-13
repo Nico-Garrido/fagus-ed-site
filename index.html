@@ -248,22 +248,6 @@
     </div>
   </section>
 
-  <sc-if value="{{ showTestimonials }}" hint-placeholder-val="{{ true }}">
-    <section data-reveal="1" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
-      <div style="max-width:1140px;margin:0 auto;padding:88px 24px">
-        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:44px">{{ t.testimonialsLabel }}</div>
-        <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:32px">
-          <sc-for list="{{ testimonials }}" as="q" hint-placeholder-count="3">
-            <figure style="margin:0;background:#FFFFFF;border:1px solid #E7E9EC;padding:32px 30px;display:flex;flex-direction:column;gap:22px">
-              <blockquote style="margin:0;font-family:Figtree,sans-serif;font-size:18px;line-height:1.5;color:#17365B;font-weight:400;text-wrap:pretty">{{ q.quote }}</blockquote>
-              <figcaption style="margin-top:auto;font-size:14px;color:#7F8996">{{ q.who }}</figcaption>
-            </figure>
-          </sc-for>
-        </div>
-      </div>
-    </section>
-  </sc-if>
-
   <section id="equipo" data-reveal="1" style="max-width:1140px;margin:0 auto;padding:96px 24px">
     <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.teamLabel }}</div>
     <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 26px;max-width:24ch;text-wrap:pretty">{{ t.teamTitle }}</h2>
@@ -372,7 +356,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Contenido&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#17365B&quot;,&quot;#2E4057&quot;,&quot;#A3ABB6&quot;],&quot;default&quot;:&quot;#17365B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;},&quot;showTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenido&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Contenido&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#17365B&quot;,&quot;#2E4057&quot;,&quot;#A3ABB6&quot;],&quot;default&quot;:&quot;#17365B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;},}">
 class Component extends DCLogic {
   state = { lang: null, tab: 0, faq: 0, menuOpen: false, sent: false, menu: null, subItem: null, navOpen: false, contactName: '', contactEmail: '', contactInterest: '', contactMessage: '', sending: false, sendError: '' };
 
@@ -492,7 +476,6 @@ class Component extends DCLogic {
       preuLabel: 'Preu FagusED', preuTitle: 'Preparación PAES con seguimiento individual',
       preuBody: 'Clases y ensayos orientados a la PAES, con diagnóstico inicial, plan de estudio por asignatura y reportes de avance para el estudiante y su familia.',
       preuCta: 'Ver detalles del preu',
-      testimonialsLabel: 'Familias y estudiantes',
       teamLabel: 'Nosotros', teamTitle: 'Un Equipo con experiencia',
       teamIntro: 'Fagus-ED fue fundado por Nicolás, Pamela y Pablo, quienes reúnen experiencia en los currículos Cambridge, Bachillerato Internacional y nacional chileno. El proyecto nace con el propósito de nivelar la cancha y ampliar el acceso a una educación de calidad.',
       resourcesTitle: 'Recursos y artículos', resourcesAll: 'Ver todos',
@@ -520,7 +503,6 @@ class Component extends DCLogic {
       preuLabel: 'Preu FagusED', preuTitle: 'PAES preparation with individual follow-up',
       preuBody: 'Classes and mock exams built around the PAES, with an initial diagnostic, a study plan per subject and progress reports for the student and the family.',
       preuCta: 'See prep details',
-      testimonialsLabel: 'Families and students',
       teamLabel: 'About us', teamTitle: 'A team with experience',
       teamIntro: 'Fagus-ED was founded by Nicolás, Pamela and Pablo, who bring together experience in the Cambridge, International Baccalaureate and Chilean national curricula. The project was created to level the playing field and widen access to a quality education.',
       resourcesTitle: 'Resources and articles', resourcesAll: 'View all',
@@ -578,11 +560,6 @@ class Component extends DCLogic {
         { title: 'Plan por asignatura', body: 'Prioridades de estudio según brechas y carrera de interés.' },
         { title: 'Ensayos periódicos', body: 'Corrección comentada y comparación con el ensayo anterior.' },
         { title: 'Reporte a la familia', body: 'Resumen mensual de asistencia, avance y próximos pasos.' }
-      ],
-      testimonials: [
-        { quote: 'Llegamos buscando clases de matemática y salimos con un plan completo para la postulación.', who: 'Apoderada, estudiante de IV medio' },
-        { quote: 'La preparación de A-Level fue mucho más ordenada de lo que esperaba, con foco en el examen.', who: 'Estudiante de A-Level, Santiago' },
-        { quote: 'Nos ayudaron a comparar colegios y a entender qué currículum le convenía a nuestro hijo.', who: 'Familia, cambio de colegio en 7º básico' }
       ],
       team: [
         { initials: 'NG', name: 'Nicolás Garrido', role: 'Director Ejecutivo', role2: '', bio: 'Profesor de Física y Matemáticas con experiencia en colegios nacionales e internacionales. Se ha especializado en la enseñanza del currículo Cambridge, incluyendo Cambridge Lower Secondary, IGCSE Physics, IGCSE Co-ordinated Sciences y A Level Physics. Como Director Ejecutivo de Fagus-ED, lidera el desarrollo estratégico del proyecto y la creación de programas académicos que preparan a los estudiantes para desenvolverse con éxito en contextos educativos nacionales e internacionales.' },
@@ -650,11 +627,6 @@ class Component extends DCLogic {
         { title: 'Regular mocks', body: 'Detailed feedback and comparison against the previous mock.' },
         { title: 'Family report', body: 'A monthly summary of attendance, progress and next steps.' }
       ],
-      testimonials: [
-        { quote: 'We came looking for maths classes and left with a full plan for the application.', who: 'Parent, final-year student' },
-        { quote: 'The A-Level preparation was far more organised than I expected, and clearly exam-focused.', who: 'A-Level student, Santiago' },
-        { quote: 'They helped us compare schools and understand which curriculum suited our son.', who: 'Family, school change in Year 8' }
-      ],
       team: [
         { initials: 'NG', name: 'Nicolás Garrido', role: 'Executive Director', role2: '', bio: 'Physics and Mathematics teacher with experience in both Chilean and international schools. He has specialised in teaching the Cambridge curriculum, including Cambridge Lower Secondary, IGCSE Physics, IGCSE Co-ordinated Sciences and A Level Physics. As Executive Director of Fagus-ED, he leads the strategic development of the project and the creation of academic programmes that prepare students to succeed in national and international educational contexts.' },
         { initials: 'PC', name: 'Pamela Corrales', role: 'Academic Director', role2: '', bio: 'Chemistry and Biology teacher with a master’s degree in the Didactics of Experimental Sciences. She has experience in the International Baccalaureate, particularly teaching sciences within the Diploma Programme. As Academic Director, she leads the curricular and pedagogical design of Fagus-ED, promoting methodologies that combine scientific rigour, experimentation and teaching adapted to each student’s needs.' },
@@ -700,7 +672,6 @@ class Component extends DCLogic {
     return {
       t, lang, accent,
       marquee: c.tabs.concat(lang === 'es' ? ['Tutoría privada', 'Asesoría a familias', 'Orientación vocacional', 'Admisión en el extranjero'] : ['Private tutoring', 'Family guidance', 'University guidance', 'Admissions abroad']).join('   ·   ') + '   ·   ',
-      showTestimonials: this.props.showTestimonials !== false,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       menus: this.buildMenus(t, lang),
@@ -723,7 +694,7 @@ class Component extends DCLogic {
         return { ...s, num: String(i + 1).padStart(2, '0'), href: L.href, target: L.ext ? '_blank' : '_self', cue: L.ext ? '↗' : '→' };
       }),
       heroFacts: c.heroFacts, steps: c.steps, preuItems: c.preuItems,
-      testimonials: c.testimonials, team: c.team, posts: c.posts, codes: c.codes,
+      team: c.team, posts: c.posts, codes: c.codes,
       tabs: c.tabs.map((label, i) => ({
         label,
         onClick: () => this.setState({ tab: i }),
