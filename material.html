@@ -134,11 +134,17 @@
 
   <footer style="border-top:1px solid #E7E9EC">
     <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <div>
       <a href="index.html" style="display:flex;align-items:center;gap:12px">
         <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
-      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
+      <div style="font-size:15px;color:#7F8996;margin-top:10px">{{ t.footerTagline }}</div>
+      </div>
+      <div style="text-align:right;font-size:14px;color:#A3ABB6;line-height:1.6">
+        <div>© 2026 FagusED</div>
+        <div>Santiago, Chile.</div>
+      </div>
     </div>
   </footer>
 </div>
@@ -179,7 +185,7 @@ class Component extends DCLogic {
       premiumLabel: 'Premium', premiumTitle: 'Qué incluye la suscripción',
       premiumBody: 'Mismo catálogo de asignaturas, con la solución completa de cada ejercicio y past paper, y acceso a FEDbot para resolver dudas mientras estudias.',
       premiumCta: 'Solicitar acceso premium',
-      footer: '100% online, en Chile y en el extranjero.',
+      footer: '100% online, en Chile y en el extranjero.', footerTagline: 'Educación que abra caminos',
       perks: [
         { title: 'Ejercicios resueltos', body: 'Cada tópico con desarrollo completo, no solo la respuesta final.' },
         { title: 'Past papers con solución', body: 'Resolución paso a paso junto al mark scheme oficial comentado.' },
@@ -203,7 +209,7 @@ class Component extends DCLogic {
       premiumLabel: 'Premium', premiumTitle: 'What the subscription includes',
       premiumBody: 'The same subject catalogue, with the full solution to every exercise and past paper, and access to FEDbot to resolve questions while you study.',
       premiumCta: 'Request premium access',
-      footer: 'Fully online, in Chile and abroad.',
+      footer: 'Fully online, in Chile and abroad.', footerTagline: 'Education that opens doors.',
       perks: [
         { title: 'Worked exercises', body: 'Every topic with the full working, not just the final answer.' },
         { title: 'Past papers with solutions', body: 'Step-by-step solutions alongside the official mark scheme, annotated.' },

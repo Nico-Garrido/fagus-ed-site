@@ -63,7 +63,7 @@
           <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:pretty">{{ p.title }}</h2>
           <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:22px 0 0;text-wrap:pretty">{{ p.intro }}</p>
           <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:16px 0 0;text-wrap:pretty">{{ p.intro2 }}</p>
-          <a href="index.html#contacto" style="display:inline-block;margin-top:28px;border-bottom:1px solid #17365B;padding-bottom:3px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600">{{ t.askAbout }}</a>
+          <a href="{{ p.askHref }}" style="display:inline-block;margin-top:28px;border-bottom:1px solid #17365B;padding-bottom:3px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600">{{ t.askAbout }}</a>
         </div>
         <div style="display:grid;gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
           <sc-for list="{{ p.facts }}" as="f" hint-placeholder-count="5">
@@ -89,11 +89,17 @@
 
   <footer style="border-top:1px solid #E7E9EC">
     <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <div>
       <a href="index.html" style="display:flex;align-items:center;gap:12px">
         <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
-      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
+      <div style="font-size:15px;color:#7F8996;margin-top:10px">{{ t.footerTagline }}</div>
+      </div>
+      <div style="text-align:right;font-size:14px;color:#A3ABB6;line-height:1.6">
+        <div>© 2026 FagusED</div>
+        <div>Santiago, Chile.</div>
+      </div>
     </div>
   </footer>
 </div>
@@ -106,13 +112,13 @@ class Component extends DCLogic {
     es: {
       navHome: 'Inicio', navSubjects: 'Asignaturas', navResources: 'Recursos', navCta: 'Agendar reunión',
       kicker: 'Programas',
-      title: 'Los cuatro currículums con los que trabajamos',
+      title: 'Los currículums con los que trabajamos',
       intro: 'Cada programa tiene su propia lógica de evaluación, calendario y exigencias. Esta página explica en detalle cómo funciona cada uno y qué implica para el estudiante y su familia.',
       askAbout: 'Consultar por este programa',
       ctaTitle: '¿No sabes cuál corresponde a tu caso?',
       ctaBody: 'En la primera reunión revisamos el colegio, el curso y los plazos, y te decimos con qué programa conviene trabajar.',
       ctaButton: 'Agendar reunión gratuita',
-      footer: '100% online, en Chile y en el extranjero.',
+      footer: '100% online, en Chile y en el extranjero.', footerTagline: 'Educación que abra caminos',
       programs: [
         {
           slug: 'plan-nacional', kicker: 'Currículum chileno', title: 'Plan Nacional',
@@ -182,13 +188,13 @@ class Component extends DCLogic {
     en: {
       navHome: 'Home', navSubjects: 'Subjects', navResources: 'Resources', navCta: 'Book a meeting',
       kicker: 'Programmes',
-      title: 'The four curricula we work with',
+      title: 'The curricula we work with',
       intro: 'Each programme has its own assessment logic, calendar and demands. This page explains in detail how each one works and what it means for the student and the family.',
       askAbout: 'Ask about this programme',
       ctaTitle: 'Not sure which one applies to you?',
       ctaBody: 'In the first meeting we review the school, the year group and the deadlines, and tell you which programme to work with.',
       ctaButton: 'Book a free meeting',
-      footer: 'Fully online, in Chile and abroad.',
+      footer: 'Fully online, in Chile and abroad.', footerTagline: 'Education that opens doors.',
       programs: [
         {
           slug: 'plan-nacional', kicker: 'Chilean curriculum', title: 'National Curriculum',
@@ -282,6 +288,7 @@ class Component extends DCLogic {
       nav: t.programs.map(p => ({ label: p.title, href: '#' + p.slug })),
       programs: t.programs.map((p, i) => ({
         ...p,
+        askHref: 'agendar.html?s=tutoria&p=' + p.slug + '&lang=' + lang,
         sectionStyle: i % 2 === 1 ? 'background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC' : 'background:#FFFFFF'
       }))
     };

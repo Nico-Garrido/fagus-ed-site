@@ -187,7 +187,7 @@
         <div>
           <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:26px;margin:0;color:#FFFFFF">{{ tab.heading }}</h3>
           <p style="font-size:17px;line-height:1.65;color:#C9D0DA;margin:16px 0 0;max-width:46ch">{{ tab.body }}</p>
-          <a href="#contacto" style="display:inline-block;margin-top:30px;background:#FFFFFF;color:#17365B;padding:13px 22px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9;color:#17365B">{{ t.programsCta }}</a>
+          <a href="{{ tab.ctaHref }}" style="display:inline-block;margin-top:30px;background:#FFFFFF;color:#17365B;padding:13px 22px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9;color:#17365B">{{ t.programsCta }}</a>
         </div>
         <div style="display:flex;flex-direction:column">
           <sc-for list="{{ tab.rows }}" as="r" hint-placeholder-count="4">
@@ -356,11 +356,17 @@
 
   <footer style="border-top:1px solid #E7E9EC">
     <div style="max-width:1140px;margin:0 auto;padding:56px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px">
+      <div>
       <div style="display:flex;align-items:center;gap:12px">
         <img src="assets/fagus-mark.png" alt="" style="height:32px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:15px;width:auto;display:block;mix-blend-mode:multiply">
       </div>
-      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
+      <div style="font-size:15px;color:#7F8996;margin-top:10px">{{ t.footerTagline }}</div>
+      </div>
+      <div style="text-align:right;font-size:14px;color:#A3ABB6;line-height:1.6">
+        <div>© 2026 FagusED</div>
+        <div>Santiago, Chile.</div>
+      </div>
     </div>
   </footer>
 </div>
@@ -494,7 +500,7 @@ class Component extends DCLogic {
       contactTitle: 'Agenda una reunión gratuita', contactBody: 'Cuéntanos el curso, el programa y en qué necesitas apoyo. Respondemos con una propuesta concreta.',
       contactHours: 'Lunes a viernes, 9:00 a 19:00 (Chile)',
       fName: 'NOMBRE', fEmail: 'EMAIL', fInterest: 'ME INTERESA', fMessage: 'MENSAJE', fSubmit: 'Enviar solicitud', fSending: 'Enviando...', fSent: 'Solicitud enviada', fFailed: 'No se pudo enviar. Intenta de nuevo o escribe a contacto@fagus-ed.cl.',
-      footer: '© 2026 Fagus Ed. Santiago, Chile.'
+      footer: '© 2026 Fagus Ed. Santiago, Chile.', footerTagline: 'Educación que abra caminos'
     },
     en: {
       navServices: 'Services', navPrograms: 'Programmes', navCodes: 'Subjects', navResources: 'Resources', navTeam: 'About', navCta: 'Book a meeting',
@@ -522,7 +528,7 @@ class Component extends DCLogic {
       contactTitle: 'Book a free meeting', contactBody: 'Tell us the year group, the programme and where you need support. We reply with a concrete proposal.',
       contactHours: 'Monday to Friday, 9:00–19:00 (Chile)',
       fName: 'NAME', fEmail: 'EMAIL', fInterest: 'I AM INTERESTED IN', fMessage: 'MESSAGE', fSubmit: 'Send request', fSending: 'Sending...', fSent: 'Request sent', fFailed: 'Could not send. Please try again or email contacto@fagus-ed.cl.',
-      footer: '© 2026 Fagus Ed. Santiago, Chile.'
+      footer: '© 2026 Fagus Ed. Santiago, Chile.', footerTagline: 'Education that opens doors.'
     }
   };
 
@@ -723,7 +729,9 @@ class Component extends DCLogic {
         onClick: () => this.setState({ tab: i }),
         style: `background:none;border:0;border-bottom:2px solid ${i === this.state.tab ? '#FFFFFF' : 'transparent'};color:${i === this.state.tab ? '#FFFFFF' : '#A3ABB6'};padding:14px 22px 14px 0;margin-right:26px;font-family:Figtree,sans-serif;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:.02em`
       })),
-      tab: c.tabData[this.state.tab] || c.tabData[0],
+      tab: Object.assign({}, c.tabData[this.state.tab] || c.tabData[0], {
+        ctaHref: 'agendar.html?s=tutoria&p=' + (['lower-secondary', 'igcse', 'a-level', 'ib-dp', 'plan-nacional'][this.state.tab] || 'igcse') + '&lang=' + lang
+      }),
       faqs: c.faqs.map((f, i) => ({
         ...f,
         open: this.state.faq === i,

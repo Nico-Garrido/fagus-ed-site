@@ -113,11 +113,17 @@
 
   <footer style="border-top:1px solid #E7E9EC">
     <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <div>
       <a href="index.html" style="display:flex;align-items:center;gap:12px">
         <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
         <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
       </a>
-      <div style="font-size:14px;color:#A3ABB6">{{ t.footer }}</div>
+      <div style="font-size:15px;color:#7F8996;margin-top:10px">{{ t.footerTagline }}</div>
+      </div>
+      <div style="text-align:right;font-size:14px;color:#A3ABB6;line-height:1.6">
+        <div>© 2026 FagusED</div>
+        <div>Santiago, Chile.</div>
+      </div>
     </div>
   </footer>
 </div>
@@ -154,7 +160,7 @@ class Component extends DCLogic {
       ctaTitle: 'Primera sesión de diagnóstico sin costo',
       ctaBody: 'Treinta minutos para ubicar el nivel actual y proponer un plan antes de comprometer sesiones.',
       ctaButton: 'Agendar diagnóstico',
-      footer: '100% online, en Chile y en el extranjero.',
+      footer: '100% online, en Chile y en el extranjero.', footerTagline: 'Educación que abra caminos',
       plans: [
         { tag: 'Sin compromiso', name: 'Sesión única', unit: 'Una sesión de 60 minutos', body: 'Ideal para resolver una unidad puntual o preparar una prueba específica.' },
         { tag: 'Más elegido', name: 'Pack 4 sesiones', unit: 'Cuatro sesiones de 60 minutos', body: 'Un mes de trabajo continuo sobre un objetivo definido en el diagnóstico.' },
@@ -179,7 +185,7 @@ class Component extends DCLogic {
       ctaTitle: 'A free first diagnostic session',
       ctaBody: 'Thirty minutes to place the current level and propose a plan before committing to any sessions.',
       ctaButton: 'Book a diagnostic',
-      footer: 'Fully online, in Chile and abroad.',
+      footer: 'Fully online, in Chile and abroad.', footerTagline: 'Education that opens doors.',
       plans: [
         { tag: 'No commitment', name: 'Single session', unit: 'One 60-minute session', body: 'Best for working through one unit or preparing a specific test.' },
         { tag: 'Most chosen', name: '4-session pack', unit: 'Four 60-minute sessions', body: 'A month of continuous work on an objective set in the diagnostic.' },
