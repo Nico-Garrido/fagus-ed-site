@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; color: #17365B; font-family: "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #17365B; text-decoration: none; }
+  a:hover { color: #2E4057; }
+  article a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: #A3ABB6; }
+  article a:hover { color: #2E4057; text-decoration-color: #17365B; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden">
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:0 24px;min-height:74px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <img src="assets/fagus-mark.png" alt="" style="height:36px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
+        <a href="index.html#recursos" style="color:#2E4057">{{ t.navResources }}</a>
+      </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="index.html#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
+    </div>
+  </header>
+
+  <article style="width:100%">
+
+    <section style="max-width:840px;margin:0 auto;padding:64px 24px 0">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px">
+        <span style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#FFFFFF;background:#17365B;padding:7px 12px">{{ t.kicker }}</span>
+        <span style="font-size:13px;color:#A3ABB6;letter-spacing:.01em">{{ t.meta }}</span>
+      </div>
+      <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.1;letter-spacing:-.02em;margin:0 0 22px;color:#17365B;text-wrap:pretty">{{ t.title }}</h1>
+      <p style="font-size:clamp(17px,1.9vw,19px);line-height:1.6;margin:0;color:#5A6675;text-wrap:pretty">{{ t.lede }}</p>
+    </section>
+
+    <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="10">
+      <section style="max-width:840px;margin:0 auto;padding:0 24px">
+        <sc-if value="{{ b.isProse }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:70ch;margin-top:44px">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 18px;color:#17365B">{{ b.heading }}</h2>
+            <sc-for list="{{ b.paras }}" as="p" hint-placeholder-count="2">
+              <p style="font-size:16.5px;line-height:1.7;margin:0 0 18px;color:#2E4057">{{ p }}</p>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isNote }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:32px;padding:22px 26px;background:#F9F9F9;border-left:3px solid #A3ABB6">
+            <p style="font-size:16px;line-height:1.7;margin:0;color:#2E4057">{{ b.text }}</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isCallout }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:32px;padding:26px 28px;background:#FFFFFF;border:1px solid #E7E9EC;border-left:4px solid #17365B">
+            <div style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin:0 0 10px;color:#17365B">{{ b.label }}</div>
+            <p style="font-size:16.5px;line-height:1.65;margin:0;color:#2E4057">{{ b.text }}</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isBullets }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:44px;padding:30px;background:#F9F9F9;border:1px solid #E7E9EC">
+            <sc-if value="{{ b.heading }}" hint-placeholder-val="{{ false }}">
+              <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(20px,2.4vw,26px);line-height:1.22;margin:0 0 24px;color:#17365B">{{ b.heading }}</h2>
+            </sc-if>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px 32px">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="6">
+                <li style="display:flex;gap:12px;align-items:flex-start;font-size:15.5px;line-height:1.6;color:#2E4057">
+                  <span style="flex:none;width:6px;height:6px;background:#17365B;margin-top:9px"></span>
+                  <span>{{ it }}</span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isSubsections }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:44px">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 24px;color:#17365B">{{ b.heading }}</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:28px 32px">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="4">
+                <div style="border-top:2px solid #17365B;padding-top:16px">
+                  <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;margin:0 0 8px;color:#17365B">{{ it.title }}</h3>
+                  <p style="font-size:15.5px;line-height:1.65;margin:0;color:#2E4057">{{ it.body }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isSteps }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:44px">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 24px;color:#17365B">{{ b.heading }}</h2>
+            <div style="display:grid;gap:22px">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="7">
+                <div style="padding:22px 24px;background:#FFFFFF;border:1px solid #E7E9EC">
+                  <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:16.5px;margin:0 0 8px;color:#17365B">{{ it.title }}</h3>
+                  <p style="font-size:15.5px;line-height:1.65;margin:0;color:#2E4057">{{ it.body }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-for>
+
+    <section style="background:#2E4057;color:#FFFFFF;margin-top:44px">
+      <div style="max-width:1140px;margin:0 auto;padding:52px 24px;display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:center">
+        <div style="max-width:52ch">
+          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);line-height:1.25;margin:0 0 10px;color:#FFFFFF">{{ t.ctaHeading }}</h2>
+          <p style="font-size:16px;line-height:1.6;margin:0;color:#D3D9E2">{{ t.ctaBody }}</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a href="{{ contactUrl }}" style="font-family:Figtree,sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.02em;color:#17365B;background:#FFFFFF;padding:14px 24px;text-decoration:none;display:inline-block" style-hover="background:#F9F9F9;color:#17365B">{{ t.ctaPrimary }}</a>
+          <a href="{{ programsUrl }}" style="font-family:Figtree,sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.02em;color:#FFFFFF;background:transparent;border:1px solid #A3ABB6;padding:13px 24px;text-decoration:none;display:inline-block" style-hover="background:#17365B;border-color:#17365B">{{ t.ctaSecondary }}</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:840px;margin:0 auto;padding:44px 24px 88px">
+      <div style="margin-top:8px;padding-top:32px;border-top:1px solid #E7E9EC">
+        <h2 style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:0 0 22px;color:#A3ABB6">{{ t.sourcesLabel }}</h2>
+        <ol style="list-style:none;margin:0 0 26px;padding:0;display:grid;gap:16px;max-width:80ch">
+          <sc-for list="{{ t.sources }}" as="s" hint-placeholder-count="5">
+            <li style="display:flex;gap:14px;align-items:flex-start;font-size:14.5px;line-height:1.6;color:#2E4057">
+              <span style="flex:none;font-family:Figtree,sans-serif;font-size:13px;font-weight:600;color:#FFFFFF;background:#A3ABB6;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px">{{ s.n }}</span>
+              <span>
+                <strong style="font-weight:600;color:#17365B">{{ s.org }}</strong>. {{ s.text }}.
+                <sc-if value="{{ s.host }}" hint-placeholder-val="{{ false }}"> <a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.host }}</a></sc-if>
+              </span>
+            </li>
+          </sc-for>
+        </ol>
+        <p style="font-size:13.5px;line-height:1.65;margin:0;color:#A3ABB6;max-width:80ch;font-style:italic">{{ t.disclaimer }}</p>
+      </div>
+    </section>
+
+  </article>
+
+  <footer style="border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <div>
+      <a href="index.html" style="display:flex;align-items:center;gap:12px">
+        <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <div style="font-size:15px;color:#7F8996;margin-top:10px">{{ t.footerTagline }}</div>
+      </div>
+      <div style="text-align:right;font-size:14px;color:#A3ABB6;line-height:1.6">
+        <div>© 2026 FagusED</div>
+        <div>Santiago, Chile.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const ES = {
+  navHome: 'Inicio', navPrograms: 'Programas', navResources: 'Recursos', navCta: 'Agendar reunión',
+  kicker: "Análisis FagusED",
+  meta: "Admisión 2027 · Información actualizada a septiembre de 2026",
+  title: "CFT e institutos profesionales",
+  lede: "La alternativa que Chile todavía suele mirar en menos: formación breve, empleabilidad y riesgos que también deben considerarse.",
+  blocks: [
+    { isProse: true, heading: "Una opción central, no una ruta secundaria", paras: [
+      "Durante décadas, ingresar a la universidad fue presentado como la continuación natural de la enseñanza media. Los centros de formación técnica y los institutos profesionales quedaron asociados a quienes no alcanzaban un puntaje suficiente. Las cifras muestran otra realidad: en 2025, los IP y CFT reunieron cerca del 44,9% de la matrícula de pregrado en Chile."
+    ]},
+    { isNote: true, text: "Chile también presenta una alta participación en programas de ciclo corto. Según la OCDE, 36% de quienes ingresan por primera vez a la educación superior lo hace en este tipo de programas, frente a un promedio de 17% en los países de la organización." },
+    { isCallout: true, label: "Dato clave", text: "La formación técnico-profesional no es marginal: representa una parte sustantiva del sistema chileno y responde a necesidades productivas que la universidad no siempre cubre." },
+    { isProse: true, heading: "CFT e IP: parecidos, pero no iguales", paras: [
+      "Los centros de formación técnica imparten principalmente carreras técnicas de nivel superior, habitualmente de dos a tres años. Los institutos profesionales pueden ofrecer tanto carreras técnicas como carreras profesionales, aunque no otorgan licenciaturas. Las universidades, en cambio, pueden otorgar títulos profesionales y grados académicos.",
+      "El requisito general para ingresar al subsistema técnico-profesional es contar con Licencia de Enseñanza Media. No existe una postulación nacional centralizada y la PAES normalmente no es obligatoria. Cada institución administra sus admisiones y puede considerar NEM, experiencia laboral, articulación con la enseñanza media técnico-profesional o reconocimiento de aprendizajes previos.",
+      "Por esa razón, no existe una cifra nacional de postulantes directamente comparable con la universitaria. Para analizar el sector resultan más útiles la matrícula, la retención, la titulación, la empleabilidad y los ingresos."
+    ]},
+    { isProse: true, heading: "Dónde aparecen las mejores señales laborales", paras: [
+      "Los programas con mejores indicadores suelen conectarse directamente con sectores productivos: automatización, minería, mantenimiento industrial, electricidad, logística, informática, redes, ciberseguridad y acuicultura."
+    ]},
+    { isBullets: true, heading: "Programas profesionales de IP con alta empleabilidad", items: [
+      "Ingeniería en Administración con mención en Seguridad Privada, Iplacex: 99,5% al primer año y 99,8% al segundo; ingresos de $1,6 a $1,7 millones al cuarto año.",
+      "Ingeniería en Prevención de Riesgos, Calidad y Medio Ambiente, Iplacex: 98,3% al primer año y 99,3% al segundo; ingresos de $1,6 a $1,7 millones.",
+      "Ingeniería en Conectividad, Redes y Ciberseguridad, IP San Sebastián: 97,8% al primer año y 96,7% al segundo; ingresos de $1,8 a $1,9 millones.",
+      "Administración Pública, Iplacex: 92,4% al primer año y 92,8% al segundo; ingresos de $1,7 a $1,8 millones."
+    ]},
+    { isBullets: true, heading: "Programas técnicos de CFT con alta empleabilidad", items: [
+      "Técnico en Producción Acuícola, CFT Santo Tomás: 87,2% al primer año y 86,3% al segundo; ingresos de $1,2 a $1,3 millones.",
+      "Técnico en Mecánica en Producción Industrial, CFT Inacap: 87% al primer año y 82,2% al segundo; ingresos de $1,1 a $1,2 millones.",
+      "Técnico en Metalurgia Extractiva, CFT Inacap: 85,1% al primer año y 86,6% al segundo; ingresos de $1,6 a $1,7 millones.",
+      "Técnico en Mantención Industrial, CFT PUCV: 79,5% al primer año y 82,8% al segundo; ingresos de $1,3 a $1,4 millones.",
+      "Técnico en Electricidad, CFT PUCV: 79,2% al primer año y 86% al segundo; ingresos de $1,1 a $1,2 millones."
+    ]},
+    { isCallout: true, label: "Advertencia", text: "Estas cifras corresponden a programas e instituciones específicas. No deben presentarse como el promedio de todas las carreras que comparten el mismo nombre." },
+    { isSubsections: true, heading: "Por qué puede ser una opción válida", items: [
+      { title: "Ingreso más rápido al trabajo", body: "Una carrera técnica permite, en muchos casos, ingresar al mercado laboral en dos o tres años. Esto reduce el tiempo sin ingresos y el costo de oportunidad de estudiar." },
+      { title: "Formación práctica y especializada", body: "La enseñanza suele centrarse en competencias aplicables: mantenimiento, programación, operación de equipos, logística, procedimientos clínicos o administración. Para quienes aprenden mejor haciendo, esta aproximación puede resultar más pertinente que un programa predominantemente teórico." },
+      { title: "Menor costo y mayor flexibilidad", body: "Una duración más breve normalmente implica menos años de arancel, transporte y materiales. La oferta vespertina, semipresencial y online también facilita combinar estudios con trabajo o responsabilidades familiares. Existen CFT e IP adscritos a gratuidad." },
+      { title: "Continuidad de estudios", body: "Algunas instituciones permiten obtener primero un título técnico, comenzar a trabajar y luego avanzar hacia un título profesional. Esta ruta reduce el riesgo de abandonar después de varios años sin una certificación intermedia." }
+    ]},
+    { isProse: true, heading: "Los riesgos que no deben ocultarse", paras: [
+      "La menor duración no garantiza la permanencia. Para la cohorte 2025, las universidades registraron una retención de primer año de 84,7%; los institutos profesionales, 72,5%; y los centros de formación técnica, 69,9%.",
+      "La modalidad también marca diferencias: la retención llegó a 82,9% en programas diurnos, 70,2% en vespertinos y 64% en programas a distancia. Estas brechas reflejan, en parte, que muchos estudiantes TP trabajan o tienen responsabilidades familiares, pero también obligan a examinar el acompañamiento académico de cada institución."
+    ]},
+    { isBullets: true, items: [
+      "La calidad puede variar mucho entre instituciones, sedes y modalidades.",
+      "Un programa online puede ser insuficiente para carreras que requieren talleres o práctica presencial intensiva.",
+      "La institución puede exigir que el propio estudiante encuentre su práctica.",
+      "Los convenios de continuidad no siempre implican convalidación automática.",
+      "Algunas especialidades dependen fuertemente de ciclos económicos o de la ubicación geográfica.",
+      "Una cifra alta de empleo no prueba por sí sola que el trabajo sea pertinente, estable o de jornada completa."
+    ]},
+    { isSteps: true, heading: "Qué revisar antes de matricularse", items: [
+      { title: "1. El programa, la sede y la modalidad", body: "No basta con buscar la empleabilidad de Ciberseguridad o Electricidad. Hay que revisar el resultado del programa exacto, el número de titulados considerado y la modalidad en que se impartirá." },
+      { title: "2. Acreditación institucional", body: "Las instituciones acreditadas registraron una retención de 78,3%, frente a 58,9% en las no acreditadas. La acreditación y adscripción correspondiente también influyen en el acceso a gratuidad y beneficios." },
+      { title: "3. Talleres, laboratorios y equipamiento", body: "En mecánica, electricidad, automatización, minería o salud, la infraestructura es parte del currículum. Conviene visitar la sede, preguntar cuántas horas prácticas existen y comprobar qué equipos y programas utilizan los estudiantes." },
+      { title: "4. Prácticas y relación con empresas", body: "Es necesario preguntar dónde realizan la práctica los estudiantes, si la institución la gestiona, qué empresas contratan a sus egresados, si existe formación dual y si los docentes mantienen contacto activo con la industria." },
+      { title: "5. Continuidad académica por escrito", body: "Si el objetivo es continuar estudios, se deben solicitar las condiciones concretas: asignaturas convalidadas, semestres adicionales, sedes disponibles, título intermedio y vigencia del convenio." },
+      { title: "6. Demanda regional", body: "Minería y metalurgia tienen una fuerte dimensión territorial; la acuicultura se concentra en el sur; logística y automatización dependen de corredores productivos, puertos y centros urbanos. La misma carrera puede ofrecer escenarios muy diferentes según la región." },
+      { title: "7. Un horario realmente sostenible", body: "La flexibilidad vespertina u online es útil, pero presenta mayor riesgo de abandono. La pregunta no es si el horario cabe durante una semana, sino si puede mantenerse durante dos, tres o cuatro años." }
+    ]},
+    { isBullets: true, heading: "¿Para quién puede ser la mejor alternativa?", items: [
+      "Para quien busca incorporarse rápidamente al mercado laboral.",
+      "Para estudiantes que prefieren aprender mediante práctica y aplicación.",
+      "Para quienes necesitan compatibilizar estudio, trabajo y responsabilidades familiares.",
+      "Para personas interesadas en sectores técnicos, industriales o tecnológicos específicos.",
+      "Para quien desea obtener primero un título técnico y continuar después.",
+      "Para quien busca reducir el costo y el riesgo financiero de su formación."
+    ]},
+    { isCallout: true, label: "La pregunta correcta", text: "¿Qué competencias adquiriré, qué empresas necesitan esas competencias y qué resultados obtienen los titulados de esta institución, sede y modalidad?" },
+    { isProse: true, heading: "Conclusión", paras: [
+      "Un CFT o IP no debe entenderse como el destino de quien no pudo entrar a la universidad. Puede ser una vía más corta, pertinente y rentable cuando existe conexión real con el mercado laboral. En algunos casos, puede ofrecer mejores perspectivas que una carrera universitaria larga, costosa y con baja empleabilidad.",
+      "Tampoco debe idealizarse. Los buenos resultados se concentran en ciertas especialidades e instituciones. La mejor opción no es necesariamente una universidad, un IP o un CFT: es aquella que equilibra intereses, forma de aprender, duración, costo, probabilidad de titulación y oportunidades laborales comprobables."
+    ]}
+  ],
+  ctaHeading: "¿Dudas entre una carrera técnica y una universitaria?",
+  ctaBody: "En Fagus Ed revisamos el perfil del estudiante, las opciones técnicas y universitarias disponibles y la evidencia real de empleabilidad antes de recomendar un camino.",
+  ctaPrimary: "Solicitar asesoría",
+  ctaSecondary: "Ver nuestros programas",
+  sourcesLabel: "Fuentes y metodología",
+  sources: [
+    { n: 1, org: "Sistema de Acceso y Subsecretaría de Educación Superior", text: "Admisión técnico-profesional", host: "acceso.mineduc.cl", url: "https://acceso.mineduc.cl" },
+    { n: 2, org: "Mi Futuro", text: "Empleabilidad e ingresos por carrera e institución", host: "mifuturo.cl", url: "https://www.mifuturo.cl" },
+    { n: 3, org: "SIES", text: "Informe de Retención de Primer Año, cohortes 2021–2025", host: "", url: "" },
+    { n: 4, org: "OCDE", text: "Panorama de la Educación 2025: participación en programas de ciclo corto", host: "oecd.org", url: "https://www.oecd.org" },
+    { n: 5, org: "SIES", text: "Informe de Matrícula en Educación Superior 2025", host: "", url: "" }
+  ],
+  disclaimer: "Nota: los indicadores de empleo provienen de registros tributarios y no equivalen necesariamente a empleo pertinente, jornada completa o contrato indefinido.",
+  footerTagline: 'Educación que abre caminos'
+};
+
+const EN = {
+  navHome: 'Home', navPrograms: 'Programmes', navResources: 'Resources', navCta: 'Book a meeting',
+  kicker: "FagusED Analysis",
+  meta: "2027 Admissions · Updated September 2026",
+  title: "CFTs and professional institutes",
+  lede: "The path Chile still tends to look down on: shorter training, employability and risks that also deserve scrutiny.",
+  blocks: [
+    { isProse: true, heading: "A mainstream option, not a fallback route", paras: [
+      "For decades, going to university was presented as the natural continuation of secondary school. Technical training centres (CFTs) and professional institutes (IPs) became associated with students who did not reach a high enough score. The figures tell a different story: in 2025, IPs and CFTs accounted for close to 44.9% of undergraduate enrolment in Chile."
+    ]},
+    { isNote: true, text: "Chile also shows high participation in short-cycle programmes. According to the OECD, 36% of students entering higher education for the first time do so through this type of programme, compared with an average of 17% across OECD countries." },
+    { isCallout: true, label: "Key fact", text: "Technical and vocational training is not marginal: it makes up a substantial part of the Chilean system and meets productive needs that university does not always cover." },
+    { isProse: true, heading: "CFTs and IPs: similar, but not the same", paras: [
+      "Centros de Formación Técnica (CFTs) mainly offer higher-level technical qualifications, usually lasting two to three years. Institutos Profesionales (IPs) can offer both technical and professional qualifications, although they do not award a licenciatura. Universities, by contrast, can award professional titles and academic degrees.",
+      "The general requirement to enter the technical-vocational subsystem is a secondary school completion certificate (Licencia de Enseñanza Media). There is no centralised national application process, and the PAES is not normally required. Each institution runs its own admissions and may consider NEM (school GPA), work experience, links with technical-vocational secondary education, or recognition of prior learning.",
+      "For that reason, there is no national applicant figure directly comparable with the university system. To analyse this sector, enrolment, retention, graduation, employability and income figures are more useful."
+    ]},
+    { isProse: true, heading: "Where the strongest job-market signals appear", paras: [
+      "The programmes with the best indicators tend to connect directly with productive sectors: automation, mining, industrial maintenance, electricity, logistics, IT, networks, cybersecurity and aquaculture."
+    ]},
+    { isBullets: true, heading: "IP professional programmes with high employability", items: [
+      "Business Administration Engineering, Private Security major, Iplacex: 99.5% at year one and 99.8% at year two; income of CLP $1.6–1.7 million by year four.",
+      "Risk Prevention, Quality and Environment Engineering, Iplacex: 98.3% at year one and 99.3% at year two; income of CLP $1.6–1.7 million.",
+      "Connectivity, Networks and Cybersecurity Engineering, IP San Sebastián: 97.8% at year one and 96.7% at year two; income of CLP $1.8–1.9 million.",
+      "Public Administration, Iplacex: 92.4% at year one and 92.8% at year two; income of CLP $1.7–1.8 million."
+    ]},
+    { isBullets: true, heading: "CFT technical programmes with high employability", items: [
+      "Aquaculture Production Technician, CFT Santo Tomás: 87.2% at year one and 86.3% at year two; income of CLP $1.2–1.3 million.",
+      "Industrial Production Mechanics Technician, CFT Inacap: 87% at year one and 82.2% at year two; income of CLP $1.1–1.2 million.",
+      "Extractive Metallurgy Technician, CFT Inacap: 85.1% at year one and 86.6% at year two; income of CLP $1.6–1.7 million.",
+      "Industrial Maintenance Technician, CFT PUCV: 79.5% at year one and 82.8% at year two; income of CLP $1.3–1.4 million.",
+      "Electricity Technician, CFT PUCV: 79.2% at year one and 86% at year two; income of CLP $1.1–1.2 million."
+    ]},
+    { isCallout: true, label: "A caution", text: "These figures correspond to specific programmes and institutions. They should not be presented as the average for every degree that shares the same name." },
+    { isSubsections: true, heading: "Why it can be a valid choice", items: [
+      { title: "Faster entry into work", body: "A technical qualification often allows students to enter the job market within two or three years. That reduces time without income and the opportunity cost of studying." },
+      { title: "Practical, specialised training", body: "Teaching tends to focus on applicable skills: maintenance, programming, equipment operation, logistics, clinical procedures or administration. For those who learn best by doing, this approach can be more relevant than a mostly theoretical programme." },
+      { title: "Lower cost and greater flexibility", body: "A shorter duration usually means fewer years of tuition, transport and materials. Evening, blended and online options also make it easier to combine study with work or family responsibilities. Some CFTs and IPs are part of the gratuidad free-tuition scheme." },
+      { title: "A path to further study", body: "Some institutions let students earn a technical qualification first, start working, and later move on to a professional qualification. This route reduces the risk of dropping out after several years with no intermediate certification." }
+    ]},
+    { isProse: true, heading: "The risks that should not be hidden", paras: [
+      "A shorter duration does not guarantee that students stay enrolled. For the 2025 cohort, universities recorded first-year retention of 84.7%; professional institutes, 72.5%; and technical training centres, 69.9%.",
+      "The format also makes a difference: retention reached 82.9% in daytime programmes, 70.2% in evening programmes and 64% in distance programmes. These gaps partly reflect that many vocational students work or have family responsibilities, but they also call for scrutiny of each institution's academic support."
+    ]},
+    { isBullets: true, items: [
+      "Quality can vary widely between institutions, campuses and formats.",
+      "An online programme may not be enough for careers that require workshops or intensive in-person practice.",
+      "The institution may require students to find their own work placement.",
+      "Continuation agreements do not always mean automatic course credit.",
+      "Some specialisations depend heavily on economic cycles or geographic location.",
+      "A high employment figure does not by itself prove that the job is relevant, stable or full-time."
+    ]},
+    { isSteps: true, heading: "What to check before enrolling", items: [
+      { title: "1. The programme, campus and format", body: "It is not enough to look up employability for “Cybersecurity” or “Electricity” in general. Check the result for the exact programme, the number of graduates the figure is based on, and the format in which it will be taught." },
+      { title: "2. Institutional accreditation", body: "Accredited institutions recorded retention of 78.3%, versus 58.9% at non-accredited ones. Accreditation and its scope also affect access to gratuidad and other benefits." },
+      { title: "3. Workshops, labs and equipment", body: "In mechanics, electricity, automation, mining or health, infrastructure is part of the curriculum itself. It is worth visiting the campus, asking how many practical hours are included, and checking what equipment and software students actually use." },
+      { title: "4. Placements and ties with employers", body: "Ask where students complete their work placement, whether the institution arranges it, which companies hire graduates, whether dual training exists, and whether teaching staff stay actively in touch with industry." },
+      { title: "5. Academic continuation in writing", body: "If the goal is to continue studying afterwards, ask for the specific terms in writing: which courses are credited, how many extra semesters are needed, which campuses are available, whether there is an intermediate qualification, and how long the agreement remains valid." },
+      { title: "6. Regional demand", body: "Mining and metallurgy have a strong regional dimension; aquaculture is concentrated in the south; logistics and automation depend on productive corridors, ports and urban centres. The same degree can look very different depending on the region." },
+      { title: "7. A genuinely sustainable schedule", body: "Evening or online flexibility is useful, but it carries a higher risk of dropping out. The question is not whether the schedule fits for one week, but whether it can be sustained for two, three or four years." }
+    ]},
+    { isBullets: true, heading: "Who might this suit best?", items: [
+      "Those looking to enter the job market quickly.",
+      "Students who prefer to learn through practice and application.",
+      "Those who need to balance study, work and family responsibilities.",
+      "People interested in specific technical, industrial or technology sectors.",
+      "Those who want to earn a technical qualification first and continue later.",
+      "Those looking to reduce the cost and financial risk of their training."
+    ]},
+    { isCallout: true, label: "The right question", text: "What skills will I actually gain, which employers need those skills, and what outcomes do graduates of this institution, campus and format actually get?" },
+    { isProse: true, heading: "Conclusion", paras: [
+      "A CFT or IP should not be seen as the fallback for those who could not get into university. It can be a shorter, more relevant and more cost-effective path when there is a real connection to the job market. In some cases, it can offer better prospects than a long, expensive university degree with low employability.",
+      "It should not be idealised either. Strong outcomes are concentrated in certain specialisations and institutions. The best option is not necessarily a university, an IP or a CFT: it is whichever one balances interests, learning style, duration, cost, the likelihood of graduating, and demonstrable job prospects."
+    ]}
+  ],
+  ctaHeading: "Weighing a technical qualification against university?",
+  ctaBody: "At Fagus Ed we review the student's profile, the technical and university options available, and the real evidence on employability before recommending a path.",
+  ctaPrimary: "Request an advisory session",
+  ctaSecondary: "See our programmes",
+  sourcesLabel: "Sources and methodology",
+  sources: [
+    { n: 1, org: "Sistema de Acceso and Undersecretariat for Higher Education (Chile)", text: "Technical-vocational admissions", host: "acceso.mineduc.cl", url: "https://acceso.mineduc.cl" },
+    { n: 2, org: "Mi Futuro", text: "Employability and income by degree and institution", host: "mifuturo.cl", url: "https://www.mifuturo.cl" },
+    { n: 3, org: "SIES", text: "First-Year Retention Report, 2021–2025 cohorts", host: "", url: "" },
+    { n: 4, org: "OECD", text: "Education at a Glance 2025: participation in short-cycle programmes", host: "oecd.org", url: "https://www.oecd.org" },
+    { n: 5, org: "SIES", text: "Higher Education Enrolment Report 2025", host: "", url: "" }
+  ],
+  disclaimer: "Note: employment indicators come from tax records and do not necessarily equate to relevant employment, full-time work or a permanent contract.",
+  footerTagline: 'Education that opens doors.'
+};
+
+class Component extends DCLogic {
+  state = { lang: null };
+
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
+
+  langBtnStyle(on) {
+    return `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
+  }
+
+  renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = lang === 'en' ? EN : ES;
+    return {
+      t,
+      blocks: t.blocks,
+      contactUrl: 'index.html#contacto',
+      programsUrl: 'programas.html',
+      esBtn: this.langBtnStyle(lang === 'es'),
+      enBtn: this.langBtnStyle(lang === 'en'),
+      setEs: () => this.pickLang('es'),
+      setEn: () => this.pickLang('en')
+    };
+  }
+}
+</script>
+</body>
+</html>

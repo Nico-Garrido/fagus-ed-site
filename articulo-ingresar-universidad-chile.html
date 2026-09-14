@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; color: #17365B; font-family: "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #17365B; text-decoration: none; }
+  a:hover { color: #2E4057; }
+  article a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: #A3ABB6; }
+  article a:hover { color: #2E4057; text-decoration-color: #17365B; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden">
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:0 24px;min-height:74px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <img src="assets/fagus-mark.png" alt="" style="height:36px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
+        <a href="index.html#recursos" style="color:#2E4057">{{ t.navResources }}</a>
+      </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="index.html#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
+    </div>
+  </header>
+
+  <article style="width:100%">
+
+    <section style="max-width:840px;margin:0 auto;padding:64px 24px 0">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px">
+        <span style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#FFFFFF;background:#17365B;padding:7px 12px">{{ t.kicker }}</span>
+        <span style="font-size:13px;color:#A3ABB6;letter-spacing:.01em">{{ t.meta }}</span>
+      </div>
+      <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.1;letter-spacing:-.02em;margin:0 0 22px;color:#17365B;text-wrap:pretty">{{ t.title }}</h1>
+      <p style="font-size:clamp(17px,1.9vw,19px);line-height:1.6;margin:0;color:#5A6675;text-wrap:pretty">{{ t.lede }}</p>
+    </section>
+
+    <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="10">
+      <section style="max-width:840px;margin:0 auto;padding:0 24px">
+        <sc-if value="{{ b.isProse }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:70ch;margin-top:44px">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 18px;color:#17365B">{{ b.heading }}</h2>
+            <sc-for list="{{ b.paras }}" as="p" hint-placeholder-count="2">
+              <p style="font-size:16.5px;line-height:1.7;margin:0 0 18px;color:#2E4057">{{ p }}</p>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isNote }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:32px;padding:22px 26px;background:#F9F9F9;border-left:3px solid #A3ABB6">
+            <p style="font-size:16px;line-height:1.7;margin:0;color:#2E4057">{{ b.text }}</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isCallout }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:32px;padding:26px 28px;background:#FFFFFF;border:1px solid #E7E9EC;border-left:4px solid #17365B">
+            <div style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin:0 0 10px;color:#17365B">{{ b.label }}</div>
+            <p style="font-size:16.5px;line-height:1.65;margin:0;color:#2E4057">{{ b.text }}</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isBullets }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:44px;padding:30px;background:#F9F9F9;border:1px solid #E7E9EC">
+            <sc-if value="{{ b.heading }}" hint-placeholder-val="{{ false }}">
+              <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(20px,2.4vw,26px);line-height:1.22;margin:0 0 24px;color:#17365B">{{ b.heading }}</h2>
+            </sc-if>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px 32px">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="6">
+                <li style="display:flex;gap:12px;align-items:flex-start;font-size:15.5px;line-height:1.6;color:#2E4057">
+                  <span style="flex:none;width:6px;height:6px;background:#17365B;margin-top:9px"></span>
+                  <span>{{ it }}</span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isSubsections }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:44px">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 24px;color:#17365B">{{ b.heading }}</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:28px 32px">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="4">
+                <div style="border-top:2px solid #17365B;padding-top:16px">
+                  <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;margin:0 0 8px;color:#17365B">{{ it.title }}</h3>
+                  <p style="font-size:15.5px;line-height:1.65;margin:0;color:#2E4057">{{ it.body }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isSteps }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:44px">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 24px;color:#17365B">{{ b.heading }}</h2>
+            <div style="display:grid;gap:22px">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="6">
+                <div style="padding:22px 24px;background:#FFFFFF;border:1px solid #E7E9EC">
+                  <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:16.5px;margin:0 0 8px;color:#17365B">{{ it.title }}</h3>
+                  <p style="font-size:15.5px;line-height:1.65;margin:0;color:#2E4057">{{ it.body }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-for>
+
+    <section style="background:#2E4057;color:#FFFFFF;margin-top:44px">
+      <div style="max-width:1140px;margin:0 auto;padding:52px 24px;display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:center">
+        <div style="max-width:52ch">
+          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);line-height:1.25;margin:0 0 10px;color:#FFFFFF">{{ t.ctaHeading }}</h2>
+          <p style="font-size:16px;line-height:1.6;margin:0;color:#D3D9E2">{{ t.ctaBody }}</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a href="{{ contactUrl }}" style="font-family:Figtree,sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.02em;color:#17365B;background:#FFFFFF;padding:14px 24px;text-decoration:none;display:inline-block" style-hover="background:#F9F9F9;color:#17365B">{{ t.ctaPrimary }}</a>
+          <a href="{{ programsUrl }}" style="font-family:Figtree,sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.02em;color:#FFFFFF;background:transparent;border:1px solid #A3ABB6;padding:13px 24px;text-decoration:none;display:inline-block" style-hover="background:#17365B;border-color:#17365B">{{ t.ctaSecondary }}</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:840px;margin:0 auto;padding:44px 24px 88px">
+      <div style="margin-top:8px;padding-top:32px;border-top:1px solid #E7E9EC">
+        <h2 style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:0 0 22px;color:#A3ABB6">{{ t.sourcesLabel }}</h2>
+        <ol style="list-style:none;margin:0 0 26px;padding:0;display:grid;gap:16px;max-width:80ch">
+          <sc-for list="{{ t.sources }}" as="s" hint-placeholder-count="5">
+            <li style="display:flex;gap:14px;align-items:flex-start;font-size:14.5px;line-height:1.6;color:#2E4057">
+              <span style="flex:none;font-family:Figtree,sans-serif;font-size:13px;font-weight:600;color:#FFFFFF;background:#A3ABB6;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px">{{ s.n }}</span>
+              <span>
+                <strong style="font-weight:600;color:#17365B">{{ s.org }}</strong>. {{ s.text }}.
+                <sc-if value="{{ s.host }}" hint-placeholder-val="{{ false }}"> <a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.host }}</a></sc-if>
+              </span>
+            </li>
+          </sc-for>
+        </ol>
+        <p style="font-size:13.5px;line-height:1.65;margin:0;color:#A3ABB6;max-width:80ch;font-style:italic">{{ t.disclaimer }}</p>
+      </div>
+    </section>
+
+  </article>
+
+  <footer style="border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <div>
+      <a href="index.html" style="display:flex;align-items:center;gap:12px">
+        <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <div style="font-size:15px;color:#7F8996;margin-top:10px">{{ t.footerTagline }}</div>
+      </div>
+      <div style="text-align:right;font-size:14px;color:#A3ABB6;line-height:1.6">
+        <div>© 2026 FagusED</div>
+        <div>Santiago, Chile.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const ES = {
+  navHome: 'Inicio', navPrograms: 'Programas', navResources: 'Recursos', navCta: 'Agendar reunión',
+  kicker: "Análisis FagusED",
+  meta: "Admisión 2027 · Información actualizada a septiembre de 2026",
+  title: "Ingresar a la universidad en Chile",
+  lede: "Más allá de la PAES: oportunidades, costos y señales que conviene revisar antes de ordenar las preferencias.",
+  blocks: [
+    { isProse: true, heading: "La selección es solo el comienzo", paras: [
+      "Cada año, miles de estudiantes concentran buena parte de sus esfuerzos en obtener un puntaje que les permita ingresar a la universidad. Sin embargo, superar la PAES y ser seleccionado es apenas el primer paso. La decisión de fondo es qué estudiar, cuánto costará completar la carrera y qué oportunidades reales ofrecerá el título después de la graduación."
+    ]},
+    { isNote: true, text: "En la Admisión 2026 participaron 189.404 postulantes y 161.911 personas fueron seleccionadas mediante las distintas vías de acceso. Solo por la vía regular se seleccionó a 156.252 personas, un 2,1% más que el año anterior. La expansión de carreras y vacantes abrió oportunidades, pero no eliminó la competencia: las preferencias continúan concentrándose en un grupo reducido de programas." },
+    { isCallout: true, label: "Dato clave", text: "Más vacantes no significan automáticamente un ingreso más fácil. La dificultad depende de cuántas personas compiten por cada cupo y del puntaje ponderado de quienes postulan." },
+    { isProse: true, heading: "La popularidad no siempre coincide con el mercado laboral", paras: [
+      "Medicina encabezó la demanda de 2026 con 94.726 postulaciones. Le siguieron Psicología (31.272), Enfermería (30.986), Ingeniería Comercial (28.438), Derecho (25.301), Ingeniería Civil plan común (20.335), Kinesiología (20.019), Química y Farmacia (19.392), Ingeniería Civil Industrial (18.322) y Medicina Veterinaria (14.415). Estas cifras representan postulaciones, no personas únicas, porque un estudiante puede incluir varios programas.",
+      "El contraste con la empleabilidad obliga a leer las preferencias con cautela. Según los datos nacionales disponibles en Mi Futuro, Química y Farmacia registra cerca de 98,3% de empleabilidad; Enfermería, 93,7%; Ingeniería Civil Industrial, 92,5%; Medicina, 89%; Ingeniería Comercial, 86,5%; Derecho, 80,8%; Kinesiología, 78,4%; Psicología, 77,1%; y Medicina Veterinaria, 73,9%.",
+      "Los ingresos brutos mensuales de referencia también son diferentes: Medicina supera los $3,2 millones; Ingeniería Civil Industrial ronda $2,36 millones; Ingeniería Comercial, $1,84 millones; Enfermería, $1,76 millones; Derecho, $1,73 millones; Kinesiología, $1,38 millones; Medicina Veterinaria, $1,19 millones; y Psicología, $1,14 millones."
+    ]},
+    { isCallout: true, label: "Lectura FagusED", text: "Psicología es una de las carreras más solicitadas, pero su empleabilidad es bastante menor que la de Enfermería o Química y Farmacia. La demanda estudiantil expresa preferencias; no constituye una proyección laboral." },
+    { isProse: true, heading: "Qué mide —y qué no mide— la empleabilidad", paras: [
+      "Mi Futuro construye este indicador cruzando registros de titulados con información tributaria del Servicio de Impuestos Internos. Se considera con empleabilidad a quien registra ingresos iguales o superiores al salario mínimo anualizado durante el periodo analizado.",
+      "La cifra no informa necesariamente si el trabajo se relaciona con la carrera, si existe contrato indefinido, si la jornada es completa, cuánto tardó la persona en encontrar empleo ni su grado de satisfacción. Tampoco debe confundirse el promedio nacional de una carrera con el resultado de una universidad o sede particular."
+    ]},
+    { isBullets: true, heading: "Los argumentos a favor de la universidad", items: [
+      "Entrega una formación disciplinaria amplia y, en muchas carreras, una base teórica y científica difícil de sustituir.",
+      "Es la vía necesaria para profesiones que requieren licenciatura o formación universitaria extensa, como Medicina, Derecho, Arquitectura, Psicología y pedagogías.",
+      "Facilita el acceso a investigación, intercambio académico, posgrados y redes profesionales.",
+      "En determinadas carreras ofrece mayores ingresos de largo plazo y mejores posibilidades de especialización.",
+      "Puede proporcionar grados con mayor reconocimiento para continuar estudios o trabajar en el extranjero."
+    ]},
+    { isProse: true, heading: "Los costos y riesgos que suelen quedar fuera del folleto", paras: [
+      "El principal riesgo no siempre es quedar fuera, sino ingresar a un programa que no se logra terminar. Las universidades registraron una retención de primer año de 84,7% para la cohorte 2025. Sin embargo, la OCDE señala que solo 13% de los nuevos estudiantes chilenos completa su licenciatura dentro de la duración teórica; la proporción aumenta a 38% un año después y a 60% tres años después del plazo previsto."
+    ]},
+    { isNote: true, text: "Cada semestre adicional significa más arancel, transporte, materiales y tiempo fuera del mercado laboral. También puede significar perder la cobertura de gratuidad, que financia matrícula y arancel únicamente durante la duración nominal de la carrera." },
+    { isBullets: true, items: [
+      "Un puntaje de corte alto indica competencia histórica, no calidad garantizada ni empleabilidad.",
+      "El arancel publicado no incluye necesariamente matrícula, materiales, alojamiento ni años adicionales.",
+      "Dos programas con el mismo nombre pueden tener mallas, prácticas y resultados laborales muy distintos.",
+      "Obtener un título no garantiza empleo pertinente ni estabilidad contractual."
+    ]},
+    { isSteps: true, heading: "La lista de verificación antes de postular", items: [
+      { title: "1. Revisar el programa exacto", body: "Conviene comparar asignaturas, menciones, prácticas, campos clínicos, laboratorios, convenios y perfil de egreso. El nombre de la carrera es solo la portada." },
+      { title: "2. Comparar empleabilidad por universidad y sede", body: "La cifra nacional sirve como contexto, pero la decisión debe apoyarse en los resultados del programa específico y en el tamaño de la cohorte con que fueron calculados." },
+      { title: "3. Preguntar por retención, titulación y duración real", body: "¿Qué porcentaje continúa después de primer año? ¿Cuánto demora realmente en titularse? ¿Cuáles son los ramos con mayor reprobación? Estas preguntas pueden ser más importantes que el puntaje de corte." },
+      { title: "4. Verificar acreditación y beneficios", body: "Las instituciones acreditadas registraron una retención de primer año de 78,3%, frente a 58,9% en las no acreditadas. La acreditación y la adscripción correspondiente también influyen en el acceso a beneficios estatales." },
+      { title: "5. Calcular el costo total", body: "La estimación debe incluir matrícula, arancel, transporte, materiales, alojamiento y un posible retraso en la titulación. El costo de oportunidad de no trabajar durante cinco o seis años también forma parte de la decisión." },
+      { title: "6. Ordenar las preferencias por interés real", body: "El sistema asigna al estudiante la alternativa más alta de su lista en la que alcanza una vacante y elimina las preferencias posteriores. Por eso, no se debe poner primero una carrera solo porque parece más segura." }
+    ]},
+    { isCallout: true, label: "La pregunta correcta", text: "No es solamente “¿qué carrera me alcanza con mi puntaje?”, sino “¿qué formación quiero, cuánto me costará terminarla y qué evidencia existe sobre sus oportunidades laborales?”" },
+    { isProse: true, heading: "Conclusión", paras: [
+      "La universidad continúa siendo una inversión valiosa cuando la profesión la requiere, el programa tiene calidad comprobable y el estudiante comprende el compromiso académico y financiero que asumirá. El error consiste en creer que cualquier título universitario garantiza estabilidad económica.",
+      "Una postulación bien construida combina vocación, puntaje ponderado, calidad institucional, capacidad financiera, probabilidad de titulación y evidencia laboral. Elegir informadamente no reduce la educación a un sueldo: evita que la vocación sea utilizada para justificar una decisión ciega."
+    ]}
+  ],
+  ctaHeading: "¿Necesitas ordenar bien tus preferencias?",
+  ctaBody: "En Fagus Ed revisamos el puntaje, las carreras de interés y la evidencia real de empleabilidad y titulación antes de armar la lista de postulación.",
+  ctaPrimary: "Solicitar asesoría",
+  ctaSecondary: "Ver nuestros programas",
+  sourcesLabel: "Fuentes y metodología",
+  sources: [
+    { n: 1, org: "Subsecretaría de Educación Superior", text: "Selección en universidades, Admisión 2026", host: "educacionsuperior.mineduc.cl", url: "https://educacionsuperior.mineduc.cl" },
+    { n: 2, org: "DEMRE y Sistema de Acceso", text: "Oferta, vacantes, ponderaciones y calendario", host: "demre.cl", url: "https://demre.cl" },
+    { n: 3, org: "Mi Futuro", text: "Empleabilidad e ingresos por carrera e institución", host: "mifuturo.cl", url: "https://www.mifuturo.cl" },
+    { n: 4, org: "OCDE", text: "Panorama de la Educación 2025: tasas de finalización en Chile", host: "oecd.org", url: "https://www.oecd.org" },
+    { n: 5, org: "SIES", text: "Informe de Retención de Primer Año, cohortes 2021–2025", host: "", url: "" }
+  ],
+  disclaimer: "Nota: los datos de empleabilidad son aproximaciones basadas en registros tributarios. No equivalen necesariamente a empleo pertinente, contrato indefinido o jornada completa.",
+  footerTagline: 'Educación que abre caminos'
+};
+
+const EN = {
+  navHome: 'Home', navPrograms: 'Programmes', navResources: 'Resources', navCta: 'Book a meeting',
+  kicker: "FagusED Analysis",
+  meta: "2027 Admissions · Updated September 2026",
+  title: "Getting into university in Chile",
+  lede: "Beyond the PAES: opportunities, costs and warning signs worth checking before ranking your preferences.",
+  blocks: [
+    { isProse: true, heading: "Selection is only the beginning", paras: [
+      "Every year, thousands of students focus much of their effort on getting a score that lets them into university. But passing the PAES and being selected is only the first step. The real decision is what to study, how much it will cost to finish the degree, and what genuine opportunities the qualification will open up after graduation."
+    ]},
+    { isNote: true, text: "The 2026 admissions round drew 189,404 applicants, and 161,911 people were selected across the different access routes. Through the regular route alone, 156,252 people were selected — 2.1% more than the previous year. The expansion of degrees and places created opportunities, but did not remove the competition: preferences remain concentrated in a limited group of programmes." },
+    { isCallout: true, label: "Key fact", text: "More places do not automatically mean an easier admission. Difficulty depends on how many people compete for each place and the weighted score of everyone who applies." },
+    { isProse: true, heading: "Popularity does not always match the job market", paras: [
+      "Medicine led demand in 2026 with 94,726 applications. It was followed by Psychology (31,272), Nursing (30,986), Business Engineering (28,438), Law (25,301), general-track Civil Engineering (20,335), Kinesiology (20,019), Pharmacy (19,392), Industrial Civil Engineering (18,322) and Veterinary Medicine (14,415). These figures represent applications, not unique people, since a student can list several programmes.",
+      "The contrast with employability calls for reading these preferences with caution. According to national data available through Mi Futuro, Pharmacy shows close to 98.3% employability; Nursing, 93.7%; Industrial Civil Engineering, 92.5%; Medicine, 89%; Business Engineering, 86.5%; Law, 80.8%; Kinesiology, 78.4%; Psychology, 77.1%; and Veterinary Medicine, 73.9%.",
+      "Reference gross monthly incomes also differ: Medicine exceeds CLP $3.2 million; Industrial Civil Engineering is around CLP $2.36 million; Business Engineering, CLP $1.84 million; Nursing, CLP $1.76 million; Law, CLP $1.73 million; Kinesiology, CLP $1.38 million; Veterinary Medicine, CLP $1.19 million; and Psychology, CLP $1.14 million."
+    ]},
+    { isCallout: true, label: "FagusED take", text: "Psychology is one of the most requested degrees, yet its employability is noticeably lower than Nursing's or Pharmacy's. Student demand expresses preferences; it is not a job-market forecast." },
+    { isProse: true, heading: "What employability measures — and does not measure", paras: [
+      "Mi Futuro builds this indicator by cross-referencing graduate records with tax data from Chile's internal revenue service (SII). A graduate is counted as employed if their recorded income meets or exceeds the annualised minimum wage during the period analysed.",
+      "The figure does not necessarily indicate whether the job relates to the degree, whether the contract is permanent, whether it is full-time, how long it took to find work, or how satisfied the graduate is. Nor should a degree's national average be confused with the result at one particular university or campus."
+    ]},
+    { isBullets: true, heading: "The case for university", items: [
+      "It provides broad disciplinary training and, in many degrees, a theoretical and scientific base that is hard to replace.",
+      "It is the required path for professions that need a licenciatura or extensive university training, such as Medicine, Law, Architecture, Psychology and teaching degrees.",
+      "It makes it easier to access research, academic exchange, postgraduate study and professional networks.",
+      "In certain degrees it offers higher long-term income and better prospects for specialisation.",
+      "It can provide degrees with wider recognition for further study or work abroad."
+    ]},
+    { isProse: true, heading: "The costs and risks that rarely make the brochure", paras: [
+      "The main risk is not always being left out, but rather enrolling in a programme that is never finished. Chilean universities recorded first-year retention of 84.7% for the 2025 cohort. Yet the OECD notes that only 13% of new Chilean students complete their degree within the theoretical duration; that share rises to 38% one year later and to 60% three years after the expected date."
+    ]},
+    { isNote: true, text: "Every extra semester means more tuition, transport, materials and time out of the job market. It can also mean losing gratuidad — Chile's free-tuition coverage — which only funds enrolment and tuition for the degree's nominal duration." },
+    { isBullets: true, items: [
+      "A high cut-off score signals historical competition, not guaranteed quality or employability.",
+      "The published tuition fee does not necessarily include enrolment, materials, housing or extra years.",
+      "Two programmes with the same name can have very different curricula, placements and job outcomes.",
+      "Earning a degree does not guarantee a relevant job or contractual stability."
+    ]},
+    { isSteps: true, heading: "The checklist before applying", items: [
+      { title: "1. Check the exact programme", body: "It is worth comparing courses, majors, placements, clinical rotations, labs, agreements and the graduate profile. The name of the degree is only the cover." },
+      { title: "2. Compare employability by university and campus", body: "The national figure works as context, but the decision should rest on the specific programme's results and the size of the cohort they were calculated from." },
+      { title: "3. Ask about retention, completion and real duration", body: "What share of students continue after first year? How long does it really take to graduate? Which courses have the highest failure rates? These questions can matter more than the cut-off score." },
+      { title: "4. Check accreditation and benefits", body: "Accredited institutions recorded first-year retention of 78.3%, versus 58.9% at non-accredited ones. Accreditation and its scope also affect access to state benefits." },
+      { title: "5. Work out the total cost", body: "The estimate should include enrolment, tuition, transport, materials, housing and a possible delay in graduating. The opportunity cost of not working for five or six years is also part of the decision." },
+      { title: "6. Rank preferences by genuine interest", body: "The system assigns the student the highest-ranked option on their list where they clear a place, and discards the preferences listed after it. That is why a degree should never be ranked first just because it feels safer." }
+    ]},
+    { isCallout: true, label: "The right question", text: "It is not only “which degree can I get into with my score?” but “what training do I actually want, how much will it cost me to finish it, and what evidence exists about its job prospects?”" },
+    { isProse: true, heading: "Conclusion", paras: [
+      "University remains a valuable investment when the profession requires it, the programme has demonstrable quality, and the student understands the academic and financial commitment involved. The mistake is believing that any university degree guarantees economic stability.",
+      "A well-built application combines vocation, weighted score, institutional quality, financial capacity, the likelihood of graduating, and labour-market evidence. Choosing with good information does not reduce education to a salary figure — it stops vocation from being used to justify a blind decision."
+    ]}
+  ],
+  ctaHeading: "Need help ranking your preferences?",
+  ctaBody: "At Fagus Ed we review the score, the degrees of interest and the real evidence on employability and graduation rates before building the application list.",
+  ctaPrimary: "Request an advisory session",
+  ctaSecondary: "See our programmes",
+  sourcesLabel: "Sources and methodology",
+  sources: [
+    { n: 1, org: "Undersecretariat for Higher Education (Chile)", text: "University selection, 2026 admissions round", host: "educacionsuperior.mineduc.cl", url: "https://educacionsuperior.mineduc.cl" },
+    { n: 2, org: "DEMRE and Sistema de Acceso", text: "Places, vacancies, weightings and calendar", host: "demre.cl", url: "https://demre.cl" },
+    { n: 3, org: "Mi Futuro", text: "Employability and income by degree and institution", host: "mifuturo.cl", url: "https://www.mifuturo.cl" },
+    { n: 4, org: "OECD", text: "Education at a Glance 2025: completion rates in Chile", host: "oecd.org", url: "https://www.oecd.org" },
+    { n: 5, org: "SIES", text: "First-Year Retention Report, 2021–2025 cohorts", host: "", url: "" }
+  ],
+  disclaimer: "Note: employability figures are approximations based on tax records. They do not necessarily equate to relevant employment, a permanent contract or full-time work.",
+  footerTagline: 'Education that opens doors.'
+};
+
+class Component extends DCLogic {
+  state = { lang: null };
+
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
+
+  langBtnStyle(on) {
+    return `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
+  }
+
+  renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = lang === 'en' ? EN : ES;
+    return {
+      t,
+      blocks: t.blocks,
+      contactUrl: 'index.html#contacto',
+      programsUrl: 'programas.html',
+      esBtn: this.langBtnStyle(lang === 'es'),
+      enBtn: this.langBtnStyle(lang === 'en'),
+      setEs: () => this.pickLang('es'),
+      setEn: () => this.pickLang('en')
+    };
+  }
+}
+</script>
+</body>
+</html>
