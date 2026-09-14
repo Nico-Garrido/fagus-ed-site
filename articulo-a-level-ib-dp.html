@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; color: #17365B; font-family: "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #17365B; text-decoration: none; }
+  a:hover { color: #2E4057; }
+  article a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: #A3ABB6; }
+  article a:hover { color: #2E4057; text-decoration-color: #17365B; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden">
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:0 24px;min-height:74px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <img src="assets/fagus-mark.png" alt="" style="height:36px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
+        <a href="index.html#recursos" style="color:#2E4057">{{ t.navResources }}</a>
+      </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="index.html#contacto" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
+    </div>
+  </header>
+
+  <article style="width:100%">
+
+    <section style="max-width:840px;margin:0 auto;padding:64px 24px 0">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px">
+        <span style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#FFFFFF;background:#17365B;padding:7px 12px">{{ t.kicker }}</span>
+        <span style="font-size:13px;color:#A3ABB6;letter-spacing:.01em">{{ t.meta }}</span>
+      </div>
+      <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.1;letter-spacing:-.02em;margin:0 0 22px;color:#17365B;text-wrap:pretty">{{ t.title }}</h1>
+      <p style="font-size:clamp(17px,1.9vw,19px);line-height:1.6;margin:0;color:#5A6675;text-wrap:pretty">{{ t.lede }}</p>
+    </section>
+
+    <section style="max-width:840px;margin:40px auto 0;padding:0 24px">
+      <div style="padding:30px 32px;background:#17365B">
+        <h2 style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:0 0 16px;color:#A3ABB6">{{ t.keyLabel }}</h2>
+        <p style="font-family:Figtree,sans-serif;font-weight:500;font-size:clamp(18px,2vw,22px);line-height:1.45;margin:0;color:#FFFFFF;text-wrap:pretty">{{ t.key }}</p>
+      </div>
+    </section>
+
+    <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="6">
+      <section style="max-width:840px;margin:0 auto;padding:0 24px">
+        <sc-if value="{{ b.isTable }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:44px">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 10px;color:#17365B">{{ b.heading }}</h2>
+            <p style="font-size:15.5px;line-height:1.6;margin:0 0 20px;color:#7F8996;max-width:64ch">{{ b.note }}</p>
+            <div style="overflow-x:auto;background:#FFFFFF;border:1px solid #E7E9EC">
+              <div style="min-width:640px">
+                <table style="border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.55">
+                  <thead>
+                    <tr style="background:#17365B">
+                      <sc-for list="{{ b.head }}" as="h" hint-placeholder-count="3">
+                        <th style="text-align:left;padding:14px 18px;font-family:Figtree,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#FFFFFF;font-weight:600">{{ h.v }}</th>
+                      </sc-for>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ b.rows }}" as="r" hint-placeholder-count="8">
+                      <tr>
+                        <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="3">
+                          <td style="padding:14px 18px;border-top:1px solid #E7E9EC;color:#2E4057;vertical-align:top">{{ c.v }}</td>
+                        </sc-for>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isProse }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:70ch;margin-top:44px">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 18px;color:#17365B">{{ b.heading }}</h2>
+            <sc-for list="{{ b.paras }}" as="p" hint-placeholder-count="2">
+              <p style="font-size:16.5px;line-height:1.7;margin:0 0 18px;color:#2E4057">{{ p }}</p>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isList }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:44px;padding:30px;background:#F9F9F9;border:1px solid #E7E9EC">
+            <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(20px,2.4vw,26px);line-height:1.22;margin:0 0 8px;color:#17365B">{{ b.heading }}</h2>
+            <p style="font-size:15.5px;line-height:1.6;margin:0 0 24px;color:#7F8996;max-width:64ch">{{ b.note }}</p>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px 32px">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="8">
+                <li style="display:flex;gap:12px;align-items:flex-start;font-size:15.5px;line-height:1.6;color:#2E4057">
+                  <span style="flex:none;width:6px;height:6px;background:#17365B;margin-top:9px"></span>
+                  <span>{{ it }}</span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+        </sc-if>
+      </section>
+    </sc-for>
+
+    <section style="max-width:840px;margin:44px auto 0;padding:0 24px">
+      <div style="padding:32px;background:#FFFFFF;border:1px solid #E7E9EC;border-left:4px solid #17365B;max-width:72ch">
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(20px,2.4vw,26px);line-height:1.22;margin:0 0 18px;color:#17365B">{{ t.recHeading }}</h2>
+        <sc-for list="{{ t.recParas }}" as="p" hint-placeholder-count="2">
+          <p style="font-size:16.5px;line-height:1.7;margin:0 0 16px;color:#2E4057">{{ p }}</p>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="background:#2E4057;color:#FFFFFF;margin-top:44px">
+      <div style="max-width:1140px;margin:0 auto;padding:52px 24px;display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:center">
+        <div style="max-width:52ch">
+          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);line-height:1.25;margin:0 0 10px;color:#FFFFFF">{{ t.ctaHeading }}</h2>
+          <p style="font-size:16px;line-height:1.6;margin:0;color:#D3D9E2">{{ t.ctaBody }}</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a href="{{ contactUrl }}" style="font-family:Figtree,sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.02em;color:#17365B;background:#FFFFFF;padding:14px 24px;text-decoration:none;display:inline-block" style-hover="background:#F9F9F9;color:#17365B">{{ t.ctaPrimary }}</a>
+          <a href="{{ programsUrl }}" style="font-family:Figtree,sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.02em;color:#FFFFFF;background:transparent;border:1px solid #A3ABB6;padding:13px 24px;text-decoration:none;display:inline-block" style-hover="background:#17365B;border-color:#17365B">{{ t.ctaSecondary }}</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:840px;margin:0 auto;padding:44px 24px 88px">
+      <div style="margin-top:8px;padding-top:32px;border-top:1px solid #E7E9EC">
+        <h2 style="font-family:Figtree,sans-serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:0 0 22px;color:#A3ABB6">{{ t.sourcesLabel }}</h2>
+        <ol style="list-style:none;margin:0 0 26px;padding:0;display:grid;gap:16px;max-width:80ch">
+          <sc-for list="{{ t.sources }}" as="s" hint-placeholder-count="4">
+            <li style="display:flex;gap:14px;align-items:flex-start;font-size:14.5px;line-height:1.6;color:#2E4057">
+              <span style="flex:none;font-family:Figtree,sans-serif;font-size:13px;font-weight:600;color:#FFFFFF;background:#A3ABB6;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px">{{ s.n }}</span>
+              <span><strong style="font-weight:600;color:#17365B">{{ s.org }}</strong>. {{ s.title }}. <a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.host }}</a></span>
+            </li>
+          </sc-for>
+        </ol>
+        <p style="font-size:13.5px;line-height:1.65;margin:0;color:#A3ABB6;max-width:80ch;font-style:italic">{{ t.disclaimer }}</p>
+      </div>
+    </section>
+
+  </article>
+
+  <footer style="border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <div>
+      <a href="index.html" style="display:flex;align-items:center;gap:12px">
+        <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <div style="font-size:15px;color:#7F8996;margin-top:10px">{{ t.footerTagline }}</div>
+      </div>
+      <div style="text-align:right;font-size:14px;color:#A3ABB6;line-height:1.6">
+        <div>© 2026 FagusED</div>
+        <div>Santiago, Chile.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const ES = {
+  navHome: 'Inicio', navPrograms: 'Programas', navResources: 'Recursos', navCta: 'Agendar reunión',
+  kicker: "Guía comparativa",
+  meta: "Actualizado en septiembre de 2026 · 9 minutos de lectura",
+  title: "A Level e IB Diploma Programme: cómo comparar y cómo elegir",
+  lede: "Una comparación de estructura, evaluación y acceso a la educación superior para familias y estudiantes que deben decidir un itinerario académico internacional.",
+  keyLabel: "Lo esencial",
+  key: "Ninguno de los dos programas es universalmente superior. A Level prepara principalmente mediante especialización; IB DP prepara mediante amplitud, integración e investigación. Para el ingreso universitario, el factor decisivo suele ser la coherencia entre la carrera proyectada, las asignaturas elegidas, su nivel y las calificaciones obtenidas.",
+  blocks: [
+    { isProse: true, heading: "La distinción que más se confunde", paras: [
+      "A Level no es normalmente un diploma único: cada asignatura produce una calificación independiente y los estudiantes suelen presentar tres o cuatro A Levels completos. El IB DP, en cambio, es un programa integrado de seis asignaturas más un núcleo común obligatorio.",
+      "Conviene además no confundir AS Level con la titulación completa: el AS representa generalmente la primera mitad de un A Level. Muchas ofertas universitarias se expresan sobre A Levels completos, de modo que la diferencia tiene consecuencias prácticas en una postulación.",
+      "El IB organiza la enseñanza mediante seis grupos de asignaturas sostenidos por el núcleo del programa, que comprende Theory of Knowledge, el Extended Essay y CAS. Cambridge International, por su parte, ofrece sus AS y A Levels como titulaciones por asignatura que el estudiante combina según su proyección académica."
+    ]},
+    { isTable: true, heading: "Comparación general", note: "Estructura, niveles, evaluación y perfil de exigencia de cada programa.",
+      head: ["Aspecto", "A Level", "IB Diploma Programme"],
+      rows: [
+        ["Estructura", "Normalmente 3 o 4 asignaturas independientes.", "6 asignaturas más el núcleo común del IB."],
+        ["Duración habitual", "2 años para el A Level completo.", "2 años para el Diploma Programme completo."],
+        ["Especialización", "Alta. Permite concentrarse tempranamente en un área.", "Combina especialización en HL con amplitud en SL."],
+        ["Selección de asignaturas", "Relativamente libre, según la oferta del colegio y los requisitos universitarios.", "Distribuida entre grupos disciplinares, aunque se permiten algunas sustituciones."],
+        ["Niveles", "AS Level y A Level completo.", "Higher Level y Standard Level; normalmente 3 asignaturas en cada nivel."],
+        ["Componentes adicionales", "No existe un núcleo común obligatorio. Puede complementarse con EPQ o Cambridge IPQ.", "Theory of Knowledge, Extended Essay y CAS son obligatorios para el diploma."],
+        ["Enfoque del contenido", "Profundidad disciplinaria, dominio conceptual y resolución de problemas.", "Profundidad y amplitud junto con investigación, reflexión y conexiones entre disciplinas."],
+        ["Autonomía", "Alta dentro de las asignaturas elegidas.", "Muy alta por la combinación de seis asignaturas, trabajos, investigación y actividades."],
+        ["Evaluación", "Suele depender fuertemente de exámenes externos. La estructura varía según la entidad examinadora.", "Combina exámenes externos, evaluaciones internas, investigaciones, trabajos orales y proyectos."],
+        ["Calificación", "Por asignatura: A*, A, B, C, D o E.", "Cada asignatura se califica de 1 a 7; el máximo total es 45 puntos."],
+        ["Resultado final", "Las calificaciones son independientes; no existe necesariamente un diploma único.", "Se deben cumplir requisitos globales para recibir el diploma completo."],
+        ["Flexibilidad", "Muy alta para construir una combinación orientada a una carrera.", "Más limitada porque exige mantener una formación académica amplia."],
+        ["Perfil de exigencia", "Pocas asignaturas con gran profundidad y, con frecuencia, exámenes finales de alta ponderación.", "Mayor carga simultánea y continua, distribuida entre asignaturas y componentes obligatorios."],
+        ["Perfil ideal", "Estudiante con intereses definidos y fuerte desempeño en un área específica.", "Estudiante organizado, autónomo y capaz de rendir bien en distintas áreas."]
+      ]},
+    { isProse: true, heading: "Ingreso a la educación superior", paras: [
+      "Ambas titulaciones son ampliamente reconocidas. Las universidades expresan sus ofertas de manera distinta: calificaciones por asignatura para A Level, y una combinación de puntaje total, resultados de Higher Level y asignaturas específicas para IB DP."
+    ]},
+    { isTable: true, heading: "Requisitos y reconocimiento", note: "Cómo se leen las dos titulaciones en los principales destinos de estudio.",
+      head: ["Elemento", "A Level", "IB Diploma Programme"],
+      rows: [
+        ["Reconocimiento", "Muy alto, especialmente en Reino Unido, Europa, Australia, Canadá, Estados Unidos y Asia.", "Muy alto y ampliamente reconocido en los mismos destinos."],
+        ["Oferta habitual", "Calificaciones específicas, por ejemplo A*AA, AAA o AAB.", "Puntaje total más resultados HL, por ejemplo 38 puntos con 6, 6, 6 en HL."],
+        ["Prerrequisitos", "La universidad puede exigir A Level Mathematics, Physics, Chemistry u otra asignatura.", "Puede exigir una asignatura concreta en HL y una calificación mínima."],
+        ["Carreras STEM", "Muy sólido si se eligen las asignaturas correctas; puede incluir Mathematics, Further Mathematics y ciencias.", "Muy sólido si Mathematics y las ciencias pertinentes se cursan en HL."],
+        ["Humanidades", "Muy sólido con materias como History, English Literature o Economics.", "Muy sólido, con práctica adicional en investigación, argumentación y escritura académica."],
+        ["Reino Unido", "Es la referencia tradicional y permite leer los requisitos de forma directa.", "Se acepta mediante equivalencias de puntaje total y notas HL."],
+        ["Estados Unidos", "Se consideran las asignaturas y notas individuales; algunas universidades pueden conceder créditos.", "Se analiza el diploma completo y especialmente los resultados HL; también puede conceder créditos."],
+        ["Pruebas adicionales", "Pueden exigirse pruebas, entrevistas, portafolios o certificación de inglés.", "Los mismos requisitos adicionales pueden aplicarse al postulante IB."],
+        ["Ventaja automática", "No existe; depende de resultados, asignaturas y universidad.", "Tampoco existe; la amplitud del diploma no sustituye prerrequisitos específicos."]
+      ]},
+    { isProse: true, heading: "Cómo se interpreta cada candidatura", paras: [
+      "En A Level, la universidad normalmente observa tres o cuatro calificaciones separadas y verifica que el postulante haya cursado las asignaturas requeridas. En IB DP, la institución puede considerar simultáneamente el puntaje total sobre 45, las notas obtenidas en Higher Level, las asignaturas específicas y el cumplimiento del diploma completo.",
+      "Una universidad puede aceptar ambos programas sin preferencia institucional y, aun así, exigir combinaciones muy precisas. La División de Ciencias Médicas de la Universidad de Oxford, por ejemplo, señala que A Levels e International Baccalaureate son titulaciones elegibles y que no pondera una como mejor que la otra: aconseja escoger según el estilo de enseñanza que más convenga al estudiante. Sus requisitos de admisión, sin embargo, siguen exigiendo asignaturas concretas en cada sistema.",
+      "Por esa razón, la planificación de asignaturas debe comenzar antes de iniciar el programa. Una carrera de Ingeniería podría solicitar Mathematics y Physics en A Level, o Mathematics y Physics en Higher Level."
+    ]},
+    { isTable: true, heading: "Enfoque educativo y tratamiento del contenido", note: "Dónde concentra cada programa el aprendizaje, más allá de su estructura formal.",
+      head: ["Dimensión", "A Level", "IB Diploma Programme"],
+      rows: [
+        ["Pregunta central", "Hasta qué profundidad domina el estudiante esta disciplina.", "Cómo conecta, investiga y aplica conocimientos de distintas disciplinas."],
+        ["Organización", "Cada asignatura funciona con considerable independencia.", "Las asignaturas se conectan mediante habilidades y componentes comunes."],
+        ["Syllabus", "Contenido disciplinario detallado y claramente delimitado.", "Contenido disciplinario junto con contextos, investigación, reflexión y comunicación."],
+        ["Investigación", "Depende de la asignatura o de complementos como EPQ o IPQ.", "Es transversal y obligatoria mediante Extended Essay y evaluaciones internas."],
+        ["Escritura académica", "Muy relevante en humanidades, pero puede ser más limitada en algunas materias STEM.", "Todos los estudiantes desarrollan investigación y escritura argumentativa."],
+        ["Aplicación práctica", "Depende de la asignatura y la entidad examinadora.", "Se incorpora mediante internal assessments, trabajos experimentales y proyectos."],
+        ["Metacognición", "Se desarrolla dentro de cada asignatura, generalmente sin un curso común.", "Es explícita y central, particularmente en Theory of Knowledge."],
+        ["Formación extracurricular", "No forma parte necesariamente de la titulación.", "CAS es obligatorio, aunque no agrega puntos directamente al total."]
+      ]},
+    { isProse: true, heading: "La diferencia pedagógica principal", paras: [
+      "A Level tiende a organizar el aprendizaje desde la lógica interna de cada disciplina. Esto facilita avanzar con gran detalle conceptual y técnico. IB DP mantiene disciplinas diferenciadas, pero añade un marco común que obliga al estudiante a investigar, justificar decisiones, reflexionar sobre el conocimiento y administrar productos académicos de distinta naturaleza.",
+      "La amplitud del IB no significa necesariamente menor exigencia. Su dificultad proviene, en buena medida, de sostener un rendimiento consistente en seis asignaturas mientras se completan tareas extensas. La exigencia de A Level se concentra más en el dominio profundo de un número menor de materias y en evaluaciones externas de alta importancia."
+    ]},
+    { isTable: true, heading: "Un caso concreto: Física", note: "La comparación se vuelve más útil al bajar a una asignatura. Ambas rutas preparan bien para carreras científicas, pero refuerzan capacidades distintas.",
+      head: ["Aspecto", "A Level Physics", "IB Physics"],
+      rows: [
+        ["Profundidad matemática", "Generalmente elevada y muy orientada a la resolución de problemas de examen.", "Elevada en HL, con atención adicional a investigación, interpretación y aplicación."],
+        ["Cobertura", "Syllabus lineal y detallado, con objetivos específicos.", "Organización conceptual con conexiones entre contenidos y contextos."],
+        ["Trabajo experimental", "Prácticas y evaluación experimental según la entidad examinadora; Cambridge incluye componentes prácticos evaluados externamente.", "Investigación científica individual evaluada internamente y proyecto científico colaborativo."],
+        ["Preparación universitaria", "Muy directa para Física, Ingeniería y áreas técnicas, sobre todo junto con Mathematics y Further Mathematics.", "Sólida para ciencias y complementada por experiencia en investigación, escritura y gestión académica."],
+        ["Posible limitación", "Puede ofrecer menos experiencia en investigación extensa o escritura transversal si no se complementa.", "Puede cubrir menos contenido especializado que una combinación de Physics, Mathematics y Further Mathematics."]
+      ]},
+    { isList: true, heading: "Semejanzas principales", note: "A pesar de sus diferencias estructurales, los dos programas comparten objetivos académicos importantes.", items: [
+      "Corresponden habitualmente a los últimos dos años de educación secundaria.",
+      "Utilizan estándares internacionales y componentes de evaluación externa.",
+      "Son reconocidos por universidades altamente selectivas.",
+      "Permiten recibir ofertas condicionales antes de conocer los resultados finales.",
+      "Exigen pensamiento crítico, autonomía y dominio conceptual.",
+      "Requieren escoger cuidadosamente las asignaturas según la carrera proyectada.",
+      "No eliminan posibles pruebas de admisión, entrevistas, portafolios ni requisitos de idioma.",
+      "Preparan al estudiante para una carga universitaria exigente."
+    ]},
+    { isTable: true, heading: "Qué programa puede convenir más", note: "Orientación general. Cada caso debe revisarse contra los requisitos reales de las universidades de destino.",
+      head: ["Objetivo o perfil", "Programa potencialmente más conveniente"],
+      rows: [
+        ["Interés definido en Física, Ingeniería o Matemáticas", "A Level puede facilitar una combinación altamente especializada."],
+        ["Necesidad de mantener abiertas distintas áreas", "IB DP conserva una formación más amplia."],
+        ["Destino principal en Reino Unido", "Ambos son válidos; A Level permite interpretar los requisitos de forma más directa."],
+        ["Postulación a universidades de varios países", "Ambos tienen amplio reconocimiento; IB ofrece una estructura global especialmente uniforme."],
+        ["Fortalecer investigación y escritura académica", "IB DP ofrece estas experiencias de manera obligatoria y transversal."],
+        ["Profundizar al máximo en tres disciplinas", "A Level suele ser la alternativa más directa."],
+        ["Fortaleza muy marcada en un área", "A Level puede permitir construir el perfil alrededor de esa fortaleza."],
+        ["Buen rendimiento equilibrado y alta organización", "IB DP puede mostrar mejor este perfil académico."]
+      ]},
+    { isProse: true, heading: "Conclusión", paras: [
+      "A Level prepara principalmente mediante especialización: permite que el estudiante concentre tiempo y esfuerzo en un conjunto reducido de materias. IB DP prepara mediante amplitud, integración e investigación: combina seis asignaturas con una estructura común que exige administrar proyectos, reflexión y experiencias fuera del aula.",
+      "Para ingresar a la universidad, el factor decisivo suele ser la coherencia entre la carrera, las asignaturas elegidas, su nivel y las calificaciones obtenidas. Un estudiante con el programa aparentemente más prestigioso, pero sin los prerrequisitos correctos, puede quedar fuera de una carrera. En cambio, una selección estratégica y buenos resultados en cualquiera de los dos sistemas pueden abrir el acceso a instituciones altamente competitivas."
+    ]}
+  ],
+  recHeading: "Recomendación para estudiantes y familias",
+  recParas: [
+    "Antes de elegir, conviene identificar entre tres y cinco carreras probables y revisar los requisitos de varias universidades en distintos países.",
+    "La decisión debería considerar también el estilo de aprendizaje del estudiante: afinidad con exámenes finales y especialización, o capacidad para sostener múltiples asignaturas, investigaciones y entregas durante dos años."
+  ],
+  ctaHeading: "¿Necesitas decidir entre A Level e IB DP?",
+  ctaBody: "En Fagus Ed revisamos el perfil del estudiante, las carreras que le interesan y los requisitos reales de sus universidades de destino antes de recomendar un itinerario.",
+  ctaPrimary: "Solicitar asesoría",
+  ctaSecondary: "Ver nuestros programas",
+  sourcesLabel: "Fuentes oficiales",
+  sources: [
+    { n: 1, org: "Cambridge International Education", title: "Cambridge International AS & A Levels. Estructura, asignaturas, profundidad y reconocimiento universitario", url: "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-advanced/cambridge-international-as-and-a-levels/", host: "cambridgeinternational.org" },
+    { n: 2, org: "International Baccalaureate", title: "Diploma Programme. Los seis grupos de asignaturas y el núcleo del programa (TOK, CAS y Extended Essay)", url: "https://ibo.org/programmes/diploma-programme/", host: "ibo.org" },
+    { n: 3, org: "International Baccalaureate", title: "Find countries and universities that admit IB students. Base de datos de reconocimiento, admisión y posibles créditos", url: "https://ibo.org/university-admission/find-countries-and-universities-that-recognize-the-ib/", host: "ibo.org" },
+    { n: 4, org: "University of Oxford, Medical Sciences Division", title: "Do you prefer A-levels or the IB? Ejemplo institucional de aceptación de ambas titulaciones sin preferencia automática", url: "https://www.medsci.ox.ac.uk/study/medicine/pre-clinical/faqs/do-you-prefer-a-levels-or-the-ib", host: "medsci.ox.ac.uk" }
+  ],
+  disclaimer: "Nota: los requisitos universitarios cambian según institución, carrera y año de admisión. Siempre debe revisarse la página oficial de cada programa antes de escoger asignaturas o presentar una postulación.",
+  footerTagline: 'Educación que abre caminos'
+};
+
+const EN = {
+  navHome: 'Home', navPrograms: 'Programmes', navResources: 'Resources', navCta: 'Book a meeting',
+  kicker: "Comparative guide",
+  meta: "Updated September 2026 · 9 minute read",
+  title: "A Level and the IB Diploma Programme: how to compare and how to choose",
+  lede: "A comparison of structure, assessment and university access for families and students deciding on an international academic pathway.",
+  keyLabel: "In brief",
+  key: "Neither programme is universally superior. A Level prepares students mainly through specialisation; the IB DP prepares them through breadth, integration and research. For university admission, the decisive factor is usually the coherence between the intended degree, the subjects chosen, the level at which they are taken and the grades achieved.",
+  blocks: [
+    { isProse: true, heading: "The distinction most often confused", paras: [
+      "A Level is not normally a single diploma: each subject produces an independent grade, and students usually present three or four full A Levels. The IB DP, by contrast, is an integrated programme of six subjects plus a compulsory core.",
+      "It is also important not to confuse AS Level with the full qualification: AS generally represents the first half of an A Level. Many university offers are expressed in terms of complete A Levels, so the difference has practical consequences for an application.",
+      "The IB organises teaching through six subject groups underpinned by the DP core, which comprises Theory of Knowledge, the Extended Essay and CAS. Cambridge International, in turn, offers its AS and A Levels as subject-by-subject qualifications that students combine according to their academic plans."
+    ]},
+    { isTable: true, heading: "General comparison", note: "Structure, levels, assessment and the demand profile of each programme.",
+      head: ["Aspect", "A Level", "IB Diploma Programme"],
+      rows: [
+        ["Structure", "Normally 3 or 4 independent subjects.", "6 subjects plus the IB core."],
+        ["Usual duration", "2 years for the full A Level.", "2 years for the full Diploma Programme."],
+        ["Specialisation", "High. Allows early concentration in one area.", "Combines specialisation at HL with breadth at SL."],
+        ["Subject selection", "Relatively free, subject to school provision and university requirements.", "Distributed across subject groups, although some substitutions are allowed."],
+        ["Levels", "AS Level and full A Level.", "Higher Level and Standard Level; normally 3 subjects at each level."],
+        ["Additional components", "There is no compulsory core. It can be complemented with an EPQ or Cambridge IPQ.", "Theory of Knowledge, the Extended Essay and CAS are compulsory for the diploma."],
+        ["Content focus", "Disciplinary depth, conceptual mastery and problem solving.", "Depth and breadth, together with research, reflection and connections across disciplines."],
+        ["Autonomy", "High within the subjects chosen.", "Very high, given six subjects, coursework, research and activities."],
+        ["Assessment", "Tends to rely heavily on external examinations. The structure varies by examining body.", "Combines external examinations, internal assessments, investigations, oral work and projects."],
+        ["Grading", "Per subject: A*, A, B, C, D or E.", "Each subject is graded 1 to 7; the maximum total is 45 points."],
+        ["Final outcome", "Grades are independent; there is not necessarily a single diploma.", "Overall requirements must be met to be awarded the full diploma."],
+        ["Flexibility", "Very high for building a degree-oriented combination.", "More limited, since it requires maintaining a broad academic education."],
+        ["Demand profile", "Few subjects studied in great depth and, frequently, high-stakes final examinations.", "Greater simultaneous and continuous workload, spread across subjects and compulsory components."],
+        ["Ideal profile", "A student with defined interests and strong performance in a specific area.", "An organised, autonomous student able to perform well across different areas."]
+      ]},
+    { isProse: true, heading: "Access to higher education", paras: [
+      "Both qualifications are widely recognised. Universities express their offers differently: subject grades for A Level, and a combination of total points, Higher Level results and specific subjects for the IB DP."
+    ]},
+    { isTable: true, heading: "Requirements and recognition", note: "How the two qualifications are read in the main study destinations.",
+      head: ["Element", "A Level", "IB Diploma Programme"],
+      rows: [
+        ["Recognition", "Very high, especially in the United Kingdom, Europe, Australia, Canada, the United States and Asia.", "Very high and widely recognised in the same destinations."],
+        ["Typical offer", "Specific grades, for example A*AA, AAA or AAB.", "Total points plus HL results, for example 38 points with 6, 6, 6 at HL."],
+        ["Prerequisites", "The university may require A Level Mathematics, Physics, Chemistry or another subject.", "May require a particular subject at HL and a minimum grade."],
+        ["STEM degrees", "Very strong if the right subjects are chosen; may include Mathematics, Further Mathematics and sciences.", "Very strong if Mathematics and the relevant sciences are taken at HL."],
+        ["Humanities", "Very strong with subjects such as History, English Literature or Economics.", "Very strong, with additional practice in research, argumentation and academic writing."],
+        ["United Kingdom", "The traditional reference point, allowing requirements to be read directly.", "Accepted through equivalences of total points and HL grades."],
+        ["United States", "Individual subjects and grades are considered; some universities may grant credit.", "The full diploma and especially HL results are considered; credit may also be granted."],
+        ["Additional tests", "Admissions tests, interviews, portfolios or English certification may be required.", "The same additional requirements may apply to IB applicants."],
+        ["Automatic advantage", "None; it depends on results, subjects and the university.", "None either; the diploma's breadth does not replace specific prerequisites."]
+      ]},
+    { isProse: true, heading: "How each application is read", paras: [
+      "With A Level, the university normally looks at three or four separate grades and checks that the applicant has taken the required subjects. With the IB DP, an institution may consider the total score out of 45, the Higher Level grades, the specific subjects and completion of the full diploma at the same time.",
+      "A university may accept both programmes without institutional preference and still require very precise combinations. The University of Oxford's Medical Sciences Division, for instance, states that A-levels and the International Baccalaureate are both eligible qualifications and that it does not weight either as better than the other, advising students to choose the qualification whose teaching style suits them best. Its entry requirements, however, still specify particular subjects in each system.",
+      "For that reason, subject planning should begin before the programme starts. An Engineering degree might require Mathematics and Physics at A Level, or Mathematics and Physics at Higher Level."
+    ]},
+    { isTable: true, heading: "Educational approach and treatment of content", note: "Where each programme concentrates learning, beyond its formal structure.",
+      head: ["Dimension", "A Level", "IB Diploma Programme"],
+      rows: [
+        ["Central question", "How deeply does the student master this discipline?", "How does the student connect, investigate and apply knowledge from different disciplines?"],
+        ["Organisation", "Each subject operates with considerable independence.", "Subjects are connected through shared skills and components."],
+        ["Syllabus", "Detailed, clearly delimited disciplinary content.", "Disciplinary content together with contexts, research, reflection and communication."],
+        ["Research", "Depends on the subject or on complements such as the EPQ or IPQ.", "Cross-curricular and compulsory, through the Extended Essay and internal assessments."],
+        ["Academic writing", "Highly relevant in the humanities, but may be more limited in some STEM subjects.", "All students develop research and argumentative writing."],
+        ["Practical application", "Depends on the subject and the examining body.", "Built in through internal assessments, experimental work and projects."],
+        ["Metacognition", "Developed within each subject, generally without a common course.", "Explicit and central, particularly in Theory of Knowledge."],
+        ["Extracurricular development", "Not necessarily part of the qualification.", "CAS is compulsory, although it does not add points directly to the total."]
+      ]},
+    { isProse: true, heading: "The main pedagogical difference", paras: [
+      "A Level tends to organise learning from the internal logic of each discipline, which makes it easier to advance with great conceptual and technical detail. The IB DP keeps disciplines distinct but adds a common framework that requires students to investigate, justify decisions, reflect on knowledge and manage academic products of different kinds.",
+      "The breadth of the IB does not necessarily mean lower demand. Its difficulty comes largely from sustaining consistent performance across six subjects while completing extensive tasks. The demand of A Level is concentrated more in deep mastery of fewer subjects and in high-stakes external assessment."
+    ]},
+    { isTable: true, heading: "A concrete case: Physics", note: "The comparison becomes more useful at subject level. Both routes prepare students well for science degrees, but they reinforce different capabilities.",
+      head: ["Aspect", "A Level Physics", "IB Physics"],
+      rows: [
+        ["Mathematical depth", "Generally high and strongly oriented towards examination problem solving.", "High at HL, with additional attention to investigation, interpretation and application."],
+        ["Coverage", "A linear, detailed syllabus with specific objectives.", "Conceptual organisation with connections between content and contexts."],
+        ["Experimental work", "Practical work and experimental assessment depending on the examining body; Cambridge includes externally assessed practical components.", "An individual scientific investigation assessed internally, plus a collaborative sciences project."],
+        ["University preparation", "Very direct for Physics, Engineering and technical fields, especially alongside Mathematics and Further Mathematics.", "Solid for the sciences, complemented by experience in research, writing and academic management."],
+        ["Possible limitation", "May offer less experience in extended research or cross-curricular writing unless complemented.", "May cover less specialised content than a combination of Physics, Mathematics and Further Mathematics."]
+      ]},
+    { isList: true, heading: "Key similarities", note: "Despite their structural differences, the two programmes share important academic objectives.", items: [
+      "They usually correspond to the final two years of secondary education.",
+      "They use international standards and external assessment components.",
+      "They are recognised by highly selective universities.",
+      "They allow students to receive conditional offers before final results are known.",
+      "They demand critical thinking, autonomy and conceptual mastery.",
+      "They require careful subject selection based on the intended degree.",
+      "They do not remove possible admissions tests, interviews, portfolios or language requirements.",
+      "They prepare students for a demanding university workload."
+    ]},
+    { isTable: true, heading: "Which programme may suit better", note: "General guidance. Each case should be checked against the actual requirements of the target universities.",
+      head: ["Goal or profile", "Potentially more suitable programme"],
+      rows: [
+        ["A defined interest in Physics, Engineering or Mathematics", "A Level can make a highly specialised combination easier."],
+        ["A need to keep different fields open", "The IB DP preserves a broader education."],
+        ["Main destination in the United Kingdom", "Both are valid; A Level allows requirements to be interpreted more directly."],
+        ["Applications to universities in several countries", "Both are widely recognised; the IB offers a particularly uniform global structure."],
+        ["Strengthening research and academic writing", "The IB DP provides these experiences on a compulsory, cross-curricular basis."],
+        ["Going as deep as possible in three disciplines", "A Level is usually the more direct alternative."],
+        ["A very marked strength in one area", "A Level can allow the profile to be built around that strength."],
+        ["Balanced strong performance and high organisation", "The IB DP may display this academic profile better."]
+      ]},
+    { isProse: true, heading: "Conclusion", paras: [
+      "A Level prepares students mainly through specialisation: it allows them to concentrate time and effort on a small set of subjects. The IB DP prepares them through breadth, integration and research: it combines six subjects with a common structure that requires managing projects, reflection and experiences outside the classroom.",
+      "For university entry, the decisive factor is usually the coherence between the degree, the subjects chosen, the level at which they are taken and the grades achieved. A student holding the apparently more prestigious programme, but without the right prerequisites, can be ruled out of a degree. Conversely, strategic subject selection and strong results in either system can open access to highly competitive institutions."
+    ]}
+  ],
+  recHeading: "Recommendation for students and families",
+  recParas: [
+    "Before choosing, it is worth identifying three to five likely degree courses and reviewing the requirements of several universities in different countries.",
+    "The decision should also take the student's learning style into account: an affinity for final examinations and specialisation, or the capacity to sustain multiple subjects, investigations and deadlines over two years."
+  ],
+  ctaHeading: "Deciding between A Level and the IB DP?",
+  ctaBody: "At Fagus Ed we review the student's profile, the degrees they are interested in and the actual requirements of their target universities before recommending a pathway.",
+  ctaPrimary: "Request an advisory session",
+  ctaSecondary: "See our programmes",
+  sourcesLabel: "Official sources",
+  sources: [
+    { n: 1, org: "Cambridge International Education", title: "Cambridge International AS & A Levels. Structure, subjects, depth and university recognition", url: "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-advanced/cambridge-international-as-and-a-levels/", host: "cambridgeinternational.org" },
+    { n: 2, org: "International Baccalaureate", title: "Diploma Programme. The six subject groups and the DP core (TOK, CAS and the Extended Essay)", url: "https://ibo.org/programmes/diploma-programme/", host: "ibo.org" },
+    { n: 3, org: "International Baccalaureate", title: "Find countries and universities that admit IB students. Recognition, admission and credit database", url: "https://ibo.org/university-admission/find-countries-and-universities-that-recognize-the-ib/", host: "ibo.org" },
+    { n: 4, org: "University of Oxford, Medical Sciences Division", title: "Do you prefer A-levels or the IB? An institutional example of both qualifications being accepted without automatic preference", url: "https://www.medsci.ox.ac.uk/study/medicine/pre-clinical/faqs/do-you-prefer-a-levels-or-the-ib", host: "medsci.ox.ac.uk" }
+  ],
+  disclaimer: "Note: university requirements change by institution, degree and year of entry. The official page of each programme should always be checked before choosing subjects or submitting an application.",
+  footerTagline: 'Education that opens doors.'
+};
+
+class Component extends DCLogic {
+  state = { lang: null };
+
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
+
+  langBtnStyle(on) {
+    return `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
+  }
+
+  renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = lang === 'en' ? EN : ES;
+    const blocks = t.blocks.map(b => b.isTable
+      ? Object.assign({}, b, {
+          head: b.head.map(v => ({ v })),
+          rows: b.rows.map(r => ({ cells: r.map(v => ({ v })) }))
+        })
+      : b);
+    return {
+      t,
+      blocks,
+      contactUrl: 'index.html#contacto',
+      programsUrl: 'programas.html',
+      esBtn: this.langBtnStyle(lang === 'es'),
+      enBtn: this.langBtnStyle(lang === 'en'),
+      setEs: () => this.pickLang('es'),
+      setEn: () => this.pickLang('en')
+    };
+  }
+}
+</script>
+</body>
+</html>
