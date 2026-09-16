@@ -83,20 +83,20 @@
       </sc-if>
 
       <sc-if value="{{ activeSubject.strands }}" hint-placeholder-val="{{ false }}">
-        <sc-for list="{{ activeSubject.strandGroups }}" as="sg" hint-placeholder-count="3">
-          <div style="margin-bottom:36px">
-            <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:15px;letter-spacing:.02em;margin:0 0 18px;color:#17365B;padding-bottom:10px;border-bottom:2px solid #17365B;display:inline-block">{{ sg.label }}</h3>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
-              <sc-for list="{{ sg.topics }}" as="it" hint-placeholder-count="8">
-                <a href="{{ it.href }}" download="{{ it.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
-                  <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.tag }}</div>
-                  <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
-                  <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
-                </a>
-              </sc-for>
-            </div>
-          </div>
-        </sc-for>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px">
+          <sc-for list="{{ activeSubject.strandTabs }}" as="st" hint-placeholder-count="3">
+            <button onClick="{{ st.onClick }}" style="{{ st.style }}">{{ st.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+          <sc-for list="{{ activeSubject.topics }}" as="it" hint-placeholder-count="8">
+            <a href="{{ it.href }}" download="{{ it.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+              <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.tag }}</div>
+              <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
+              <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+            </a>
+          </sc-for>
+        </div>
       </sc-if>
     </div>
   </section>
@@ -163,7 +163,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { program: null, subject: 'physics-0625', lang: null };
+  state = { program: null, subject: 'physics-0625', strand: 'B', lang: null };
 
   STRAND_LABEL = {
     B: { es: 'Biología', en: 'Biology' },
@@ -350,12 +350,12 @@ class Component extends DCLogic {
       intro: 'Elige tu programa para ver las guías, flashcards y demás recursos preparados por el equipo.',
       empty: 'Aún no hay recursos publicados para este programa. Vuelve pronto.',
       guidesLabel: 'Guías de estudio',
-      guidesTitle: 'Guías IGCSE completas, por asignatura',
+      guidesTitle: 'Guías',
       guidesBlurb: 'Teoría, ejemplos resueltos y práctica tipo examen en PDF, para Physics, Chemistry, Biology, Co-ordinated Sciences y Mathematics. Descarga directa, sin registro.',
       pdfBadge: 'PDF',
       download: 'Descargar',
       flashLabel: 'Flashcards',
-      flashTitle: 'Flashcards IGCSE, interactivas o para imprimir',
+      flashTitle: 'Flashcards',
       flashBlurb: 'Tarjetas de pregunta y respuesta por asignatura, basadas en las guías FagusED. Repasa en el navegador o recorta tarjetas de doble cara.',
       flashInteractiveTitle: 'Versión interactiva',
       flashInteractiveBody: 'Filtra por asignatura y tema, da vuelta la tarjeta para ver la respuesta y califica tu repaso. Funciona sin conexión y guarda tu progreso en este navegador.',
@@ -374,12 +374,12 @@ class Component extends DCLogic {
       intro: 'Pick your programme to see the guides, flashcards and other resources prepared by the team.',
       empty: 'No resources have been published for this programme yet. Check back soon.',
       guidesLabel: 'Study guides',
-      guidesTitle: 'Complete IGCSE guides, by subject',
+      guidesTitle: 'Guides',
       guidesBlurb: 'Theory, worked examples and exam-style practice in PDF, for Physics, Chemistry, Biology, Co-ordinated Sciences and Mathematics. Direct download, no sign-up.',
       pdfBadge: 'PDF',
       download: 'Download',
       flashLabel: 'Flashcards',
-      flashTitle: 'IGCSE flashcards, interactive or printable',
+      flashTitle: 'Flashcards',
       flashBlurb: 'Question-and-answer cards by subject, based on the FagusED guides. Review in the browser or cut out double-sided cards.',
       flashInteractiveTitle: 'Interactive version',
       flashInteractiveBody: 'Filter by subject and topic, flip the card to see the answer, and rate your recall. Works offline and saves your progress in this browser.',
@@ -429,14 +429,17 @@ class Component extends DCLogic {
       href: activeRaw.dir + '/' + tp.file,
       downloadName: [activeRaw.name, activeRaw.code, slugify(tp.tag), slugify(tp.title)].join('_') + '.pdf'
     }));
+    const strand = this.state.strand || 'B';
     const activeSubject = activeRaw.strands
       ? {
           plain: false,
           strands: true,
-          strandGroups: ['B', 'C', 'P'].map(s => ({
+          strandTabs: ['B', 'C', 'P'].map(s => ({
             label: this.STRAND_LABEL[s][lang],
-            topics: withHref.filter(tp => tp.strand === s)
-          }))
+            onClick: () => this.setState({ strand: s }),
+            style: `border:1px solid ${strand === s ? '#17365B' : '#E7E9EC'};background:${strand === s ? '#17365B' : 'transparent'};color:${strand === s ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`
+          })),
+          topics: withHref.filter(tp => tp.strand === strand)
         }
       : { plain: true, strands: false, topics: withHref };
     const flashcardSets = this.FLASHCARDS.map(fc => ({
@@ -451,7 +454,7 @@ class Component extends DCLogic {
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       subjectTabs: this.SUBJECTS.map(s => ({
         label: s.label,
-        onClick: () => this.setState({ subject: s.slug }),
+        onClick: () => this.setState({ subject: s.slug, strand: 'B' }),
         style: `border:1px solid ${subj === s.slug ? '#17365B' : '#E7E9EC'};background:${subj === s.slug ? '#17365B' : 'transparent'};color:${subj === s.slug ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`
       })),
       activeSubject,
