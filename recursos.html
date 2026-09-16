@@ -56,6 +56,50 @@
     </div>
   </section>
 
+  <section id="guias-igcse" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:64px 24px">
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.guidesLabel }}</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px">
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.guidesTitle }}</h2>
+        <p style="font-size:16px;color:#7F8996;max-width:44ch;margin:0;line-height:1.6">{{ t.guidesBlurb }}</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px">
+        <sc-for list="{{ subjectTabs }}" as="s" hint-placeholder-count="5">
+          <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ activeSubject.plain }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+          <sc-for list="{{ activeSubject.topics }}" as="it" hint-placeholder-count="8">
+            <a href="{{ it.href }}" download style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+              <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.tag }}</div>
+              <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
+              <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+            </a>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ activeSubject.strands }}" hint-placeholder-val="{{ false }}">
+        <sc-for list="{{ activeSubject.strandGroups }}" as="sg" hint-placeholder-count="3">
+          <div style="margin-bottom:36px">
+            <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:15px;letter-spacing:.02em;margin:0 0 18px;color:#17365B;padding-bottom:10px;border-bottom:2px solid #17365B;display:inline-block">{{ sg.label }}</h3>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+              <sc-for list="{{ sg.topics }}" as="it" hint-placeholder-count="8">
+                <a href="{{ it.href }}" download style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+                  <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.tag }}</div>
+                  <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
+                  <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </sc-if>
+    </div>
+  </section>
+
   <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
     <section id="{{ g.slug }}" style="{{ g.sectionStyle }}">
       <div style="max-width:1140px;margin:0 auto;padding:64px 24px">
@@ -108,7 +152,126 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { filter: 'all', lang: null };
+  state = { filter: 'all', subject: 'physics-0625', lang: null };
+
+  STRAND_LABEL = {
+    B: { es: 'Biología', en: 'Biology' },
+    C: { es: 'Química', en: 'Chemistry' },
+    P: { es: 'Física', en: 'Physics' }
+  };
+
+  SUBJECTS = [
+    {
+      slug: 'physics-0625', dir: 'guides/physics-0625', label: 'Physics (0625)',
+      topics: [
+        { tag: 'Topic 1', title: 'Motion, forces and energy', file: 'FagusED_IGCSE_Physics_0625_Topic_1_V6_Cambridge_Typography.pdf' },
+        { tag: 'Topic 2', title: 'Thermal physics', file: 'FagusED_IGCSE_Physics_0625_Topic_2_Thermal_Physics.pdf' },
+        { tag: 'Topic 3', title: 'Waves', file: 'FagusED_IGCSE_Physics_0625_Topic_3_Waves.pdf' },
+        { tag: 'Topic 4', title: 'Electricity and magnetism', file: 'FagusED_IGCSE_Physics_0625_Topic_4_Electricity_and_magnetism.pdf' },
+        { tag: 'Topic 5', title: 'Nuclear physics', file: 'FagusED_IGCSE_Physics_0625_Topic_5_Nuclear_physics.pdf' },
+        { tag: 'Topic 6', title: 'Space physics', file: 'FagusED_IGCSE_Physics_0625_Topic_6_Space_physics.pdf' }
+      ]
+    },
+    {
+      slug: 'chemistry-0620', dir: 'guides/chemistry-0620', label: 'Chemistry (0620)',
+      topics: [
+        { tag: 'Topic 1', title: 'States of matter', file: 'FagusED_IGCSE_Chemistry_0620_Topic_1_States_of_matter.pdf' },
+        { tag: 'Topic 2', title: 'Atoms, elements and compounds', file: 'FagusED_IGCSE_Chemistry_0620_Topic_2_Atoms,_elements_and_compounds.pdf' },
+        { tag: 'Topic 3', title: 'Stoichiometry', file: 'FagusED_IGCSE_Chemistry_0620_Topic_3_Stoichiometry.pdf' },
+        { tag: 'Topic 4', title: 'Electrochemistry', file: 'FagusED_IGCSE_Chemistry_0620_Topic_4_Electrochemistry.pdf' },
+        { tag: 'Topic 5', title: 'Chemical energetics', file: 'FagusED_IGCSE_Chemistry_0620_Topic_5_Chemical_energetics.pdf' },
+        { tag: 'Topic 6', title: 'Chemical reactions', file: 'FagusED_IGCSE_Chemistry_0620_Topic_6_Chemical_reactions.pdf' },
+        { tag: 'Topic 7', title: 'Acids, bases and salts', file: 'FagusED_IGCSE_Chemistry_0620_Topic_7_Acids,_bases_and_salts.pdf' },
+        { tag: 'Topic 8', title: 'The Periodic Table', file: 'FagusED_IGCSE_Chemistry_0620_Topic_8_The_Periodic_Table.pdf' },
+        { tag: 'Topic 9', title: 'Metals', file: 'FagusED_IGCSE_Chemistry_0620_Topic_9_Metals.pdf' },
+        { tag: 'Topic 10', title: 'Chemistry of the environment', file: 'FagusED_IGCSE_Chemistry_0620_Topic_10_Chemistry_of_the_environment.pdf' },
+        { tag: 'Topic 11', title: 'Organic chemistry', file: 'FagusED_IGCSE_Chemistry_0620_Topic_11_Organic_chemistry.pdf' },
+        { tag: 'Topic 12', title: 'Experimental techniques and chemical analysis', file: 'FagusED_IGCSE_Chemistry_0620_Topic_12_Experimental_techniques_and_chemical_analysis.pdf' }
+      ]
+    },
+    {
+      slug: 'biology-0610', dir: 'guides/biology-0610', label: 'Biology (0610)',
+      topics: [
+        { tag: 'Topic 1', title: 'Characteristics and classification of living organisms', file: 'FagusED_IGCSE_Biology_0610_Topic_1_Characteristics_and_classification_of_living_organisms.pdf' },
+        { tag: 'Topic 2', title: 'Organisation of the organism', file: 'FagusED_IGCSE_Biology_0610_Topic_2_Organisation_of_the_organism.pdf' },
+        { tag: 'Topic 3', title: 'Movement into and out of cells', file: 'FagusED_IGCSE_Biology_0610_Topic_3_Movement_into_and_out_of_cells.pdf' },
+        { tag: 'Topic 4', title: 'Biological molecules', file: 'FagusED_IGCSE_Biology_0610_Topic_4_Biological_molecules.pdf' },
+        { tag: 'Topic 5', title: 'Enzymes', file: 'FagusED_IGCSE_Biology_0610_Topic_5_Enzymes.pdf' },
+        { tag: 'Topic 6', title: 'Plant nutrition', file: 'FagusED_IGCSE_Biology_0610_Topic_6_Plant_nutrition.pdf' },
+        { tag: 'Topic 7', title: 'Human nutrition', file: 'FagusED_IGCSE_Biology_0610_Topic_7_Human_nutrition.pdf' },
+        { tag: 'Topic 8', title: 'Transport in plants', file: 'FagusED_IGCSE_Biology_0610_Topic_8_Transport_in_plants.pdf' },
+        { tag: 'Topic 9', title: 'Transport in animals', file: 'FagusED_IGCSE_Biology_0610_Topic_9_Transport_in_animals.pdf' },
+        { tag: 'Topic 10', title: 'Diseases and immunity', file: 'FagusED_IGCSE_Biology_0610_Topic_10_Diseases_and_immunity.pdf' },
+        { tag: 'Topic 11', title: 'Gas exchange in humans', file: 'FagusED_IGCSE_Biology_0610_Topic_11_Gas_exchange_in_humans.pdf' },
+        { tag: 'Topic 12', title: 'Respiration', file: 'FagusED_IGCSE_Biology_0610_Topic_12_Respiration.pdf' },
+        { tag: 'Topic 13', title: 'Excretion in humans', file: 'FagusED_IGCSE_Biology_0610_Topic_13_Excretion_in_humans.pdf' },
+        { tag: 'Topic 14', title: 'Coordination and response', file: 'FagusED_IGCSE_Biology_0610_Topic_14_Coordination_and_response.pdf' },
+        { tag: 'Topic 15', title: 'Drugs', file: 'FagusED_IGCSE_Biology_0610_Topic_15_Drugs.pdf' },
+        { tag: 'Topic 16', title: 'Reproduction', file: 'FagusED_IGCSE_Biology_0610_Topic_16_Reproduction.pdf' },
+        { tag: 'Topic 17', title: 'Inheritance', file: 'FagusED_IGCSE_Biology_0610_Topic_17_Inheritance.pdf' },
+        { tag: 'Topic 18', title: 'Variation and selection', file: 'FagusED_IGCSE_Biology_0610_Topic_18_Variation_and_selection.pdf' },
+        { tag: 'Topic 19', title: 'Organisms and their environment', file: 'FagusED_IGCSE_Biology_0610_Topic_19_Organisms_and_their_environment.pdf' },
+        { tag: 'Topic 20', title: 'Human influences on ecosystems', file: 'FagusED_IGCSE_Biology_0610_Topic_20_Human_influences_on_ecosystems.pdf' },
+        { tag: 'Topic 21', title: 'Biotechnology and genetic modification', file: 'FagusED_IGCSE_Biology_0610_Topic_21_Biotechnology_and_genetic_modification.pdf' }
+      ]
+    },
+    {
+      slug: 'coordinated-sciences-0654', dir: 'guides/coordinated-sciences-0654', label: 'Co-ordinated Sciences (0654)', strands: true,
+      topics: [
+        { tag: 'B1', title: 'Characteristics and classification of living organisms', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B1_Characteristics_and_classification_of_living_organisms.pdf', strand: 'B' },
+        { tag: 'B2', title: 'Cells', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B2_Cells.pdf', strand: 'B' },
+        { tag: 'B3', title: 'Movement into and out of cells', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B3_Movement_into_and_out_of_cells.pdf', strand: 'B' },
+        { tag: 'B4', title: 'Biological molecules', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B4_Biological_molecules.pdf', strand: 'B' },
+        { tag: 'B5', title: 'Enzymes', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B5_Enzymes.pdf', strand: 'B' },
+        { tag: 'B6', title: 'Plant nutrition', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B6_Plant_nutrition.pdf', strand: 'B' },
+        { tag: 'B7', title: 'Human nutrition', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B7_Human_nutrition.pdf', strand: 'B' },
+        { tag: 'B8', title: 'Transport in plants', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B8_Transport_in_plants.pdf', strand: 'B' },
+        { tag: 'B9', title: 'Transport in animals', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B9_Transport_in_animals.pdf', strand: 'B' },
+        { tag: 'B10', title: 'Diseases and immunity', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B10_Diseases_and_immunity.pdf', strand: 'B' },
+        { tag: 'B11', title: 'Gas exchange in humans', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B11_Gas_exchange_in_humans.pdf', strand: 'B' },
+        { tag: 'B12', title: 'Respiration', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B12_Respiration.pdf', strand: 'B' },
+        { tag: 'B13', title: 'Coordination and response', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B13_Coordination_and_response.pdf', strand: 'B' },
+        { tag: 'B14', title: 'Drugs', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B14_Drugs.pdf', strand: 'B' },
+        { tag: 'B15', title: 'Reproduction', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B15_Reproduction.pdf', strand: 'B' },
+        { tag: 'B16', title: 'Inheritance', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B16_Inheritance.pdf', strand: 'B' },
+        { tag: 'B17', title: 'Variation and selection', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B17_Variation_and_selection.pdf', strand: 'B' },
+        { tag: 'B18', title: 'Organisms and their environment', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B18_Organisms_and_their_environment.pdf', strand: 'B' },
+        { tag: 'B19', title: 'Human influences on ecosystems', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B19_Human_influences_on_ecosystems.pdf', strand: 'B' },
+        { tag: 'C1', title: 'States of matter', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C1_States_of_matter.pdf', strand: 'C' },
+        { tag: 'C2', title: 'Atoms, elements and compounds', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C2_Atoms_elements_and_compounds.pdf', strand: 'C' },
+        { tag: 'C3', title: 'Stoichiometry', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C3_Stoichiometry.pdf', strand: 'C' },
+        { tag: 'C4', title: 'Electrochemistry', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C4_Electrochemistry.pdf', strand: 'C' },
+        { tag: 'C5', title: 'Chemical energetics', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C5_Chemical_energetics.pdf', strand: 'C' },
+        { tag: 'C6', title: 'Chemical reactions', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C6_Chemical_reactions.pdf', strand: 'C' },
+        { tag: 'C7', title: 'Acids, bases and salts', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C7_Acids_bases_and_salts.pdf', strand: 'C' },
+        { tag: 'C8', title: 'The Periodic Table', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C8_The_Periodic_Table.pdf', strand: 'C' },
+        { tag: 'C9', title: 'Metals', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C9_Metals.pdf', strand: 'C' },
+        { tag: 'C10', title: 'Chemistry of the environment', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C10_Chemistry_of_the_environment.pdf', strand: 'C' },
+        { tag: 'C11', title: 'Organic chemistry', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C11_Organic_chemistry.pdf', strand: 'C' },
+        { tag: 'C12', title: 'Experimental techniques and chemical analysis', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_C12_Experimental_techniques_and_chemical_analysis.pdf', strand: 'C' },
+        { tag: 'P1', title: 'Motion, forces and energy', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_P1_Motion_forces_and_energy.pdf', strand: 'P' },
+        { tag: 'P2', title: 'Thermal physics', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_P2_Thermal_physics.pdf', strand: 'P' },
+        { tag: 'P3', title: 'Waves', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_P3_Waves.pdf', strand: 'P' },
+        { tag: 'P4', title: 'Electricity and magnetism', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_P4_Electricity_and_magnetism.pdf', strand: 'P' },
+        { tag: 'P5', title: 'Nuclear physics', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_P5_Nuclear_physics.pdf', strand: 'P' },
+        { tag: 'P6', title: 'Space physics', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_P6_Space_physics.pdf', strand: 'P' }
+      ]
+    },
+    {
+      slug: 'mathematics-0580', dir: 'guides/mathematics-0580', label: 'Mathematics (0580)',
+      topics: [
+        { tag: 'Topic 1', title: 'Number', file: 'FagusED_IGCSE_Mathematics_0580_Topic_1_Number.pdf' },
+        { tag: 'Topic 2', title: 'Algebra and graphs', file: 'FagusED_IGCSE_Mathematics_0580_Topic_2_Algebra_and_graphs.pdf' },
+        { tag: 'Topic 3', title: 'Coordinate geometry', file: 'FagusED_IGCSE_Mathematics_0580_Topic_3_Coordinate_geometry.pdf' },
+        { tag: 'Topic 4', title: 'Geometry', file: 'FagusED_IGCSE_Mathematics_0580_Topic_4_Geometry.pdf' },
+        { tag: 'Topic 5', title: 'Mensuration', file: 'FagusED_IGCSE_Mathematics_0580_Topic_5_Mensuration.pdf' },
+        { tag: 'Topic 6', title: 'Trigonometry', file: 'FagusED_IGCSE_Mathematics_0580_Topic_6_Trigonometry.pdf' },
+        { tag: 'Topic 7', title: 'Transformations and vectors', file: 'FagusED_IGCSE_Mathematics_0580_Topic_7_Transformations_and_vectors.pdf' },
+        { tag: 'Topic 8', title: 'Probability', file: 'FagusED_IGCSE_Mathematics_0580_Topic_8_Probability.pdf' },
+        { tag: 'Topic 9', title: 'Statistics', file: 'FagusED_IGCSE_Mathematics_0580_Topic_9_Statistics.pdf' }
+      ]
+    }
+  ];
 
   PROG = [
     { slug: 'all', es: 'Todos', en: 'All' },
@@ -126,6 +289,11 @@ class Component extends DCLogic {
       title: 'Material de estudio ordenado por tipo',
       intro: 'Guías, past papers, slides y apuntes preparados por el equipo. Filtra por programa para ver solo lo que te sirve.',
       empty: 'No hay material de este tipo para el programa seleccionado todavía.',
+      guidesLabel: 'Guías de estudio',
+      guidesTitle: 'Guías IGCSE completas, por asignatura',
+      guidesBlurb: 'Teoría, ejemplos resueltos y práctica tipo examen en PDF, para Physics, Chemistry, Biology, Co-ordinated Sciences y Mathematics. Descarga directa, sin registro.',
+      pdfBadge: 'PDF',
+      download: 'Descargar',
       ctaTitle: '¿Buscas material de una asignatura específica?',
       ctaBody: 'Escríbenos y te enviamos el paquete que corresponde a tu programa y nivel.',
       ctaButton: 'Escribir al equipo',
@@ -137,6 +305,11 @@ class Component extends DCLogic {
       title: 'Study material organised by type',
       intro: 'Guides, past papers, slides and notes prepared by the team. Filter by programme to see only what is useful to you.',
       empty: 'There is no material of this type for the selected programme yet.',
+      guidesLabel: 'Study guides',
+      guidesTitle: 'Complete IGCSE guides, by subject',
+      guidesBlurb: 'Theory, worked examples and exam-style practice in PDF, for Physics, Chemistry, Biology, Co-ordinated Sciences and Mathematics. Direct download, no sign-up.',
+      pdfBadge: 'PDF',
+      download: 'Download',
       ctaTitle: 'Looking for material on a specific subject?',
       ctaBody: 'Write to us and we will send the pack that matches your programme and level.',
       ctaButton: 'Write to the team',
@@ -215,10 +388,29 @@ class Component extends DCLogic {
     const f = this.state.filter;
     const labelOf = (slug) => { const p = this.PROG.find(x => x.slug === slug); return p ? p[lang] : slug; };
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
+    const subj = this.state.subject;
+    const activeRaw = this.SUBJECTS.find(s => s.slug === subj) || this.SUBJECTS[0];
+    const withHref = activeRaw.topics.map(tp => Object.assign({}, tp, { href: activeRaw.dir + '/' + tp.file }));
+    const activeSubject = activeRaw.strands
+      ? {
+          plain: false,
+          strands: true,
+          strandGroups: ['B', 'C', 'P'].map(s => ({
+            label: this.STRAND_LABEL[s][lang],
+            topics: withHref.filter(tp => tp.strand === s)
+          }))
+        }
+      : { plain: true, strands: false, topics: withHref };
     return {
       t, lang,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
+      subjectTabs: this.SUBJECTS.map(s => ({
+        label: s.label,
+        onClick: () => this.setState({ subject: s.slug }),
+        style: `border:1px solid ${subj === s.slug ? '#17365B' : '#E7E9EC'};background:${subj === s.slug ? '#17365B' : 'transparent'};color:${subj === s.slug ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`
+      })),
+      activeSubject,
       filters: this.PROG.map(p => ({
         label: p[lang],
         onClick: () => this.setState({ filter: p.slug }),
