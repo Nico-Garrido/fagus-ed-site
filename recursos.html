@@ -56,6 +56,7 @@
     </div>
   </section>
 
+  <sc-if value="{{ isIgcse }}" hint-placeholder-val="{{ true }}">
   <section id="guias-igcse" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
     <div style="max-width:1140px;margin:0 auto;padding:64px 24px">
       <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.guidesLabel }}</div>
@@ -125,29 +126,13 @@
       </sc-for>
     </div>
   </section>
+  </sc-if>
 
-  <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
-    <section id="{{ g.slug }}" style="{{ g.sectionStyle }}">
-      <div style="max-width:1140px;margin:0 auto;padding:64px 24px">
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:30px">
-          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0">{{ g.title }}</h2>
-          <div style="font-size:16px;color:#7F8996;max-width:52ch;text-wrap:pretty">{{ g.blurb }}</div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
-          <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
-            <a href="index.html#contacto" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:26px;display:flex;flex-direction:column;min-height:180px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
-              <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.program }}</div>
-              <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:18px;line-height:1.3;margin:14px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
-              <div style="margin-top:auto;padding-top:18px;font-size:14px;color:#7F8996">{{ it.meta }}</div>
-            </a>
-          </sc-for>
-        </div>
-        <sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}">
-          <div style="border:1px dashed #D8DCE2;padding:34px;font-size:16px;color:#7F8996">{{ t.empty }}</div>
-        </sc-if>
-      </div>
+  <sc-if value="{{ isEmptyProgram }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1140px;margin:0 auto;padding:24px 24px 96px">
+      <div style="border:1px dashed #D8DCE2;padding:48px;font-size:16px;color:#7F8996;text-align:center">{{ t.empty }}</div>
     </section>
-  </sc-for>
+  </sc-if>
 
   <section style="background:#17365B;color:#FFFFFF">
     <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
@@ -178,7 +163,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { filter: 'all', subject: 'physics-0625', lang: null };
+  state = { program: null, subject: 'physics-0625', lang: null };
 
   STRAND_LABEL = {
     B: { es: 'Biología', en: 'Biology' },
@@ -350,21 +335,20 @@ class Component extends DCLogic {
   ];
 
   PROG = [
-    { slug: 'all', es: 'Todos', en: 'All' },
     { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
-    { slug: 'lower-secondary', es: 'Lower Secondary', en: 'Lower Secondary' },
     { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
     { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
-    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' }
+    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' },
+    { slug: 'paes', es: 'PAES', en: 'PAES' }
   ];
 
   UI = {
     es: {
       navHome: 'Inicio', navPrograms: 'Programas', navSubjects: 'Asignaturas', navCta: 'Agendar reunión',
       kicker: 'Recursos',
-      title: 'Material de estudio ordenado por tipo',
-      intro: 'Guías, past papers, slides y apuntes preparados por el equipo. Filtra por programa para ver solo lo que te sirve.',
-      empty: 'No hay material de este tipo para el programa seleccionado todavía.',
+      title: 'Material de estudio por programa',
+      intro: 'Elige tu programa para ver las guías, flashcards y demás recursos preparados por el equipo.',
+      empty: 'Aún no hay recursos publicados para este programa. Vuelve pronto.',
       guidesLabel: 'Guías de estudio',
       guidesTitle: 'Guías IGCSE completas, por asignatura',
       guidesBlurb: 'Teoría, ejemplos resueltos y práctica tipo examen en PDF, para Physics, Chemistry, Biology, Co-ordinated Sciences y Mathematics. Descarga directa, sin registro.',
@@ -386,9 +370,9 @@ class Component extends DCLogic {
     en: {
       navHome: 'Home', navPrograms: 'Programmes', navSubjects: 'Subjects', navCta: 'Book a meeting',
       kicker: 'Resources',
-      title: 'Study material organised by type',
-      intro: 'Guides, past papers, slides and notes prepared by the team. Filter by programme to see only what is useful to you.',
-      empty: 'There is no material of this type for the selected programme yet.',
+      title: 'Study material by programme',
+      intro: 'Pick your programme to see the guides, flashcards and other resources prepared by the team.',
+      empty: 'No resources have been published for this programme yet. Check back soon.',
       guidesLabel: 'Study guides',
       guidesTitle: 'Complete IGCSE guides, by subject',
       guidesBlurb: 'Theory, worked examples and exam-style practice in PDF, for Physics, Chemistry, Biology, Co-ordinated Sciences and Mathematics. Direct download, no sign-up.',
@@ -409,63 +393,21 @@ class Component extends DCLogic {
     }
   };
 
-  G = [
-    {
-      slug: 'guias',
-      title: { es: 'Guías', en: 'Guides' },
-      blurb: { es: 'Resúmenes de contenido y ejercicios resueltos por unidad.', en: 'Content summaries and worked exercises by unit.' },
-      items: [
-        { p: 'igcse', title: { es: 'Estequiometría: guía de cálculo paso a paso', en: 'Stoichiometry: step-by-step calculation guide' }, meta: { es: 'PDF · 14 páginas', en: 'PDF · 14 pages' } },
-        { p: 'a-level', title: { es: 'Campos eléctricos y gravitacionales: guía comparada', en: 'Electric and gravitational fields: comparative guide' }, meta: { es: 'PDF · 11 páginas', en: 'PDF · 11 pages' } },
-        { p: 'ib-dp', title: { es: 'Cómo estructurar la exploración matemática (IA)', en: 'How to structure the mathematical exploration (IA)' }, meta: { es: 'PDF · 9 páginas', en: 'PDF · 9 pages' } },
-        { p: 'plan-nacional', title: { es: 'Eje Álgebra y Funciones para M1', en: 'Algebra and Functions strand for M1' }, meta: { es: 'PDF · 16 páginas', en: 'PDF · 16 pages' } },
-        { p: 'lower-secondary', title: { es: 'Ciencias Lower Secondary: los tres ejes en una guía', en: 'Lower Secondary Science: the three strands in one guide' }, meta: { es: 'PDF · 18 páginas', en: 'PDF · 18 pages' } },
-        { p: 'lower-secondary', title: { es: 'Preparación IELTS, FCE y CAE: estructura de cada examen', en: 'IELTS, FCE and CAE preparation: the structure of each exam' }, meta: { es: 'PDF · 10 páginas', en: 'PDF · 10 pages' } }
-      ]
-    },
-    {
-      slug: 'past-papers',
-      title: { es: 'Past papers', en: 'Past papers' },
-      blurb: { es: 'Exámenes de años anteriores con mark scheme y comentarios del equipo.', en: 'Previous years’ examinations with mark schemes and notes from the team.' },
-      items: [
-        { p: 'igcse', title: { es: 'Physics 0625 · Paper 4 · series recientes', en: 'Physics 0625 · Paper 4 · recent series' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } },
-        { p: 'igcse', title: { es: 'Biology 0610 · Paper 6 (práctico alternativo)', en: 'Biology 0610 · Paper 6 (alternative to practical)' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } },
-        { p: 'a-level', title: { es: 'Chemistry 9701 · Papers 2 y 4', en: 'Chemistry 9701 · Papers 2 and 4' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } },
-        { p: 'ib-dp', title: { es: 'Physics SL/HL · Paper 1 y Paper 2', en: 'Physics SL/HL · Paper 1 and Paper 2' }, meta: { es: 'Selección por tema', en: 'Selected by topic' } },
-        { p: 'plan-nacional', title: { es: 'Ensayos PAES Competencia Matemática M1', en: 'PAES Mathematics M1 mock exams' }, meta: { es: 'Con corrección comentada', en: 'With annotated feedback' } },
-        { p: 'lower-secondary', title: { es: 'Checkpoint Science 1113 · Papers 1 y 2', en: 'Checkpoint Science 1113 · Papers 1 and 2' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } },
-        { p: 'lower-secondary', title: { es: 'Checkpoint Mathematics 1112 · Papers 1 y 2', en: 'Checkpoint Mathematics 1112 · Papers 1 and 2' }, meta: { es: 'Con mark scheme', en: 'With mark scheme' } }
-      ]
-    },
-    {
-      slug: 'slides',
-      title: { es: 'Slides', en: 'Slides' },
-      blurb: { es: 'Presentaciones de clase, útiles para repasar antes de una prueba.', en: 'Class presentations, useful for revising before a test.' },
-      items: [
-        { p: 'igcse', title: { es: 'Ondas y luz: presentación de repaso', en: 'Waves and light: revision presentation' }, meta: { es: '38 slides', en: '38 slides' } },
-        { p: 'a-level', title: { es: 'Mecanismos orgánicos: sustitución y eliminación', en: 'Organic mechanisms: substitution and elimination' }, meta: { es: '42 slides', en: '42 slides' } },
-        { p: 'ib-dp', title: { es: 'Continuidad y cambio en Biología', en: 'Continuity and change in Biology' }, meta: { es: '30 slides', en: '30 slides' } }
-      ]
-    },
-    {
-      slug: 'notes',
-      title: { es: 'Apuntes', en: 'Notes' },
-      blurb: { es: 'Notas breves por tema, escritas para leer en diez minutos.', en: 'Short notes by topic, written to be read in ten minutes.' },
-      items: [
-        { p: 'a-level', title: { es: 'Incertidumbres y tratamiento de datos experimentales', en: 'Uncertainties and handling experimental data' }, meta: { es: 'Lectura de 7 min', en: '7 min read' } },
-        { p: 'ib-dp', title: { es: 'Criterios de evaluación de la Monografía', en: 'Extended Essay assessment criteria' }, meta: { es: 'Lectura de 6 min', en: '6 min read' } },
-        { p: 'plan-nacional', title: { es: 'Cómo se calcula el puntaje PAES', en: 'How the PAES score is calculated' }, meta: { es: 'Lectura de 5 min', en: '5 min read' } },
-        { p: 'igcse', title: { es: 'Diferencias entre Core y Extended', en: 'Differences between Core and Extended' }, meta: { es: 'Lectura de 4 min', en: '4 min read' } }
-      ]
-    }
-  ];
-
   storedLang() {
     try {
       const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
       if (q) return q;
       const s = localStorage.getItem('fagus-lang');
       if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  storedProgram() {
+    try {
+      const q = (location.search.match(/[?&]program=([a-z-]+)/) || [])[1];
+      if (q && this.PROG.some(p => p.slug === q)) return q;
+      const h = location.hash.replace('#', '');
+      if (h && this.PROG.some(p => p.slug === h)) return h;
     } catch (e) {}
     return null;
   }
@@ -477,8 +419,8 @@ class Component extends DCLogic {
   renderVals() {
     const lang = this.state.lang || this.storedLang() || 'es';
     const t = this.UI[lang];
-    const f = this.state.filter;
-    const labelOf = (slug) => { const p = this.PROG.find(x => x.slug === slug); return p ? p[lang] : slug; };
+    const program = this.state.program || this.storedProgram() || 'igcse';
+    const isIgcse = program === 'igcse';
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     const subj = this.state.subject;
     const activeRaw = this.SUBJECTS.find(s => s.slug === subj) || this.SUBJECTS[0];
@@ -514,20 +456,13 @@ class Component extends DCLogic {
       })),
       activeSubject,
       flashcardSets,
+      isIgcse,
+      isEmptyProgram: !isIgcse,
       filters: this.PROG.map(p => ({
         label: p[lang],
-        onClick: () => this.setState({ filter: p.slug }),
-        style: `border:1px solid ${f === p.slug ? '#17365B' : '#E7E9EC'};background:${f === p.slug ? '#17365B' : 'transparent'};color:${f === p.slug ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`
-      })),
-      groups: this.G.map((g, i) => {
-        const items = g.items.filter(it => f === 'all' || it.p === f);
-        return {
-          slug: g.slug, title: g.title[lang], blurb: g.blurb[lang],
-          sectionStyle: i % 2 === 1 ? 'background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC' : 'background:#FFFFFF',
-          empty: items.length === 0,
-          items: items.map(it => ({ title: it.title[lang], meta: it.meta[lang], program: labelOf(it.p) }))
-        };
-      })
+        onClick: () => this.setState({ program: p.slug }),
+        style: `border:1px solid ${program === p.slug ? '#17365B' : '#E7E9EC'};background:${program === p.slug ? '#17365B' : 'transparent'};color:${program === p.slug ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`
+      }))
     };
   }
 }
