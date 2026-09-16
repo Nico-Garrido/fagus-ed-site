@@ -72,7 +72,7 @@
       <sc-if value="{{ activeSubject.plain }}" hint-placeholder-val="{{ true }}">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
           <sc-for list="{{ activeSubject.topics }}" as="it" hint-placeholder-count="8">
-            <a href="{{ it.href }}" download style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+            <a href="{{ it.href }}" download="{{ it.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
               <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.tag }}</div>
               <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
               <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
@@ -87,7 +87,7 @@
             <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:15px;letter-spacing:.02em;margin:0 0 18px;color:#17365B;padding-bottom:10px;border-bottom:2px solid #17365B;display:inline-block">{{ sg.label }}</h3>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
               <sc-for list="{{ sg.topics }}" as="it" hint-placeholder-count="8">
-                <a href="{{ it.href }}" download style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+                <a href="{{ it.href }}" download="{{ it.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
                   <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.tag }}</div>
                   <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
                   <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
@@ -97,6 +97,32 @@
           </div>
         </sc-for>
       </sc-if>
+    </div>
+  </section>
+
+  <section id="flashcards" style="max-width:1140px;margin:0 auto;padding:64px 24px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.flashLabel }}</div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px">
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.flashTitle }}</h2>
+      <p style="font-size:16px;color:#7F8996;max-width:44ch;margin:0;line-height:1.6">{{ t.flashBlurb }}</p>
+    </div>
+
+    <div style="margin-bottom:40px;padding:36px;background:#17365B;color:#FFFFFF;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px">
+      <div style="max-width:56ch">
+        <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:20px;margin:0 0 10px;color:#FFFFFF">{{ t.flashInteractiveTitle }}</h3>
+        <p style="font-size:15px;line-height:1.6;margin:0;color:#D3D9E2">{{ t.flashInteractiveBody }}</p>
+      </div>
+      <a href="flashcards.html" target="_blank" style="flex-shrink:0;background:#FFFFFF;color:#17365B;padding:14px 24px;font-family:Figtree,sans-serif;font-weight:600;font-size:14.5px;text-decoration:none" style-hover="background:#F9F9F9;color:#17365B">{{ t.flashInteractiveCta }} ↗</a>
+    </div>
+
+    <div style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#A3ABB6;margin-bottom:18px">{{ t.flashPrintLabel }}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+      <sc-for list="{{ flashcardSets }}" as="fc" hint-placeholder-count="8">
+        <a href="{{ fc.href }}" download="{{ fc.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:130px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+          <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:16px;line-height:1.3;margin:0;color:#17365B">{{ fc.label }}</h3>
+          <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ fc.stats }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+        </a>
+      </sc-for>
     </div>
   </section>
 
@@ -162,7 +188,7 @@ class Component extends DCLogic {
 
   SUBJECTS = [
     {
-      slug: 'physics-0625', dir: 'guides/physics-0625', label: 'Physics (0625)',
+      slug: 'physics-0625', dir: 'guides/physics-0625', label: 'Physics (0625)', name: 'Physics', code: '0625',
       topics: [
         { tag: 'Topic 1', title: 'Motion, forces and energy', file: 'FagusED_IGCSE_Physics_0625_Topic_1_V6_Cambridge_Typography.pdf' },
         { tag: 'Topic 2', title: 'Thermal physics', file: 'FagusED_IGCSE_Physics_0625_Topic_2_Thermal_Physics.pdf' },
@@ -173,7 +199,7 @@ class Component extends DCLogic {
       ]
     },
     {
-      slug: 'chemistry-0620', dir: 'guides/chemistry-0620', label: 'Chemistry (0620)',
+      slug: 'chemistry-0620', dir: 'guides/chemistry-0620', label: 'Chemistry (0620)', name: 'Chemistry', code: '0620',
       topics: [
         { tag: 'Topic 1', title: 'States of matter', file: 'FagusED_IGCSE_Chemistry_0620_Topic_1_States_of_matter.pdf' },
         { tag: 'Topic 2', title: 'Atoms, elements and compounds', file: 'FagusED_IGCSE_Chemistry_0620_Topic_2_Atoms,_elements_and_compounds.pdf' },
@@ -190,7 +216,7 @@ class Component extends DCLogic {
       ]
     },
     {
-      slug: 'biology-0610', dir: 'guides/biology-0610', label: 'Biology (0610)',
+      slug: 'biology-0610', dir: 'guides/biology-0610', label: 'Biology (0610)', name: 'Biology', code: '0610',
       topics: [
         { tag: 'Topic 1', title: 'Characteristics and classification of living organisms', file: 'FagusED_IGCSE_Biology_0610_Topic_1_Characteristics_and_classification_of_living_organisms.pdf' },
         { tag: 'Topic 2', title: 'Organisation of the organism', file: 'FagusED_IGCSE_Biology_0610_Topic_2_Organisation_of_the_organism.pdf' },
@@ -216,7 +242,7 @@ class Component extends DCLogic {
       ]
     },
     {
-      slug: 'coordinated-sciences-0654', dir: 'guides/coordinated-sciences-0654', label: 'Co-ordinated Sciences (0654)', strands: true,
+      slug: 'coordinated-sciences-0654', dir: 'guides/coordinated-sciences-0654', label: 'Co-ordinated Sciences (0654)', name: 'Co_ordinated_Sciences', code: '0654', strands: true,
       topics: [
         { tag: 'B1', title: 'Characteristics and classification of living organisms', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B1_Characteristics_and_classification_of_living_organisms.pdf', strand: 'B' },
         { tag: 'B2', title: 'Cells', file: 'FagusED_IGCSE_Co_ordinated_Sciences_0654_B2_Cells.pdf', strand: 'B' },
@@ -258,7 +284,7 @@ class Component extends DCLogic {
       ]
     },
     {
-      slug: 'mathematics-0580', dir: 'guides/mathematics-0580', label: 'Mathematics (0580)',
+      slug: 'mathematics-0580', dir: 'guides/mathematics-0580', label: 'Mathematics (0580)', name: 'Mathematics', code: '0580',
       topics: [
         { tag: 'Topic 1', title: 'Number', file: 'FagusED_IGCSE_Mathematics_0580_Topic_1_Number.pdf' },
         { tag: 'Topic 2', title: 'Algebra and graphs', file: 'FagusED_IGCSE_Mathematics_0580_Topic_2_Algebra_and_graphs.pdf' },
@@ -272,7 +298,7 @@ class Component extends DCLogic {
       ]
     },
     {
-      slug: 'international-mathematics-0607', dir: 'guides/international-mathematics-0607', label: 'International Mathematics (0607)',
+      slug: 'international-mathematics-0607', dir: 'guides/international-mathematics-0607', label: 'International Mathematics (0607)', name: 'International_Mathematics', code: '0607',
       topics: [
         { tag: 'Topic 1', title: 'Number', file: 'FagusED_IGCSE_International_Mathematics_0607_Topic_1_Number.pdf' },
         { tag: 'Topic 2', title: 'Algebra', file: 'FagusED_IGCSE_International_Mathematics_0607_Topic_2_Algebra.pdf' },
@@ -287,7 +313,7 @@ class Component extends DCLogic {
       ]
     },
     {
-      slug: 'english-first-language-0500', dir: 'guides/english-first-language-0500', label: 'First Language English (0500)',
+      slug: 'english-first-language-0500', dir: 'guides/english-first-language-0500', label: 'First Language English (0500)', name: 'English_First_Language', code: '0500',
       topics: [
         { tag: 'Guide 1', title: 'Comprehension and inference', file: 'FagusED_IGCSE_English_First_Language_0500_01_Comprehension_and_inference.pdf' },
         { tag: 'Guide 2', title: 'Selective summary and attitudes', file: 'FagusED_IGCSE_English_First_Language_0500_02_Selective_summary_and_attitudes.pdf' },
@@ -298,7 +324,7 @@ class Component extends DCLogic {
       ]
     },
     {
-      slug: 'english-second-language-0511', dir: 'guides/english-second-language-0511', label: 'English as a Second Language (0511)',
+      slug: 'english-second-language-0511', dir: 'guides/english-second-language-0511', label: 'English as a Second Language (0511)', name: 'English_Second_Language', code: '0511',
       topics: [
         { tag: 'Guide 1', title: 'Reading for precise information', file: 'FagusED_IGCSE_English_Second_Language_0511_01_Reading_for_precise_information.pdf' },
         { tag: 'Guide 2', title: 'Multiple matching across texts', file: 'FagusED_IGCSE_English_Second_Language_0511_02_Multiple_matching_across_texts.pdf' },
@@ -310,6 +336,17 @@ class Component extends DCLogic {
         { tag: 'Guide 8', title: 'Speaking: interview, short talk and discussion', file: 'FagusED_IGCSE_English_Second_Language_0511_08_Speaking_interview,_short_talk_and_discussion.pdf' }
       ]
     }
+  ];
+
+  FLASHCARDS = [
+    { name: 'Physics', code: '0625', cards: 50, topics: 6, file: 'FagusED_IGCSE_Flashcards_Physics_0625_Compact.pdf' },
+    { name: 'Chemistry', code: '0620', cards: 84, topics: 12, file: 'FagusED_IGCSE_Flashcards_Chemistry_0620_Compact.pdf' },
+    { name: 'Biology', code: '0610', cards: 168, topics: 21, file: 'FagusED_IGCSE_Flashcards_Biology_0610_Compact.pdf' },
+    { name: 'Co-ordinated Sciences', code: '0654', cards: 148, topics: 37, file: 'FagusED_IGCSE_Flashcards_Co_ordinated_Sciences_0654_Compact.pdf' },
+    { name: 'Mathematics', code: '0580', cards: 54, topics: 9, file: 'FagusED_IGCSE_Flashcards_Mathematics_0580_Compact.pdf' },
+    { name: 'International Mathematics', code: '0607', cards: 70, topics: 10, file: 'FagusED_IGCSE_Flashcards_International_Mathematics_0607_Compact.pdf' },
+    { name: 'First Language English', code: '0500', cards: 24, topics: 6, file: 'FagusED_IGCSE_Flashcards_English_First_Language_0500_Compact.pdf' },
+    { name: 'English as a Second Language', code: '0511', cards: 33, topics: 8, file: 'FagusED_IGCSE_Flashcards_English_Second_Language_0511_Compact.pdf' }
   ];
 
   PROG = [
@@ -333,6 +370,14 @@ class Component extends DCLogic {
       guidesBlurb: 'Teoría, ejemplos resueltos y práctica tipo examen en PDF, para Physics, Chemistry, Biology, Co-ordinated Sciences y Mathematics. Descarga directa, sin registro.',
       pdfBadge: 'PDF',
       download: 'Descargar',
+      flashLabel: 'Flashcards',
+      flashTitle: 'Flashcards IGCSE, interactivas o para imprimir',
+      flashBlurb: 'Tarjetas de pregunta y respuesta por asignatura, basadas en las guías FagusED. Repasa en el navegador o recorta tarjetas de doble cara.',
+      flashInteractiveTitle: 'Versión interactiva',
+      flashInteractiveBody: 'Filtra por asignatura y tema, da vuelta la tarjeta para ver la respuesta y califica tu repaso. Funciona sin conexión y guarda tu progreso en este navegador.',
+      flashInteractiveCta: 'Abrir flashcards interactivas',
+      flashPrintLabel: 'Versión imprimible, por asignatura',
+      cardsLabel: 'tarjetas', topicsLabel: 'temas',
       ctaTitle: '¿Buscas material de una asignatura específica?',
       ctaBody: 'Escríbenos y te enviamos el paquete que corresponde a tu programa y nivel.',
       ctaButton: 'Escribir al equipo',
@@ -349,6 +394,14 @@ class Component extends DCLogic {
       guidesBlurb: 'Theory, worked examples and exam-style practice in PDF, for Physics, Chemistry, Biology, Co-ordinated Sciences and Mathematics. Direct download, no sign-up.',
       pdfBadge: 'PDF',
       download: 'Download',
+      flashLabel: 'Flashcards',
+      flashTitle: 'IGCSE flashcards, interactive or printable',
+      flashBlurb: 'Question-and-answer cards by subject, based on the FagusED guides. Review in the browser or cut out double-sided cards.',
+      flashInteractiveTitle: 'Interactive version',
+      flashInteractiveBody: 'Filter by subject and topic, flip the card to see the answer, and rate your recall. Works offline and saves your progress in this browser.',
+      flashInteractiveCta: 'Open the interactive flashcards',
+      flashPrintLabel: 'Printable version, by subject',
+      cardsLabel: 'cards', topicsLabel: 'topics',
       ctaTitle: 'Looking for material on a specific subject?',
       ctaBody: 'Write to us and we will send the pack that matches your programme and level.',
       ctaButton: 'Write to the team',
@@ -429,7 +482,11 @@ class Component extends DCLogic {
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     const subj = this.state.subject;
     const activeRaw = this.SUBJECTS.find(s => s.slug === subj) || this.SUBJECTS[0];
-    const withHref = activeRaw.topics.map(tp => Object.assign({}, tp, { href: activeRaw.dir + '/' + tp.file }));
+    const slugify = (s) => s.replace(/,/g, '').trim().replace(/\s+/g, '_');
+    const withHref = activeRaw.topics.map(tp => Object.assign({}, tp, {
+      href: activeRaw.dir + '/' + tp.file,
+      downloadName: [activeRaw.name, activeRaw.code, slugify(tp.tag), slugify(tp.title)].join('_') + '.pdf'
+    }));
     const activeSubject = activeRaw.strands
       ? {
           plain: false,
@@ -440,6 +497,12 @@ class Component extends DCLogic {
           }))
         }
       : { plain: true, strands: false, topics: withHref };
+    const flashcardSets = this.FLASHCARDS.map(fc => ({
+      label: `${fc.name} (${fc.code})`,
+      href: 'flashcards/' + fc.file,
+      downloadName: [slugify(fc.name), fc.code, 'Flashcards.pdf'].join('_'),
+      stats: `${fc.cards} ${t.cardsLabel} · ${fc.topics} ${t.topicsLabel}`
+    }));
     return {
       t, lang,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
@@ -450,6 +513,7 @@ class Component extends DCLogic {
         style: `border:1px solid ${subj === s.slug ? '#17365B' : '#E7E9EC'};background:${subj === s.slug ? '#17365B' : 'transparent'};color:${subj === s.slug ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`
       })),
       activeSubject,
+      flashcardSets,
       filters: this.PROG.map(p => ({
         label: p[lang],
         onClick: () => this.setState({ filter: p.slug }),
