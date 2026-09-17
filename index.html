@@ -364,7 +364,7 @@ class Component extends DCLogic {
 
   LINKS = [
     { href: 'https://www.preufagus-ed.cl', ext: true },
-    { href: 'material.html' },
+    { href: 'recursos.html' },
     { href: 'tutoria.html' },
     { href: 'agendar.html?s=familias' },
     { href: 'agendar.html?s=vocacional' },
@@ -372,19 +372,25 @@ class Component extends DCLogic {
   ];
 
   PROGRAMS = [
-    { slug: 'plan-nacional', label: 'Plan Nacional' },
-    { slug: 'lower-secondary', label: 'Lower Secondary' },
-    { slug: 'igcse', label: 'IGCSE' },
-    { slug: 'a-level', label: 'A-Level' },
-    { slug: 'ib-dp', label: 'IB DP' }
+    { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum', subjects: ['ciencias', 'biologia', 'fisica', 'quimica', 'matematicas', 'ingles'] },
+    { slug: 'igcse', es: 'IGCSE', en: 'IGCSE', subjects: ['biologia', 'quimica', 'fisica', 'co-ordinated-sciences', 'matematicas', 'international-mathematics', 'ingles'] },
+    { slug: 'a-level', es: 'A-Level', en: 'A-Level', subjects: ['biologia', 'quimica', 'fisica', 'matematicas', 'ingles'] },
+    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP', subjects: ['biologia', 'quimica', 'fisica', 'matematicas', 'ingles'] },
+    { slug: 'paes', es: 'PAES', en: 'PAES', subjects: ['paes-ciencias', 'paes-m1', 'paes-m2'] }
   ];
-  SUBJECTS = [
-    { slug: 'biologia', es: 'Biología', en: 'Biology' },
-    { slug: 'quimica', es: 'Química', en: 'Chemistry' },
-    { slug: 'fisica', es: 'Física', en: 'Physics' },
-    { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics' },
-    { slug: 'ingles', es: 'Inglés', en: 'English' }
-  ];
+  SUBJECT_LABELS = {
+    ciencias: { es: 'Ciencias', en: 'Science' },
+    biologia: { es: 'Biología', en: 'Biology' },
+    fisica: { es: 'Física', en: 'Physics' },
+    quimica: { es: 'Química', en: 'Chemistry' },
+    matematicas: { es: 'Matemáticas', en: 'Mathematics' },
+    ingles: { es: 'Inglés', en: 'English' },
+    'co-ordinated-sciences': { es: 'Co-ordinated Sciences', en: 'Co-ordinated Sciences' },
+    'international-mathematics': { es: 'International Mathematics', en: 'International Mathematics' },
+    'paes-ciencias': { es: 'Ciencias', en: 'Science' },
+    'paes-m1': { es: 'Competencia Matemática M1', en: 'Mathematics M1' },
+    'paes-m2': { es: 'Competencia Matemática M2', en: 'Mathematics M2' }
+  };
   RESOURCES = [
     { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
     { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
@@ -402,19 +408,21 @@ class Component extends DCLogic {
     });
     const plain = (label, href) => ({ label, href, arrow: '', subOpen: false, sub: [], enter: () => this.setState({ subItem: null }), leave: () => {} });
     return [
-      mk('programs', t.navPrograms, this.PROGRAMS.map(p => plain(p.label, 'programas.html#' + p.slug)), 'programas.html'),
-      mk('subjects', t.navCodes, this.SUBJECTS.map(s => {
-        const id = 'sub-' + s.slug;
+      mk('programs', t.navPrograms, this.PROGRAMS.map(p => {
+        const id = 'prog-' + p.slug;
         return {
-          label: lang === 'en' ? s.en : s.es,
-          href: 'asignaturas.html#' + s.slug,
+          label: p[lang],
+          href: 'programas.html?program=' + p.slug,
           arrow: '›',
           subOpen: this.state.subItem === id,
           enter: () => this.setState({ subItem: id }),
           leave: () => {},
-          sub: this.PROGRAMS.map(p => ({ label: p.label, href: 'asignaturas.html#' + s.slug + '-' + p.slug }))
+          sub: p.subjects.map(sSlug => ({
+            label: this.SUBJECT_LABELS[sSlug][lang],
+            href: p.slug === 'paes' ? 'programas.html?program=paes' : 'asignaturas.html?subject=' + sSlug + '&program=' + p.slug
+          }))
         };
-      }), 'asignaturas.html'),
+      }), 'programas.html'),
       mk('resources', t.navResources, this.RESOURCES.map(r => plain(lang === 'en' ? r.en : r.es, 'recursos.html#' + r.slug)), 'recursos.html')
     ];
   }
@@ -462,7 +470,7 @@ class Component extends DCLogic {
 
   D = {
     es: {
-      navServices: 'Servicios', navPrograms: 'Programas', navCodes: 'Asignaturas', navResources: 'Recursos', navTeam: 'Nosotros', navCta: 'Agendar reunión',
+      navServices: 'Servicios', navPrograms: 'Programas', navResources: 'Recursos', navTeam: 'Nosotros', navCta: 'Agendar reunión',
       codesLabel: 'Asignaturas y códigos', codesTitle: 'Códigos de asignatura por programa',
       codesNote: 'Referencia de los códigos oficiales de cada asignatura en IGCSE, A Level e IB DP. Trabajamos con material alineado a cada uno.',
       codesSubject: 'Asignatura',
@@ -489,7 +497,7 @@ class Component extends DCLogic {
       footer: '© 2026 Fagus Ed. Santiago, Chile.', footerTagline: 'Educación que abre caminos'
     },
     en: {
-      navServices: 'Services', navPrograms: 'Programmes', navCodes: 'Subjects', navResources: 'Resources', navTeam: 'About', navCta: 'Book a meeting',
+      navServices: 'Services', navPrograms: 'Programmes', navResources: 'Resources', navTeam: 'About', navCta: 'Book a meeting',
       codesLabel: 'Subjects and codes', codesTitle: 'Subject codes by programme',
       codesNote: 'Reference of the official subject codes for IGCSE, A Level and IB DP. Our material is aligned to each of them.',
       codesSubject: 'Subject',
@@ -684,8 +692,7 @@ class Component extends DCLogic {
       closeNav: () => this.setState({ navOpen: false }),
       mobileGroups: [
         { label: t.navServices, items: c.services.map((s, i) => { const L = this.LINKS[i] || { href: '#contacto' }; return { label: s.title, href: L.href, target: L.ext ? '_blank' : '_self' }; }) },
-        { label: t.navPrograms, items: this.PROGRAMS.map(p => ({ label: p.label, href: 'programas.html#' + p.slug, target: '_self' })) },
-        { label: t.navCodes, items: this.SUBJECTS.map(s => ({ label: lang === 'en' ? s.en : s.es, href: 'asignaturas.html#' + s.slug, target: '_self' })) },
+        { label: t.navPrograms, items: this.PROGRAMS.map(p => ({ label: p[lang], href: 'programas.html?program=' + p.slug, target: '_self' })) },
         { label: t.navResources, items: this.RESOURCES.map(r => ({ label: lang === 'en' ? r.en : r.es, href: 'recursos.html#' + r.slug, target: '_self' })) },
         { label: t.navTeam, items: [{ label: t.teamTitle, href: '#equipo', target: '_self' }, { label: t.navCta, href: '#contacto', target: '_self' }] }
       ],

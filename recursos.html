@@ -34,7 +34,6 @@
       <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
         <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
         <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
-        <a href="asignaturas.html" style="color:#2E4057">{{ t.navSubjects }}</a>
       </nav>
       <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
         <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
@@ -70,17 +69,14 @@
           <button onClick="{{ lv.onClick }}" style="{{ lv.style }}">{{ lv.label }}</button>
         </sc-for>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px">
-        <sc-for list="{{ pnSubjectTabs }}" as="ps" hint-placeholder-count="5">
-          <button onClick="{{ ps.onClick }}" style="{{ ps.style }}">{{ ps.label }}</button>
-        </sc-for>
-      </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
-        <a href="{{ pnGuide.href }}" download="{{ pnGuide.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;max-width:340px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
-          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ pnGuide.tag }}</div>
-          <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ pnGuide.title }}</h3>
-          <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
-        </a>
+        <sc-for list="{{ pnGuides }}" as="pg" hint-placeholder-count="5">
+          <a href="{{ pg.href }}" download="{{ pg.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+            <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ pg.tag }}</div>
+            <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ pg.title }}</h3>
+            <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+          </a>
+        </sc-for>
       </div>
     </div>
   </section>
@@ -193,7 +189,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { program: null, subject: 'physics-0625', strand: 'B', level: null, pnSubject: null, lang: null };
+  state = { program: null, subject: 'physics-0625', strand: 'B', level: null, lang: null };
 
   STRAND_LABEL = {
     B: { es: 'Biología', en: 'Biology' },
@@ -496,23 +492,17 @@ class Component extends DCLogic {
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     const tabStyle = (on) => `border:1px solid ${on ? '#17365B' : '#E7E9EC'};background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`;
     const activeLevel = this.PLAN_NACIONAL.find(l => l.slug === this.state.level) || this.PLAN_NACIONAL[0];
-    const activePnSubject = activeLevel.subjects.find(s => s.slug === this.state.pnSubject) || activeLevel.subjects[0];
     const levelTabs = this.PLAN_NACIONAL.map(l => ({
       label: l[lang],
-      onClick: () => this.setState({ level: l.slug, pnSubject: null }),
+      onClick: () => this.setState({ level: l.slug }),
       style: tabStyle(activeLevel.slug === l.slug)
     }));
-    const pnSubjectTabs = activeLevel.subjects.map(s => ({
-      label: s[lang],
-      onClick: () => this.setState({ pnSubject: s.slug }),
-      style: tabStyle(activePnSubject.slug === s.slug)
-    }));
-    const pnGuide = {
-      href: activeLevel.dir + '/' + activePnSubject.file,
-      downloadName: ['FagusED_PlanNacional', activeLevel.slug.replace(/-/g, '_'), activePnSubject.slug].join('_') + '.pdf',
+    const pnGuides = activeLevel.subjects.map(s => ({
+      href: activeLevel.dir + '/' + s.file,
+      downloadName: ['FagusED_PlanNacional', activeLevel.slug.replace(/-/g, '_'), s.slug].join('_') + '.pdf',
       tag: activeLevel[lang],
-      title: activePnSubject[lang]
-    };
+      title: s[lang]
+    }));
     const subj = this.state.subject;
     const activeRaw = this.SUBJECTS.find(s => s.slug === subj) || this.SUBJECTS[0];
     const slugify = (s) => s.replace(/,/g, '').trim().replace(/\s+/g, '_');
@@ -554,8 +544,7 @@ class Component extends DCLogic {
       isIgcse,
       isPlanNacional,
       levelTabs,
-      pnSubjectTabs,
-      pnGuide,
+      pnGuides,
       isEmptyProgram: !isIgcse && !isPlanNacional,
       filters: this.PROG.map(p => ({
         label: p[lang],

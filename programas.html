@@ -33,7 +33,6 @@
       </a>
       <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
         <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
-        <a href="asignaturas.html" style="color:#2E4057">{{ t.navSubjects }}</a>
         <a href="recursos.html" style="color:#2E4057">{{ t.navResources }}</a>
       </nav>
       <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
@@ -51,33 +50,31 @@
     <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.title }}</h1>
     <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">{{ t.intro }}</p>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:36px">
-      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
-        <a href="{{ n.href }}" style="border:1px solid #E7E9EC;padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;color:#2E4057" style-hover="background:#F9F9F9;border-color:#17365B">{{ n.label }}</a>
+      <sc-for list="{{ programTabs }}" as="n" hint-placeholder-count="5">
+        <button onClick="{{ n.onClick }}" style="{{ n.style }}">{{ n.label }}</button>
       </sc-for>
     </div>
   </section>
 
-  <sc-for list="{{ programs }}" as="p" hint-placeholder-count="4">
-    <section id="{{ p.slug }}" style="{{ p.sectionStyle }}">
-      <div style="max-width:1140px;margin:0 auto;padding:76px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:52px;align-items:start">
-        <div style="position:relative">
-          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ p.kicker }}</div>
-          <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:pretty">{{ p.title }}</h2>
-          <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:22px 0 0;text-wrap:pretty">{{ p.intro }}</p>
-          <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:16px 0 0;text-wrap:pretty">{{ p.intro2 }}</p>
-          <a href="{{ p.askHref }}" style="display:inline-block;margin-top:28px;border-bottom:1px solid #17365B;padding-bottom:3px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600">{{ t.askAbout }}</a>
-        </div>
-        <div style="display:grid;gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
-          <sc-for list="{{ p.facts }}" as="f" hint-placeholder-count="5">
-            <div style="background:#FFFFFF;padding:20px 22px">
-              <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ f.label }}</div>
-              <div style="font-size:16px;line-height:1.55;color:#2E4057;margin-top:7px;text-wrap:pretty">{{ f.value }}</div>
-            </div>
-          </sc-for>
-        </div>
+  <section id="{{ activeProgram.slug }}" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:76px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:52px;align-items:start">
+      <div style="position:relative">
+        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:16px">{{ activeProgram.kicker }}</div>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:pretty">{{ activeProgram.title }}</h2>
+        <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:22px 0 0;text-wrap:pretty">{{ activeProgram.intro }}</p>
+        <p style="font-size:17px;line-height:1.65;color:#5A6675;margin:16px 0 0;text-wrap:pretty">{{ activeProgram.intro2 }}</p>
+        <a href="{{ activeProgram.askHref }}" style="display:inline-block;margin-top:28px;border-bottom:1px solid #17365B;padding-bottom:3px;font-family:Figtree,sans-serif;font-size:15px;font-weight:600">{{ t.askAbout }}</a>
       </div>
-    </section>
-  </sc-for>
+      <div style="display:grid;gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+        <sc-for list="{{ activeProgram.facts }}" as="f" hint-placeholder-count="5">
+          <div style="background:#FFFFFF;padding:20px 22px">
+            <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ f.label }}</div>
+            <div style="font-size:16px;line-height:1.55;color:#2E4057;margin-top:7px;text-wrap:pretty">{{ f.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
 
   <section style="background:#17365B;color:#FFFFFF">
     <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
@@ -108,7 +105,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { lang: null };
+  state = { program: null, lang: null };
 
   D = {
     es: {
@@ -183,6 +180,18 @@ class Component extends DCLogic {
             { label: 'Evaluación', value: 'Exámenes externos más evaluación interna (IA) en cada asignatura' },
             { label: 'Calificación', value: '1 a 7 por asignatura; 45 puntos máximo, 24 mínimo para el diploma' },
             { label: 'Cómo apoyamos', value: 'Tutoría por asignatura y nivel, orientación en la IA y en la Monografía, preparación de exámenes' }
+          ]
+        },
+        {
+          slug: 'paes', kicker: 'Admisión a la universidad', title: 'PAES',
+          intro: 'La Prueba de Acceso a la Educación Superior (PAES) es el proceso de admisión a las universidades chilenas adscritas al sistema. Junto con las notas de enseñanza media (NEM) y el ranking, determina el puntaje con el que un estudiante postula a las carreras.',
+          intro2: 'Trabajamos la preparación por prueba y por eje temático, con diagnóstico inicial, ensayos periódicos y seguimiento de puntaje hasta la fecha de la prueba.',
+          facts: [
+            { label: 'Pruebas', value: 'Competencia Lectora, Competencia Matemática M1 (obligatoria) y M2 (electiva), Ciencias e Historia y Ciencias Sociales (electivas)' },
+            { label: 'Puntaje', value: 'Escala de 100 a 1000 puntos por prueba; se combina con NEM y ranking según cada carrera' },
+            { label: 'Calendario', value: 'Se rinde una vez al año, con proceso de admisión regular a fin de año' },
+            { label: 'Nuestro foco', value: 'Competencia Matemática M1 y M2, y la prueba de Ciencias' },
+            { label: 'Cómo apoyamos', value: 'Preu FagusED: clases por eje, ensayos periódicos con corrección y reporte de avance de puntaje' }
           ]
         }
       ]
@@ -260,6 +269,18 @@ class Component extends DCLogic {
             { label: 'Grading', value: '1 to 7 per subject; 45 points maximum, 24 minimum for the diploma' },
             { label: 'How we help', value: 'Tutoring by subject and level, guidance on the IA and Extended Essay, exam preparation' }
           ]
+        },
+        {
+          slug: 'paes', kicker: 'University admission', title: 'PAES',
+          intro: 'The PAES (Prueba de Acceso a la Educación Superior) is the admission process for Chilean universities within the state system. Together with the school grade average (NEM) and class ranking, it determines the score a student applies with.',
+          intro2: 'We prepare students test by test and strand by strand, with an initial diagnostic, regular mock exams and score tracking through to the test date.',
+          facts: [
+            { label: 'Tests', value: 'Reading Competency, Mathematics Competency M1 (compulsory) and M2 (elective), Sciences and History and Social Sciences (elective)' },
+            { label: 'Score', value: 'A 100–1000 point scale per test; combined with the school grade average and ranking depending on each degree' },
+            { label: 'Calendar', value: 'Sat once a year, ahead of the regular admission round at the end of the year' },
+            { label: 'Our focus', value: 'Mathematics Competency M1 and M2, and the Sciences test' },
+            { label: 'How we help', value: 'Preu FagusED: classes by strand, regular mock exams with feedback and score-progress reports' }
+          ]
         }
       ]
     }
@@ -278,21 +299,34 @@ class Component extends DCLogic {
     try { localStorage.setItem('fagus-lang', l); } catch (e) {}
     this.setState({ lang: l });
   }
+  storedProgram(validSlugs) {
+    try {
+      const q = (location.search.match(/[?&]program=([a-z-]+)/) || [])[1];
+      if (q && validSlugs.includes(q)) return q;
+      const h = location.hash.replace('#', '');
+      if (h && validSlugs.includes(h)) return h;
+    } catch (e) {}
+    return null;
+  }
 
   renderVals() {
     const lang = this.state.lang || this.storedLang() || 'es';
     const t = this.D[lang];
+    const validSlugs = t.programs.map(p => p.slug);
+    const program = this.state.program || this.storedProgram(validSlugs) || 'plan-nacional';
+    const activeRaw = t.programs.find(p => p.slug === program) || t.programs[0];
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
+    const tabStyle = (on) => `border:1px solid ${on ? '#17365B' : '#E7E9EC'};background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`;
     return {
       t, lang,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
-      nav: t.programs.map(p => ({ label: p.title, href: '#' + p.slug })),
-      programs: t.programs.map((p, i) => ({
-        ...p,
-        askHref: 'agendar.html?s=tutoria&p=' + p.slug + '&lang=' + lang,
-        sectionStyle: i % 2 === 1 ? 'background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC' : 'background:#FFFFFF'
-      }))
+      programTabs: t.programs.filter(p => p.slug !== 'lower-secondary').map(p => ({
+        label: p.title,
+        onClick: () => this.setState({ program: p.slug }),
+        style: tabStyle(p.slug === program)
+      })),
+      activeProgram: { ...activeRaw, askHref: 'agendar.html?s=tutoria&p=' + activeRaw.slug + '&lang=' + lang }
     };
   }
 }
