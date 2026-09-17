@@ -237,6 +237,63 @@
   </section>
   </sc-if>
 
+  <sc-if value="{{ isIbdp }}" hint-placeholder-val="{{ false }}">
+  <section id="guias-ib-dp" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:64px 24px">
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.guidesLabel }}</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px">
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.guidesTitle }}</h2>
+        <p style="font-size:16px;color:#7F8996;max-width:44ch;margin:0;line-height:1.6">{{ t.ibdpGuidesBlurb }}</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+        <sc-for list="{{ ibdpSubjectTabs }}" as="s" hint-placeholder-count="7">
+          <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px">
+        <sc-for list="{{ activeIbdpSubject.componentTabs }}" as="c" hint-placeholder-count="4">
+          <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+        <sc-for list="{{ activeIbdpSubject.topics }}" as="it" hint-placeholder-count="8">
+          <a href="{{ it.href }}" download="{{ it.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+            <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.tag }}</div>
+            <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
+            <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="flashcards-ib-dp" style="max-width:1140px;margin:0 auto;padding:64px 24px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.flashLabel }}</div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px">
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.flashTitle }}</h2>
+      <p style="font-size:16px;color:#7F8996;max-width:44ch;margin:0;line-height:1.6">{{ t.ibdpFlashBlurb }}</p>
+    </div>
+
+    <div style="margin-bottom:40px;padding:36px;background:#17365B;color:#FFFFFF;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px">
+      <div style="max-width:56ch">
+        <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:20px;margin:0 0 10px;color:#FFFFFF">{{ t.flashInteractiveTitle }}</h3>
+        <p style="font-size:15px;line-height:1.6;margin:0;color:#D3D9E2">{{ t.flashInteractiveBody }}</p>
+      </div>
+      <a href="{{ ibdpFlashcardsHref }}" target="_blank" style="flex-shrink:0;background:#FFFFFF;color:#17365B;padding:14px 24px;font-family:Figtree,sans-serif;font-weight:600;font-size:14.5px;text-decoration:none" style-hover="background:#F9F9F9;color:#17365B">{{ t.flashInteractiveCta }} ↗</a>
+    </div>
+
+    <div style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#A3ABB6;margin-bottom:18px">{{ t.flashPrintLabel }}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+      <sc-for list="{{ ibdpFlashcardSets }}" as="fc" hint-placeholder-count="7">
+        <a href="{{ fc.href }}" download="{{ fc.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:130px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+          <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:16px;line-height:1.3;margin:0;color:#17365B">{{ fc.label }}</h3>
+          <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ fc.stats }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
   <sc-if value="{{ isEmptyProgram }}" hint-placeholder-val="{{ false }}">
     <section style="max-width:1140px;margin:0 auto;padding:24px 24px 96px">
       <div style="border:1px dashed #D8DCE2;padding:48px;font-size:16px;color:#7F8996;text-align:center">{{ t.empty }}</div>
@@ -272,7 +329,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { program: null, subject: 'physics-0625', strand: 'B', level: null, alevelSubject: null, alevelComponent: null, lang: null };
+  state = { program: null, subject: 'physics-0625', strand: 'B', level: null, alevelSubject: null, alevelComponent: null, ibdpSubject: null, ibdpComponent: null, lang: null };
 
   STRAND_LABEL = {
     B: { es: 'Biología', en: 'Biology' },
@@ -705,6 +762,212 @@ class Component extends DCLogic {
     { slug: 'literature-in-english-9695', name: 'Literature_in_English', code: '9695', cards: 24, topics: 8, fileDouble: 'FagusED_A_Level_9695_Literature_in_English_Flashcards_Imprimibles.pdf', fileCompact: 'FagusED_A_Level_9695_Literature_in_English_Flashcards_Una_Cara.pdf' }
   ];
 
+  IBDP_SUBJECTS = [
+    {
+      slug: 'physics', dir: 'guides/ib-dp/physics', label: 'Physics HL/SL', name: 'Physics', code: 'PHY',
+      topics: [
+        { tag: 'A.1', title: 'Kinematics', file: 'FagusED_IBDP_Physics_01_A_1_Kinematics.pdf', component: 'Space, time and motion' },
+        { tag: 'A.2', title: 'Forces and momentum', file: 'FagusED_IBDP_Physics_02_A_2_Forces_and_momentum.pdf', component: 'Space, time and motion' },
+        { tag: 'A.3', title: 'Work, energy and power', file: 'FagusED_IBDP_Physics_03_A_3_Work_energy_and_power.pdf', component: 'Space, time and motion' },
+        { tag: 'A.4', title: 'Rigid body mechanics (HL)', file: 'FagusED_IBDP_Physics_04_A_4_Rigid_body_mechanics_HL.pdf', component: 'Space, time and motion' },
+        { tag: 'A.5', title: 'Galilean and special relativity (HL)', file: 'FagusED_IBDP_Physics_05_A_5_Galilean_and_special_relativity_HL.pdf', component: 'Space, time and motion' },
+        { tag: 'B.1', title: 'Thermal energy transfers', file: 'FagusED_IBDP_Physics_06_B_1_Thermal_energy_transfers.pdf', component: 'The particulate nature of matter' },
+        { tag: 'B.2', title: 'Greenhouse effect', file: 'FagusED_IBDP_Physics_07_B_2_Greenhouse_effect.pdf', component: 'The particulate nature of matter' },
+        { tag: 'B.3', title: 'Gas laws', file: 'FagusED_IBDP_Physics_08_B_3_Gas_laws.pdf', component: 'The particulate nature of matter' },
+        { tag: 'B.4', title: 'Thermodynamics (HL)', file: 'FagusED_IBDP_Physics_09_B_4_Thermodynamics_HL.pdf', component: 'The particulate nature of matter' },
+        { tag: 'B.5', title: 'Current and circuits', file: 'FagusED_IBDP_Physics_10_B_5_Current_and_circuits.pdf', component: 'The particulate nature of matter' },
+        { tag: 'C.1', title: 'Simple harmonic motion', file: 'FagusED_IBDP_Physics_11_C_1_Simple_harmonic_motion.pdf', component: 'Wave behaviour' },
+        { tag: 'C.2', title: 'Wave model', file: 'FagusED_IBDP_Physics_12_C_2_Wave_model.pdf', component: 'Wave behaviour' },
+        { tag: 'C.3', title: 'Wave phenomena', file: 'FagusED_IBDP_Physics_13_C_3_Wave_phenomena.pdf', component: 'Wave behaviour' },
+        { tag: 'C.4', title: 'Standing waves and resonance', file: 'FagusED_IBDP_Physics_14_C_4_Standing_waves_and_resonance.pdf', component: 'Wave behaviour' },
+        { tag: 'C.5', title: 'Doppler effect', file: 'FagusED_IBDP_Physics_15_C_5_Doppler_effect.pdf', component: 'Wave behaviour' },
+        { tag: 'D.1', title: 'Gravitational fields', file: 'FagusED_IBDP_Physics_16_D_1_Gravitational_fields.pdf', component: 'Fields' },
+        { tag: 'D.2', title: 'Electric and magnetic fields', file: 'FagusED_IBDP_Physics_17_D_2_Electric_and_magnetic_fields.pdf', component: 'Fields' },
+        { tag: 'D.3', title: 'Motion in electromagnetic fields', file: 'FagusED_IBDP_Physics_18_D_3_Motion_in_electromagnetic_fields.pdf', component: 'Fields' },
+        { tag: 'D.4', title: 'Electromagnetic induction (HL)', file: 'FagusED_IBDP_Physics_19_D_4_Electromagnetic_induction_HL.pdf', component: 'Fields' },
+        { tag: 'E.1', title: 'Structure of the atom', file: 'FagusED_IBDP_Physics_20_E_1_Structure_of_the_atom.pdf', component: 'Nuclear and quantum physics' },
+        { tag: 'E.2', title: 'Quantum physics (HL)', file: 'FagusED_IBDP_Physics_21_E_2_Quantum_physics_HL.pdf', component: 'Nuclear and quantum physics' },
+        { tag: 'E.3', title: 'Radioactive decay', file: 'FagusED_IBDP_Physics_22_E_3_Radioactive_decay.pdf', component: 'Nuclear and quantum physics' },
+        { tag: 'E.4', title: 'Fission', file: 'FagusED_IBDP_Physics_23_E_4_Fission.pdf', component: 'Nuclear and quantum physics' },
+        { tag: 'E.5', title: 'Fusion and stars', file: 'FagusED_IBDP_Physics_24_E_5_Fusion_and_stars.pdf', component: 'Nuclear and quantum physics' }
+      ]
+    },
+    {
+      slug: 'chemistry', dir: 'guides/ib-dp/chemistry', label: 'Chemistry HL/SL', name: 'Chemistry', code: 'CHEM',
+      topics: [
+        { tag: 'S1.1', title: 'Introduction to the particulate nature of matter', file: 'FagusED_IBDP_Chemistry_01_S1_1_Introduction_to_the_particulate_nature_o.pdf', component: 'Structure 1 — Models of the particulate nature of matter' },
+        { tag: 'S1.2', title: 'The nuclear atom', file: 'FagusED_IBDP_Chemistry_02_S1_2_The_nuclear_atom.pdf', component: 'Structure 1 — Models of the particulate nature of matter' },
+        { tag: 'S1.3', title: 'Electron configurations', file: 'FagusED_IBDP_Chemistry_03_S1_3_Electron_configurations.pdf', component: 'Structure 1 — Models of the particulate nature of matter' },
+        { tag: 'S1.4', title: 'Counting particles by mass: the mole', file: 'FagusED_IBDP_Chemistry_04_S1_4_Counting_particles_by_mass_the_mole.pdf', component: 'Structure 1 — Models of the particulate nature of matter' },
+        { tag: 'S1.5', title: 'Ideal gases (HL)', file: 'FagusED_IBDP_Chemistry_05_S1_5_Ideal_gases_HL.pdf', component: 'Structure 1 — Models of the particulate nature of matter' },
+        { tag: 'S2.1', title: 'The ionic model', file: 'FagusED_IBDP_Chemistry_06_S2_1_The_ionic_model.pdf', component: 'Structure 2 — Models of bonding and structure' },
+        { tag: 'S2.2', title: 'The covalent model', file: 'FagusED_IBDP_Chemistry_07_S2_2_The_covalent_model.pdf', component: 'Structure 2 — Models of bonding and structure' },
+        { tag: 'S2.3', title: 'The metallic model', file: 'FagusED_IBDP_Chemistry_08_S2_3_The_metallic_model.pdf', component: 'Structure 2 — Models of bonding and structure' },
+        { tag: 'S2.4', title: 'From models to materials (HL)', file: 'FagusED_IBDP_Chemistry_09_S2_4_From_models_to_materials_HL.pdf', component: 'Structure 2 — Models of bonding and structure' },
+        { tag: 'S3.1', title: 'The periodic table: classification of elements', file: 'FagusED_IBDP_Chemistry_10_S3_1_The_periodic_table_classification_of_ele.pdf', component: 'Structure 3 — Classification of matter' },
+        { tag: 'S3.2', title: 'Functional groups: classification of organic compounds', file: 'FagusED_IBDP_Chemistry_11_S3_2_Functional_groups_classification_of_orga.pdf', component: 'Structure 3 — Classification of matter' },
+        { tag: 'R1.1', title: 'Measuring enthalpy changes', file: 'FagusED_IBDP_Chemistry_12_R1_1_Measuring_enthalpy_changes.pdf', component: 'Reactivity 1 — What drives chemical reactions?' },
+        { tag: 'R1.2', title: 'Energy cycles in reactions (HL)', file: 'FagusED_IBDP_Chemistry_13_R1_2_Energy_cycles_in_reactions_HL.pdf', component: 'Reactivity 1 — What drives chemical reactions?' },
+        { tag: 'R1.3', title: 'Energy from fuels', file: 'FagusED_IBDP_Chemistry_14_R1_3_Energy_from_fuels.pdf', component: 'Reactivity 1 — What drives chemical reactions?' },
+        { tag: 'R2.1', title: 'How much? The amount of chemical change', file: 'FagusED_IBDP_Chemistry_15_R2_1_How_much_The_amount_of_chemical_change.pdf', component: 'Reactivity 2 — How much, how fast and how far?' },
+        { tag: 'R2.2', title: 'How fast? The rate of chemical change', file: 'FagusED_IBDP_Chemistry_16_R2_2_How_fast_The_rate_of_chemical_change.pdf', component: 'Reactivity 2 — How much, how fast and how far?' },
+        { tag: 'R2.3', title: 'How far? The extent of chemical change (HL)', file: 'FagusED_IBDP_Chemistry_17_R2_3_How_far_The_extent_of_chemical_change_HL.pdf', component: 'Reactivity 2 — How much, how fast and how far?' },
+        { tag: 'R3.1', title: 'Proton transfer reactions', file: 'FagusED_IBDP_Chemistry_18_R3_1_Proton_transfer_reactions.pdf', component: 'Reactivity 3 — What are the mechanisms of chemical change?' },
+        { tag: 'R3.2', title: 'Electron transfer reactions', file: 'FagusED_IBDP_Chemistry_19_R3_2_Electron_transfer_reactions.pdf', component: 'Reactivity 3 — What are the mechanisms of chemical change?' },
+        { tag: 'R3.3', title: 'Electron sharing reactions', file: 'FagusED_IBDP_Chemistry_20_R3_3_Electron_sharing_reactions.pdf', component: 'Reactivity 3 — What are the mechanisms of chemical change?' },
+        { tag: 'R3.4', title: 'Electron-pair sharing reactions (HL)', file: 'FagusED_IBDP_Chemistry_21_R3_4_Electronpair_sharing_reactions_HL.pdf', component: 'Reactivity 3 — What are the mechanisms of chemical change?' }
+      ]
+    },
+    {
+      slug: 'biology', dir: 'guides/ib-dp/biology', label: 'Biology HL/SL', name: 'Biology', code: 'BIO',
+      topics: [
+        { tag: 'A1', title: 'Water', file: 'FagusED_IBDP_Biology_01_A1_Water.pdf', component: 'A — Unity and diversity' },
+        { tag: 'A2', title: 'Nucleic acids', file: 'FagusED_IBDP_Biology_02_A2_Nucleic_acids.pdf', component: 'A — Unity and diversity' },
+        { tag: 'A3', title: 'Cell structure', file: 'FagusED_IBDP_Biology_03_A3_Cell_structure.pdf', component: 'A — Unity and diversity' },
+        { tag: 'A4', title: 'Diversity of organisms', file: 'FagusED_IBDP_Biology_04_A4_Diversity_of_organisms.pdf', component: 'A — Unity and diversity' },
+        { tag: 'B1', title: 'Carbohydrates and lipids', file: 'FagusED_IBDP_Biology_05_B1_Carbohydrates_and_lipids.pdf', component: 'B — Form and function' },
+        { tag: 'B2', title: 'Proteins', file: 'FagusED_IBDP_Biology_06_B2_Proteins.pdf', component: 'B — Form and function' },
+        { tag: 'B3', title: 'Membranes and membrane transport', file: 'FagusED_IBDP_Biology_07_B3_Membranes_and_membrane_transport.pdf', component: 'B — Form and function' },
+        { tag: 'B4', title: 'Gas exchange', file: 'FagusED_IBDP_Biology_08_B4_Gas_exchange.pdf', component: 'B — Form and function' },
+        { tag: 'B5', title: 'Organisms exchange with their environment (HL)', file: 'FagusED_IBDP_Biology_09_B5_Organisms_exchange_with_their_environmen.pdf', component: 'B — Form and function' },
+        { tag: 'C1', title: 'Enzymes and metabolism', file: 'FagusED_IBDP_Biology_10_C1_Enzymes_and_metabolism.pdf', component: 'C — Interaction and interdependence' },
+        { tag: 'C2', title: 'Cell respiration', file: 'FagusED_IBDP_Biology_11_C2_Cell_respiration.pdf', component: 'C — Interaction and interdependence' },
+        { tag: 'C3', title: 'Photosynthesis', file: 'FagusED_IBDP_Biology_12_C3_Photosynthesis.pdf', component: 'C — Interaction and interdependence' },
+        { tag: 'C4', title: 'Ecosystems and energy flow', file: 'FagusED_IBDP_Biology_13_C4_Ecosystems_and_energy_flow.pdf', component: 'C — Interaction and interdependence' },
+        { tag: 'C5', title: 'Populations and communities (HL)', file: 'FagusED_IBDP_Biology_14_C5_Populations_and_communities_HL.pdf', component: 'C — Interaction and interdependence' },
+        { tag: 'D1', title: 'DNA replication', file: 'FagusED_IBDP_Biology_15_D1_DNA_replication.pdf', component: 'D — Continuity and change' },
+        { tag: 'D2', title: 'Protein synthesis', file: 'FagusED_IBDP_Biology_16_D2_Protein_synthesis.pdf', component: 'D — Continuity and change' },
+        { tag: 'D3', title: 'Cell division', file: 'FagusED_IBDP_Biology_17_D3_Cell_division.pdf', component: 'D — Continuity and change' },
+        { tag: 'D4', title: 'Genetics and inheritance', file: 'FagusED_IBDP_Biology_18_D4_Genetics_and_inheritance.pdf', component: 'D — Continuity and change' },
+        { tag: 'D5', title: 'Natural selection and evolution', file: 'FagusED_IBDP_Biology_19_D5_Natural_selection_and_evolution.pdf', component: 'D — Continuity and change' },
+        { tag: 'D6', title: 'Gene expression and homeostasis (HL)', file: 'FagusED_IBDP_Biology_20_D6_Gene_expression_and_homeostasis_HL.pdf', component: 'D — Continuity and change' }
+      ]
+    },
+    {
+      slug: 'math-aa', dir: 'guides/ib-dp/math-aa', label: 'Mathematics: AA', name: 'Mathematics_AA', code: 'MathAA',
+      topics: [
+        { tag: '1.1', title: 'Arithmetic and geometric sequences and series', file: 'FagusED_IBDP_MathAA_01_1_1_Arithmetic_and_geometric_sequences_and_s.pdf', component: 'Number and algebra' },
+        { tag: '1.2', title: 'Exponents and logarithms', file: 'FagusED_IBDP_MathAA_02_1_2_Exponents_and_logarithms.pdf', component: 'Number and algebra' },
+        { tag: '1.3', title: 'Financial applications of geometric sequences', file: 'FagusED_IBDP_MathAA_03_1_3_Financial_applications_of_geometric_sequ.pdf', component: 'Number and algebra' },
+        { tag: '1.4', title: 'The binomial theorem', file: 'FagusED_IBDP_MathAA_04_1_4_The_binomial_theorem.pdf', component: 'Number and algebra' },
+        { tag: '1.5', title: 'Complex numbers (HL)', file: 'FagusED_IBDP_MathAA_05_1_5_Complex_numbers_HL.pdf', component: 'Number and algebra' },
+        { tag: '1.6', title: 'Proof by induction (HL)', file: 'FagusED_IBDP_MathAA_06_1_6_Proof_by_induction_HL.pdf', component: 'Number and algebra' },
+        { tag: '1.7', title: 'Systems of linear equations (HL)', file: 'FagusED_IBDP_MathAA_07_1_7_Systems_of_linear_equations_HL.pdf', component: 'Number and algebra' },
+        { tag: '2.1', title: 'Functions, domain and range', file: 'FagusED_IBDP_MathAA_08_2_1_Functions_domain_and_range.pdf', component: 'Functions' },
+        { tag: '2.2', title: 'Composite and inverse functions', file: 'FagusED_IBDP_MathAA_09_2_2_Composite_and_inverse_functions.pdf', component: 'Functions' },
+        { tag: '2.3', title: 'Quadratic functions and the discriminant', file: 'FagusED_IBDP_MathAA_10_2_3_Quadratic_functions_and_the_discriminant.pdf', component: 'Functions' },
+        { tag: '2.4', title: 'Transformations of graphs', file: 'FagusED_IBDP_MathAA_11_2_4_Transformations_of_graphs.pdf', component: 'Functions' },
+        { tag: '2.5', title: 'Exponential and logarithmic functions', file: 'FagusED_IBDP_MathAA_12_2_5_Exponential_and_logarithmic_functions.pdf', component: 'Functions' },
+        { tag: '2.6', title: 'Rational functions (HL)', file: 'FagusED_IBDP_MathAA_13_2_6_Rational_functions_HL.pdf', component: 'Functions' },
+        { tag: '2.7', title: 'Polynomial functions and factor theorem (HL)', file: 'FagusED_IBDP_MathAA_14_2_7_Polynomial_functions_and_factor_theorem_.pdf', component: 'Functions' },
+        { tag: '3.1', title: 'Volume and surface area of 3D solids', file: 'FagusED_IBDP_MathAA_15_3_1_Volume_and_surface_area_of_3D_solids.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.2', title: 'Right-angled trigonometry and bearings', file: 'FagusED_IBDP_MathAA_16_3_2_Rightangled_trigonometry_and_bearings.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.3', title: 'Non-right triangles: sine and cosine rules', file: 'FagusED_IBDP_MathAA_17_3_3_Nonright_triangles_sine_and_cosine_rules.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.4', title: 'The unit circle and radian measure', file: 'FagusED_IBDP_MathAA_18_3_4_The_unit_circle_and_radian_measure.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.5', title: 'Trigonometric identities and equations', file: 'FagusED_IBDP_MathAA_19_3_5_Trigonometric_identities_and_equations.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.6', title: 'Vectors and scalar/vector products (HL)', file: 'FagusED_IBDP_MathAA_20_3_6_Vectors_and_scalarvector_products_HL.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.7', title: 'Lines and planes in three dimensions (HL)', file: 'FagusED_IBDP_MathAA_21_3_7_Lines_and_planes_in_three_dimensions_HL.pdf', component: 'Geometry and trigonometry' },
+        { tag: '4.1', title: 'Sampling and data collection', file: 'FagusED_IBDP_MathAA_22_4_1_Sampling_and_data_collection.pdf', component: 'Statistics and probability' },
+        { tag: '4.2', title: 'Statistical measures and displays', file: 'FagusED_IBDP_MathAA_23_4_2_Statistical_measures_and_displays.pdf', component: 'Statistics and probability' },
+        { tag: '4.3', title: 'Correlation and linear regression', file: 'FagusED_IBDP_MathAA_24_4_3_Correlation_and_linear_regression.pdf', component: 'Statistics and probability' },
+        { tag: '4.4', title: 'Probability, Venn and tree diagrams', file: 'FagusED_IBDP_MathAA_25_4_4_Probability_Venn_and_tree_diagrams.pdf', component: 'Statistics and probability' },
+        { tag: '4.5', title: 'Discrete random variables and the binomial distribution', file: 'FagusED_IBDP_MathAA_26_4_5_Discrete_random_variables_and_the_binomi.pdf', component: 'Statistics and probability' },
+        { tag: '4.6', title: 'The normal distribution', file: 'FagusED_IBDP_MathAA_27_4_6_The_normal_distribution.pdf', component: 'Statistics and probability' },
+        { tag: '4.7', title: 'Bayes\' theorem (HL)', file: 'FagusED_IBDP_MathAA_28_4_7_Bayes_theorem_HL.pdf', component: 'Statistics and probability' },
+        { tag: '5.1', title: 'Limits and the derivative from first principles', file: 'FagusED_IBDP_MathAA_29_5_1_Limits_and_the_derivative_from_first_pri.pdf', component: 'Calculus' },
+        { tag: '5.2', title: 'Differentiation rules and tangents/normals', file: 'FagusED_IBDP_MathAA_30_5_2_Differentiation_rules_and_tangentsnormal.pdf', component: 'Calculus' },
+        { tag: '5.3', title: 'Optimisation and related rates', file: 'FagusED_IBDP_MathAA_31_5_3_Optimisation_and_related_rates.pdf', component: 'Calculus' },
+        { tag: '5.4', title: 'Kinematics using calculus', file: 'FagusED_IBDP_MathAA_32_5_4_Kinematics_using_calculus.pdf', component: 'Calculus' },
+        { tag: '5.5', title: 'Integration and areas under curves', file: 'FagusED_IBDP_MathAA_33_5_5_Integration_and_areas_under_curves.pdf', component: 'Calculus' },
+        { tag: '5.6', title: 'Volumes of revolution (HL)', file: 'FagusED_IBDP_MathAA_34_5_6_Volumes_of_revolution_HL.pdf', component: 'Calculus' },
+        { tag: '5.7', title: 'Further differentiation: implicit and higher derivatives (HL)', file: 'FagusED_IBDP_MathAA_35_5_7_Further_differentiation_implicit_and_hig.pdf', component: 'Calculus' },
+        { tag: '5.8', title: 'Further integration: substitution and by parts (HL)', file: 'FagusED_IBDP_MathAA_36_5_8_Further_integration_substitution_and_by_.pdf', component: 'Calculus' },
+        { tag: '5.9', title: 'Differential equations and Maclaurin series (HL)', file: 'FagusED_IBDP_MathAA_37_5_9_Differential_equations_and_Maclaurin_ser.pdf', component: 'Calculus' }
+      ]
+    },
+    {
+      slug: 'math-ai', dir: 'guides/ib-dp/math-ai', label: 'Mathematics: AI', name: 'Mathematics_AI', code: 'MathAI',
+      topics: [
+        { tag: '1.1', title: 'Number systems, rounding and estimation', file: 'FagusED_IBDP_MathAI_01_1_1_Number_systems_rounding_and_estimation.pdf', component: 'Number and algebra' },
+        { tag: '1.2', title: 'Sequences and series', file: 'FagusED_IBDP_MathAI_02_1_2_Sequences_and_series.pdf', component: 'Number and algebra' },
+        { tag: '1.3', title: 'Exponents and logarithms', file: 'FagusED_IBDP_MathAI_03_1_3_Exponents_and_logarithms.pdf', component: 'Number and algebra' },
+        { tag: '1.4', title: 'Financial mathematics: loans and amortization', file: 'FagusED_IBDP_MathAI_04_1_4_Financial_mathematics_loans_and_amortiza.pdf', component: 'Number and algebra' },
+        { tag: '1.5', title: 'Matrices and systems of equations (HL)', file: 'FagusED_IBDP_MathAI_05_1_5_Matrices_and_systems_of_equations_HL.pdf', component: 'Number and algebra' },
+        { tag: '1.6', title: 'Eigenvalues and eigenvectors (HL)', file: 'FagusED_IBDP_MathAI_06_1_6_Eigenvalues_and_eigenvectors_HL.pdf', component: 'Number and algebra' },
+        { tag: '2.1', title: 'Linear models', file: 'FagusED_IBDP_MathAI_07_2_1_Linear_models.pdf', component: 'Functions' },
+        { tag: '2.2', title: 'Quadratic models', file: 'FagusED_IBDP_MathAI_08_2_2_Quadratic_models.pdf', component: 'Functions' },
+        { tag: '2.3', title: 'Exponential and logarithmic models', file: 'FagusED_IBDP_MathAI_09_2_3_Exponential_and_logarithmic_models.pdf', component: 'Functions' },
+        { tag: '2.4', title: 'Cubic and other polynomial models', file: 'FagusED_IBDP_MathAI_10_2_4_Cubic_and_other_polynomial_models.pdf', component: 'Functions' },
+        { tag: '2.5', title: 'Modelling with technology and model fitting', file: 'FagusED_IBDP_MathAI_11_2_5_Modelling_with_technology_and_model_fitt.pdf', component: 'Functions' },
+        { tag: '2.6', title: 'Optimisation of models (HL)', file: 'FagusED_IBDP_MathAI_12_2_6_Optimisation_of_models_HL.pdf', component: 'Functions' },
+        { tag: '3.1', title: 'Coordinate geometry and Voronoi diagrams', file: 'FagusED_IBDP_MathAI_13_3_1_Coordinate_geometry_and_Voronoi_diagrams.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.2', title: 'Trigonometry: non-right triangles', file: 'FagusED_IBDP_MathAI_14_3_2_Trigonometry_nonright_triangles.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.3', title: 'Volume, surface area and geometric applications', file: 'FagusED_IBDP_MathAI_15_3_3_Volume_surface_area_and_geometric_applic.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.4', title: 'Vectors (HL)', file: 'FagusED_IBDP_MathAI_16_3_4_Vectors_HL.pdf', component: 'Geometry and trigonometry' },
+        { tag: '3.5', title: 'Vector applications to kinematics (HL)', file: 'FagusED_IBDP_MathAI_17_3_5_Vector_applications_to_kinematics_HL.pdf', component: 'Geometry and trigonometry' },
+        { tag: '4.1', title: 'Sampling techniques', file: 'FagusED_IBDP_MathAI_18_4_1_Sampling_techniques.pdf', component: 'Statistics and probability' },
+        { tag: '4.2', title: 'Summarising data: measures and displays', file: 'FagusED_IBDP_MathAI_19_4_2_Summarising_data_measures_and_displays.pdf', component: 'Statistics and probability' },
+        { tag: '4.3', title: 'Bivariate data and correlation', file: 'FagusED_IBDP_MathAI_20_4_3_Bivariate_data_and_correlation.pdf', component: 'Statistics and probability' },
+        { tag: '4.4', title: 'Probability, Venn and tree diagrams', file: 'FagusED_IBDP_MathAI_21_4_4_Probability_Venn_and_tree_diagrams.pdf', component: 'Statistics and probability' },
+        { tag: '4.5', title: 'Discrete distributions and the binomial distribution', file: 'FagusED_IBDP_MathAI_22_4_5_Discrete_distributions_and_the_binomial_.pdf', component: 'Statistics and probability' },
+        { tag: '4.6', title: 'The normal distribution', file: 'FagusED_IBDP_MathAI_23_4_6_The_normal_distribution.pdf', component: 'Statistics and probability' },
+        { tag: '4.7', title: 'The chi-squared test', file: 'FagusED_IBDP_MathAI_24_4_7_The_chisquared_test.pdf', component: 'Statistics and probability' },
+        { tag: '4.8', title: 'Spearman\'s rank correlation', file: 'FagusED_IBDP_MathAI_25_4_8_Spearmans_rank_correlation.pdf', component: 'Statistics and probability' },
+        { tag: '4.9', title: 'Further hypothesis tests: the t-test (HL)', file: 'FagusED_IBDP_MathAI_26_4_9_Further_hypothesis_tests_the_ttest_HL.pdf', component: 'Statistics and probability' },
+        { tag: '4.10', title: 'Non-linear regression and the Poisson distribution (HL)', file: 'FagusED_IBDP_MathAI_27_4_10_Nonlinear_regression_and_the_Poisson_dis.pdf', component: 'Statistics and probability' },
+        { tag: '5.1', title: 'Rates of change and the derivative', file: 'FagusED_IBDP_MathAI_28_5_1_Rates_of_change_and_the_derivative.pdf', component: 'Calculus' },
+        { tag: '5.2', title: 'Optimisation with technology', file: 'FagusED_IBDP_MathAI_29_5_2_Optimisation_with_technology.pdf', component: 'Calculus' },
+        { tag: '5.3', title: 'Integration and the trapezoidal rule', file: 'FagusED_IBDP_MathAI_30_5_3_Integration_and_the_trapezoidal_rule.pdf', component: 'Calculus' },
+        { tag: '5.4', title: 'Kinematics using calculus', file: 'FagusED_IBDP_MathAI_31_5_4_Kinematics_using_calculus.pdf', component: 'Calculus' },
+        { tag: '5.5', title: 'Differential equations and Euler\'s method (HL)', file: 'FagusED_IBDP_MathAI_32_5_5_Differential_equations_and_Eulers_method.pdf', component: 'Calculus' },
+        { tag: '5.6', title: 'Further calculus applications to modelling (HL)', file: 'FagusED_IBDP_MathAI_33_5_6_Further_calculus_applications_to_modelli.pdf', component: 'Calculus' }
+      ]
+    },
+    {
+      slug: 'english-a-literature', dir: 'guides/ib-dp/english-a-literature', label: 'English A: Literature', name: 'English_A_Literature', code: 'EngALit',
+      topics: [
+        { tag: '1', title: 'Guided literary analysis: unseen prose (Paper 1)', file: 'FagusED_IBDP_EnglishALit_01_1_Guided_literary_analysis_unseen_prose_Pa.pdf', component: 'Paper 1 — Guided literary analysis' },
+        { tag: '2', title: 'Guided literary analysis: unseen poetry (Paper 1)', file: 'FagusED_IBDP_EnglishALit_02_2_Guided_literary_analysis_unseen_poetry_P.pdf', component: 'Paper 1 — Guided literary analysis' },
+        { tag: '3', title: 'Comparative essay: theme across two works (Paper 2)', file: 'FagusED_IBDP_EnglishALit_03_3_Comparative_essay_theme_across_two_works.pdf', component: 'Paper 2 — Comparative essay' },
+        { tag: '4', title: 'Comparative essay: narrative or dramatic technique (Paper 2)', file: 'FagusED_IBDP_EnglishALit_04_4_Comparative_essay_narrative_or_dramatic_.pdf', component: 'Paper 2 — Comparative essay' },
+        { tag: '5', title: 'The novel and short story: narrative method', file: 'FagusED_IBDP_EnglishALit_05_5_The_novel_and_short_story_narrative_meth.pdf', component: 'Literary forms' },
+        { tag: '6', title: 'Poetry: voice, form and imagery', file: 'FagusED_IBDP_EnglishALit_06_6_Poetry_voice_form_and_imagery.pdf', component: 'Literary forms' },
+        { tag: '7', title: 'Drama: staging, dialogue and dramatic irony', file: 'FagusED_IBDP_EnglishALit_07_7_Drama_staging_dialogue_and_dramatic_iron.pdf', component: 'Literary forms' },
+        { tag: '8', title: 'Prose other than fiction: rhetoric and structure', file: 'FagusED_IBDP_EnglishALit_08_8_Prose_other_than_fiction_rhetoric_and_st.pdf', component: 'Literary forms' },
+        { tag: '9', title: 'Works in translation: context and cultural framing', file: 'FagusED_IBDP_EnglishALit_09_9_Works_in_translation_context_and_cultura.pdf', component: 'Literary forms' },
+        { tag: '10', title: 'The HL essay: independent literary analysis (HL)', file: 'FagusED_IBDP_EnglishALit_10_10_The_HL_essay_independent_literary_analys.pdf', component: 'Individual assessment' },
+        { tag: '11', title: 'Individual oral: global issue in literary and non-literary works', file: 'FagusED_IBDP_EnglishALit_11_11_Individual_oral_global_issue_in_literary.pdf', component: 'Individual assessment' }
+      ]
+    },
+    {
+      slug: 'english-b', dir: 'guides/ib-dp/english-b', label: 'English B', name: 'English_B', code: 'EngB',
+      topics: [
+        { tag: '1', title: 'Receptive skills: reading for gist and detail', file: 'FagusED_IBDP_EnglishB_01_1_Receptive_skills_reading_for_gist_and_de.pdf', component: 'Receptive skills' },
+        { tag: '2', title: 'Receptive skills: listening for specific information', file: 'FagusED_IBDP_EnglishB_02_2_Receptive_skills_listening_for_specific_.pdf', component: 'Receptive skills' },
+        { tag: '3', title: 'Productive skills: the formal email or letter', file: 'FagusED_IBDP_EnglishB_03_3_Productive_skills_the_formal_email_or_le.pdf', component: 'Productive skills' },
+        { tag: '4', title: 'Productive skills: the blog post or article', file: 'FagusED_IBDP_EnglishB_04_4_Productive_skills_the_blog_post_or_artic.pdf', component: 'Productive skills' },
+        { tag: '5', title: 'Productive skills: the opinion or argumentative essay (HL)', file: 'FagusED_IBDP_EnglishB_05_5_Productive_skills_the_opinion_or_argumen.pdf', component: 'Productive skills' },
+        { tag: '6', title: 'Interactive skills: the individual oral', file: 'FagusED_IBDP_EnglishB_06_6_Interactive_skills_the_individual_oral.pdf', component: 'Interactive skills' },
+        { tag: '7', title: 'Theme: identities', file: 'FagusED_IBDP_EnglishB_07_7_Theme_identities.pdf', component: 'Themes' },
+        { tag: '8', title: 'Theme: experiences', file: 'FagusED_IBDP_EnglishB_08_8_Theme_experiences.pdf', component: 'Themes' },
+        { tag: '9', title: 'Theme: human ingenuity', file: 'FagusED_IBDP_EnglishB_09_9_Theme_human_ingenuity.pdf', component: 'Themes' },
+        { tag: '10', title: 'Theme: social organization', file: 'FagusED_IBDP_EnglishB_10_10_Theme_social_organization.pdf', component: 'Themes' },
+        { tag: '11', title: 'Theme: sharing the planet', file: 'FagusED_IBDP_EnglishB_11_11_Theme_sharing_the_planet.pdf', component: 'Themes' },
+        { tag: '12', title: 'Literary extract analysis in English B (HL)', file: 'FagusED_IBDP_EnglishB_12_12_Literary_extract_analysis_in_English_B_H.pdf', component: 'Individual assessment' }
+      ]
+    }
+  ];
+
+  IBDP_FLASHCARDS = [
+    { slug: 'physics', name: 'Physics', label: 'Physics HL/SL', code: 'PHY', cards: 96, topics: 24, file: 'FagusED_IBDP_Physics_Flashcards.pdf' },
+    { slug: 'chemistry', name: 'Chemistry', label: 'Chemistry HL/SL', code: 'CHEM', cards: 84, topics: 21, file: 'FagusED_IBDP_Chemistry_Flashcards.pdf' },
+    { slug: 'biology', name: 'Biology', label: 'Biology HL/SL', code: 'BIO', cards: 80, topics: 20, file: 'FagusED_IBDP_Biology_Flashcards.pdf' },
+    { slug: 'math-aa', name: 'Mathematics_AA', label: 'Mathematics: AA', code: 'MathAA', cards: 148, topics: 37, file: 'FagusED_IBDP_MathAA_Flashcards.pdf' },
+    { slug: 'math-ai', name: 'Mathematics_AI', label: 'Mathematics: AI', code: 'MathAI', cards: 132, topics: 33, file: 'FagusED_IBDP_MathAI_Flashcards.pdf' },
+    { slug: 'english-a-literature', name: 'English_A_Literature', label: 'English A: Literature', code: 'EngALit', cards: 44, topics: 11, file: 'FagusED_IBDP_EnglishALit_Flashcards.pdf' },
+    { slug: 'english-b', name: 'English_B', label: 'English B', code: 'EngB', cards: 48, topics: 12, file: 'FagusED_IBDP_EnglishB_Flashcards.pdf' }
+  ];
+
   UI = {
     es: {
       navHome: 'Inicio', navPrograms: 'Programas', navSubjects: 'Asignaturas', navCta: 'Agendar reunión',
@@ -716,9 +979,11 @@ class Component extends DCLogic {
       guidesTitle: 'Guías',
       guidesBlurb: 'Teoría, ejemplos resueltos y práctica tipo examen en PDF, para Physics, Chemistry, Biology, Co-ordinated Sciences y Mathematics. Descarga directa, sin registro.',
       alevelGuidesBlurb: 'Guías por syllabus y componente para las siete asignaturas de A-Level que preparamos: Biology, Chemistry, Physics, Mathematics, Further Mathematics, English Language y Literature in English. Descarga directa, sin registro.',
+      ibdpGuidesBlurb: 'Guías por tema y componente para las siete asignaturas de IB DP que preparamos: Physics, Chemistry, Biology, Mathematics AA, Mathematics AI, English A: Literature e English B. Descarga directa, sin registro.',
       pnGuidesBlurb: 'Guías del Currículum Nacional para 7° y 8° básico, y 1° y 2° medio, con teoría, ejemplos resueltos y práctica. Descarga directa, sin registro.',
       pnFlashBlurb: 'Tarjetas de pregunta y respuesta por nivel y asignatura, basadas en las guías del Currículum Nacional. Repasa en el navegador o recorta tarjetas de doble cara.',
       alevelFlashBlurb: 'Tarjetas de pregunta y respuesta por asignatura y componente, basadas en las 165 guías de A-Level. Repasa en el navegador o descarga la versión de doble cara para recortar, o la de una cara con pregunta y respuesta juntas.',
+      ibdpFlashBlurb: 'Tarjetas de pregunta y respuesta por asignatura y componente, basadas en las guías de IB DP. Repasa en el navegador o descarga la versión imprimible de doble cara para recortar.',
       pdfBadge: 'PDF',
       download: 'Descargar',
       flashLabel: 'Flashcards',
@@ -745,9 +1010,11 @@ class Component extends DCLogic {
       guidesTitle: 'Guides',
       guidesBlurb: 'Theory, worked examples and exam-style practice in PDF, for Physics, Chemistry, Biology, Co-ordinated Sciences and Mathematics. Direct download, no sign-up.',
       alevelGuidesBlurb: 'Guides by syllabus and component for the seven A-Level subjects we cover: Biology, Chemistry, Physics, Mathematics, Further Mathematics, English Language and Literature in English. Direct download, no sign-up.',
+      ibdpGuidesBlurb: 'Guides by topic and component for the seven IB DP subjects we cover: Physics, Chemistry, Biology, Mathematics AA, Mathematics AI, English A: Literature and English B. Direct download, no sign-up.',
       pnGuidesBlurb: 'National Curriculum guides for grades 7 and 8, and grades 9 and 10 (1° and 2° medio), with theory, worked examples and practice. Direct download, no sign-up.',
       pnFlashBlurb: 'Question-and-answer cards by level and subject, based on the National Curriculum guides. Review in the browser or cut out double-sided cards.',
       alevelFlashBlurb: 'Question-and-answer cards by subject and component, based on the 165 A-Level guides. Review in the browser, or download the double-sided version to cut out, or the one-sided version with question and answer together.',
+      ibdpFlashBlurb: 'Question-and-answer cards by subject and component, based on the IB DP guides. Review in the browser, or download the printable double-sided version to cut out.',
       pdfBadge: 'PDF',
       download: 'Download',
       flashLabel: 'Flashcards',
@@ -796,6 +1063,7 @@ class Component extends DCLogic {
     const isIgcse = program === 'igcse';
     const isPlanNacional = program === 'plan-nacional';
     const isAlevel = program === 'a-level';
+    const isIbdp = program === 'ib-dp';
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     const tabStyle = (on) => `border:1px solid ${on ? '#17365B' : '#E7E9EC'};background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`;
     const activeLevel = this.PLAN_NACIONAL.find(l => l.slug === this.state.level) || this.PLAN_NACIONAL[0];
@@ -873,11 +1141,35 @@ class Component extends DCLogic {
         stats: `${fc.cards} ${t.cardsLabel} · ${fc.topics} ${t.topicsLabel}`
       }
     ]));
+    const ibdpSubj = this.state.ibdpSubject || 'physics';
+    const activeIbdpRaw = this.IBDP_SUBJECTS.find(s => s.slug === ibdpSubj) || this.IBDP_SUBJECTS[0];
+    const ibdpWithHref = activeIbdpRaw.topics.map(tp => Object.assign({}, tp, {
+      href: activeIbdpRaw.dir + '/' + tp.file,
+      downloadName: [activeIbdpRaw.name, activeIbdpRaw.code, slugify(tp.tag), slugify(tp.title)].join('_') + '.pdf'
+    }));
+    const ibdpComponents = [...new Set(activeIbdpRaw.topics.map(tp => tp.component))];
+    const ibdpComponent = ibdpComponents.includes(this.state.ibdpComponent) ? this.state.ibdpComponent : ibdpComponents[0];
+    const activeIbdpSubject = {
+      componentTabs: ibdpComponents.map(c => ({
+        label: c,
+        onClick: () => this.setState({ ibdpComponent: c }),
+        style: tabStyle(ibdpComponent === c)
+      })),
+      topics: ibdpWithHref.filter(tp => tp.component === ibdpComponent)
+    };
+    const ibdpFlashcardSets = this.IBDP_FLASHCARDS.map(fc => ({
+      label: `${fc.label}`,
+      href: 'flashcards/ib-dp/' + fc.slug + '/' + fc.file,
+      downloadName: ['FagusED_IBDP_Flashcards', fc.name, fc.code].join('_') + '.pdf',
+      stats: `${fc.cards} ${t.cardsLabel} · ${fc.topics} ${t.topicsLabel}`
+    }));
     return {
       t, lang,
       flashcardsHref: 'flashcards.html?lang=' + lang,
       alevelFlashcardsHref: 'flashcards.html?program=a-level&lang=' + lang,
       alevelFlashcardSets,
+      ibdpFlashcardsHref: 'flashcards.html?program=ib-dp&lang=' + lang,
+      ibdpFlashcardSets,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       subjectTabs: this.SUBJECTS.map(s => ({
@@ -892,15 +1184,22 @@ class Component extends DCLogic {
         style: tabStyle(alevelSubj === s.slug)
       })),
       activeAlevelSubject,
+      ibdpSubjectTabs: this.IBDP_SUBJECTS.map(s => ({
+        label: s.label,
+        onClick: () => this.setState({ ibdpSubject: s.slug, ibdpComponent: null }),
+        style: tabStyle(ibdpSubj === s.slug)
+      })),
+      activeIbdpSubject,
       flashcardSets,
       isIgcse,
       isPlanNacional,
       isAlevel,
+      isIbdp,
       levelTabs,
       pnGuides,
       pnFlashcardsHref,
       pnFlashcardSets,
-      isEmptyProgram: !isIgcse && !isPlanNacional && !isAlevel,
+      isEmptyProgram: !isIgcse && !isPlanNacional && !isAlevel && !isIbdp,
       filters: this.PROG.map(p => ({
         label: p[lang],
         onClick: () => this.setState({ program: p.slug }),
