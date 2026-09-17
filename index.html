@@ -368,29 +368,16 @@ class Component extends DCLogic {
     { href: 'tutoria.html' },
     { href: 'agendar.html?s=familias' },
     { href: 'agendar.html?s=vocacional' },
-    { href: 'agendar.html?s=admision' }
+    { href: 'agendar.html?s=colegios' }
   ];
 
   PROGRAMS = [
-    { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum', subjects: ['ciencias', 'biologia', 'fisica', 'quimica', 'matematicas', 'ingles'] },
-    { slug: 'igcse', es: 'IGCSE', en: 'IGCSE', subjects: ['biologia', 'quimica', 'fisica', 'co-ordinated-sciences', 'matematicas', 'international-mathematics', 'ingles'] },
-    { slug: 'a-level', es: 'A-Level', en: 'A-Level', subjects: ['biologia', 'quimica', 'fisica', 'matematicas', 'ingles'] },
-    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP', subjects: ['biologia', 'quimica', 'fisica', 'matematicas', 'ingles'] },
-    { slug: 'paes', es: 'PAES', en: 'PAES', subjects: ['paes-ciencias', 'paes-m1', 'paes-m2'] }
+    { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
+    { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
+    { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
+    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' },
+    { slug: 'paes', es: 'PAES', en: 'PAES' }
   ];
-  SUBJECT_LABELS = {
-    ciencias: { es: 'Ciencias', en: 'Science' },
-    biologia: { es: 'Biología', en: 'Biology' },
-    fisica: { es: 'Física', en: 'Physics' },
-    quimica: { es: 'Química', en: 'Chemistry' },
-    matematicas: { es: 'Matemáticas', en: 'Mathematics' },
-    ingles: { es: 'Inglés', en: 'English' },
-    'co-ordinated-sciences': { es: 'Co-ordinated Sciences', en: 'Co-ordinated Sciences' },
-    'international-mathematics': { es: 'International Mathematics', en: 'International Mathematics' },
-    'paes-ciencias': { es: 'Ciencias', en: 'Science' },
-    'paes-m1': { es: 'Competencia Matemática M1', en: 'Mathematics M1' },
-    'paes-m2': { es: 'Competencia Matemática M2', en: 'Mathematics M2' }
-  };
   RESOURCES = [
     { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
     { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
@@ -408,21 +395,7 @@ class Component extends DCLogic {
     });
     const plain = (label, href) => ({ label, href, arrow: '', subOpen: false, sub: [], enter: () => this.setState({ subItem: null }), leave: () => {} });
     return [
-      mk('programs', t.navPrograms, this.PROGRAMS.map(p => {
-        const id = 'prog-' + p.slug;
-        return {
-          label: p[lang],
-          href: 'programas.html?program=' + p.slug,
-          arrow: '›',
-          subOpen: this.state.subItem === id,
-          enter: () => this.setState({ subItem: id }),
-          leave: () => {},
-          sub: p.subjects.map(sSlug => ({
-            label: this.SUBJECT_LABELS[sSlug][lang],
-            href: p.slug === 'paes' ? 'programas.html?program=paes' : 'asignaturas.html?subject=' + sSlug + '&program=' + p.slug
-          }))
-        };
-      }), 'programas.html'),
+      mk('programs', t.navPrograms, this.PROGRAMS.map(p => plain(p[lang], 'programas.html?program=' + p.slug)), 'programas.html'),
       mk('resources', t.navResources, this.RESOURCES.map(r => plain(lang === 'en' ? r.en : r.es, 'recursos.html#' + r.slug)), 'recursos.html')
     ];
   }
@@ -543,8 +516,8 @@ class Component extends DCLogic {
         { title: 'Material IGCSE, A-Level y DP', short: 'Guías, ejercicios y past papers', body: 'Material propio alineado al syllabus, con ejercicios resueltos y práctica de exámenes anteriores.', tag: 'Acceso por asignatura' },
         { title: 'Tutoría privada', short: 'Clases uno a uno, online o presencial', body: 'Sesiones enfocadas en los contenidos que el estudiante necesita reforzar, con reportes a la familia.', tag: '100% online' },
         { title: 'Asesoría a familias', short: 'Qué colegio y qué currículum elegir', body: 'Acompañamiento a apoderados para comparar colegios, currículums y procesos de admisión.', tag: 'Para apoderados' },
-        { title: 'Orientación vocacional en Chile', short: 'Carreras, universidades y puntajes', body: 'Exploración de intereses, análisis de carreras y armado de una lista realista de postulaciones.', tag: 'Para estudiantes' },
-        { title: 'Admisión en el extranjero', short: 'Postulaciones fuera de Chile', body: 'Selección de universidades, requisitos, ensayos y calendario de postulación paso a paso.', tag: 'Reino Unido, EE.UU., Europa' }
+        { title: 'Admisión universitaria', short: 'Chile o el extranjero, tú eliges', body: 'Orientación para postular a la universidad en Chile o en el extranjero: carreras, puntajes, requisitos y calendario de postulación. Elige la opción que corresponda al continuar.', tag: 'Chile y extranjero' },
+        { title: 'Soluciones para colegios', short: 'Automatización y software a medida', body: 'Optimizamos el trabajo de los docentes automatizando procesos y desarrollando aplicaciones a medida, con más tiempo para planificar clases y preparar material.', tag: 'Reportes, horarios y pases digitales' }
       ],
       heroFacts: [
         { label: 'Currículums', value: 'IGCSE, A-Level, IB DP y currículum nacional' },
@@ -609,8 +582,8 @@ class Component extends DCLogic {
         { title: 'IGCSE, A-Level and DP material', short: 'Guides, exercises and past papers', body: 'In-house material aligned to the syllabus, with worked exercises and past-paper practice.', tag: 'Access per subject' },
         { title: 'Private tutoring', short: 'One-to-one, online or in person', body: 'Sessions focused on the topics the student needs to reinforce, with reports to the family.', tag: '100% online' },
         { title: 'Family guidance', short: 'Which school and which curriculum', body: 'Support for parents comparing schools, curricula and admissions processes.', tag: 'For parents' },
-        { title: 'University guidance in Chile', short: 'Degrees, universities and scores', body: 'Interest exploration, degree analysis and a realistic application list.', tag: 'For students' },
-        { title: 'Admissions abroad', short: 'Applications outside Chile', body: 'University selection, requirements, essays and a step-by-step application calendar.', tag: 'UK, US, Europe' }
+        { title: 'University admissions', short: 'Chile or abroad, you choose', body: 'Guidance for applying to university in Chile or abroad: degrees, scores, requirements and the application calendar. Pick the option you need on the next page.', tag: 'Chile and abroad' },
+        { title: 'Solutions for schools', short: 'Automation and custom software', body: 'We optimise teachers’ workload by automating processes and building custom applications, freeing up time for lesson planning and preparing material.', tag: 'Reports, timetables and digital passes' }
       ],
       heroFacts: [
         { label: 'Curricula', value: 'IGCSE, A-Level, IB DP and the Chilean curriculum' },
@@ -682,7 +655,7 @@ class Component extends DCLogic {
     const langBtn = (on) => `background:${on ? accent : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     return {
       t, lang, accent,
-      marquee: c.tabs.concat(lang === 'es' ? ['Tutoría privada', 'Asesoría a familias', 'Orientación vocacional', 'Admisión en el extranjero'] : ['Private tutoring', 'Family guidance', 'University guidance', 'Admissions abroad']).join('   ·   ') + '   ·   ',
+      marquee: c.tabs.concat(lang === 'es' ? ['Tutoría privada', 'Asesoría a familias', 'Admisión universitaria', 'Soluciones para colegios'] : ['Private tutoring', 'Family guidance', 'University admissions', 'Solutions for schools']).join('   ·   ') + '   ·   ',
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       menus: this.buildMenus(t, lang),

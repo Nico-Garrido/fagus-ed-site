@@ -196,6 +196,13 @@ class Component extends DCLogic {
           intro: 'Treinta minutos para ubicar el nivel actual en la asignatura y proponer un plan de sesiones.',
           extraLabel: 'ASIGNATURA Y PROGRAMA', extraPlaceholder: 'Ej: Física IGCSE',
           event: 'Diagnóstico de tutoría · Fagus Ed'
+        },
+        colegios: {
+          label: 'Soluciones para colegios', kicker: 'Soluciones para colegios',
+          title: 'Agenda una reunión para tu colegio',
+          intro: 'Cuéntanos qué proceso quieres optimizar y elige un horario. Revisamos si conviene automatizar un proceso existente o desarrollar una aplicación a medida.',
+          extraLabel: 'PROCESO O NECESIDAD A OPTIMIZAR', extraPlaceholder: 'Ej: reportes de avance curricular a apoderados',
+          event: 'Soluciones para colegios · Fagus Ed'
         }
       }
     },
@@ -248,12 +255,19 @@ class Component extends DCLogic {
           intro: 'Thirty minutes to place the current level in the subject and propose a plan of sessions.',
           extraLabel: 'SUBJECT AND PROGRAMME', extraPlaceholder: 'e.g. IGCSE Physics',
           event: 'Tutoring diagnostic · Fagus Ed'
+        },
+        colegios: {
+          label: 'Solutions for schools', kicker: 'Solutions for schools',
+          title: 'Book a meeting for your school',
+          intro: 'Tell us which process you want to optimise and choose a time. We review whether it is better to automate an existing process or build a custom application.',
+          extraLabel: 'PROCESS OR NEED TO OPTIMISE', extraPlaceholder: 'e.g. curriculum progress reports to parents',
+          event: 'Solutions for schools · Fagus Ed'
         }
       }
     }
   };
 
-  DURATION = { familias: 30, vocacional: 30, admision: 30, tutoria: 30 };
+  DURATION = { familias: 30, vocacional: 30, admision: 30, tutoria: 30, colegios: 30 };
   TIMES = ['17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
 
   storedLang() {

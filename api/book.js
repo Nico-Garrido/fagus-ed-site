@@ -6,7 +6,7 @@
 import { zonedTimeToUtc, freeBusy, createEvent } from './_lib/google.js';
 
 const TIMEZONE = 'America/Santiago';
-const DURATION = { familias: 30, vocacional: 30, admision: 30, tutoria: 30 };
+const DURATION = { familias: 30, vocacional: 30, admision: 30, tutoria: 30, colegios: 30 };
 const ADMIN_EMAIL = 'contacto@fagus-ed.cl';
 const FROM_EMAIL = 'Fagus Ed <reservas@fagus-ed.cl>'; // must be on a domain verified in Resend
 
@@ -14,13 +14,15 @@ const EVENT_TITLES = {
   familias: { es: 'Asesoría a familias · Fagus Ed', en: 'Family guidance · Fagus Ed' },
   vocacional: { es: 'Orientación vocacional · Fagus Ed', en: 'University guidance · Fagus Ed' },
   admision: { es: 'Admisión en el extranjero · Fagus Ed', en: 'Admissions abroad · Fagus Ed' },
-  tutoria: { es: 'Diagnóstico de tutoría · Fagus Ed', en: 'Tutoring diagnostic · Fagus Ed' }
+  tutoria: { es: 'Diagnóstico de tutoría · Fagus Ed', en: 'Tutoring diagnostic · Fagus Ed' },
+  colegios: { es: 'Soluciones para colegios · Fagus Ed', en: 'Solutions for schools · Fagus Ed' }
 };
 const EXTRA_LABELS = {
   familias: { es: 'Curso y colegio actual', en: 'Current year group and school' },
   vocacional: { es: 'Curso actual', en: 'Current year group' },
   admision: { es: 'Países o universidades de interés', en: 'Countries or universities of interest' },
-  tutoria: { es: 'Asignatura y programa', en: 'Subject and programme' }
+  tutoria: { es: 'Asignatura y programa', en: 'Subject and programme' },
+  colegios: { es: 'Proceso o necesidad a optimizar', en: 'Process or need to optimise' }
 };
 
 function isValidEmail(v) {

@@ -6,7 +6,7 @@ import { zonedTimeToUtc, freeBusy } from './_lib/google.js';
 
 const TIMEZONE = 'America/Santiago';
 const CANDIDATE_TIMES = ['17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
-const DURATION = { familias: 30, vocacional: 30, admision: 30, tutoria: 30 };
+const DURATION = { familias: 30, vocacional: 30, admision: 30, tutoria: 30, colegios: 30 };
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
