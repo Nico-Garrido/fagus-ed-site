@@ -80,6 +80,32 @@
       </div>
     </div>
   </section>
+
+  <section id="flashcards-plan-nacional" style="max-width:1140px;margin:0 auto;padding:64px 24px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.flashLabel }}</div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px">
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.flashTitle }}</h2>
+      <p style="font-size:16px;color:#7F8996;max-width:44ch;margin:0;line-height:1.6">{{ t.pnFlashBlurb }}</p>
+    </div>
+
+    <div style="margin-bottom:40px;padding:36px;background:#17365B;color:#FFFFFF;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px">
+      <div style="max-width:56ch">
+        <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:20px;margin:0 0 10px;color:#FFFFFF">{{ t.flashInteractiveTitle }}</h3>
+        <p style="font-size:15px;line-height:1.6;margin:0;color:#D3D9E2">{{ t.flashInteractiveBody }}</p>
+      </div>
+      <a href="{{ pnFlashcardsHref }}" target="_blank" style="flex-shrink:0;background:#FFFFFF;color:#17365B;padding:14px 24px;font-family:Figtree,sans-serif;font-weight:600;font-size:14.5px;text-decoration:none" style-hover="background:#F9F9F9;color:#17365B">{{ t.flashInteractiveCta }} ↗</a>
+    </div>
+
+    <div style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#A3ABB6;margin-bottom:18px">{{ t.flashPrintLabel }}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+      <sc-for list="{{ pnFlashcardSets }}" as="fc" hint-placeholder-count="5">
+        <a href="{{ fc.href }}" download="{{ fc.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:130px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+          <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:16px;line-height:1.3;margin:0;color:#17365B">{{ fc.label }}</h3>
+          <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ fc.stats }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
   </sc-if>
 
   <sc-if value="{{ isIgcse }}" hint-placeholder-val="{{ true }}">
@@ -154,6 +180,37 @@
   </section>
   </sc-if>
 
+  <sc-if value="{{ isAlevel }}" hint-placeholder-val="{{ false }}">
+  <section id="guias-a-level" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:64px 24px">
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.guidesLabel }}</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px">
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.guidesTitle }}</h2>
+        <p style="font-size:16px;color:#7F8996;max-width:44ch;margin:0;line-height:1.6">{{ t.alevelGuidesBlurb }}</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+        <sc-for list="{{ alevelSubjectTabs }}" as="s" hint-placeholder-count="7">
+          <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px">
+        <sc-for list="{{ activeAlevelSubject.componentTabs }}" as="c" hint-placeholder-count="4">
+          <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+        <sc-for list="{{ activeAlevelSubject.topics }}" as="it" hint-placeholder-count="8">
+          <a href="{{ it.href }}" download="{{ it.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+            <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ it.tag }}</div>
+            <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ it.title }}</h3>
+            <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
   <sc-if value="{{ isEmptyProgram }}" hint-placeholder-val="{{ false }}">
     <section style="max-width:1140px;margin:0 auto;padding:24px 24px 96px">
       <div style="border:1px dashed #D8DCE2;padding:48px;font-size:16px;color:#7F8996;text-align:center">{{ t.empty }}</div>
@@ -189,7 +246,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { program: null, subject: 'physics-0625', strand: 'B', level: null, lang: null };
+  state = { program: null, subject: 'physics-0625', strand: 'B', level: null, alevelSubject: null, alevelComponent: null, lang: null };
 
   STRAND_LABEL = {
     B: { es: 'Biología', en: 'Biology' },
@@ -349,41 +406,244 @@ class Component extends DCLogic {
     }
   ];
 
+  ALEVEL_SUBJECTS = [
+    {
+      slug: 'biology-9700', dir: 'guides/a-level/biology-9700', label: 'Biology (9700)', name: 'Biology', code: '9700',
+      topics: [
+        { tag: '1', title: 'Cell structure', file: 'FagusED_A_Level_9700_01_1_Cell_structure.pdf', component: 'AS' },
+        { tag: '2', title: 'Biological molecules', file: 'FagusED_A_Level_9700_02_2_Biological_molecules.pdf', component: 'AS' },
+        { tag: '3', title: 'Enzymes', file: 'FagusED_A_Level_9700_03_3_Enzymes.pdf', component: 'AS' },
+        { tag: '4', title: 'Cell membranes and transport', file: 'FagusED_A_Level_9700_04_4_Cell_membranes_and_transport.pdf', component: 'AS' },
+        { tag: '5', title: 'The mitotic cell cycle', file: 'FagusED_A_Level_9700_05_5_The_mitotic_cell_cycle.pdf', component: 'AS' },
+        { tag: '6', title: 'Nucleic acids and protein synthesis', file: 'FagusED_A_Level_9700_06_6_Nucleic_acids_and_protein_synthesis.pdf', component: 'AS' },
+        { tag: '7', title: 'Transport in plants', file: 'FagusED_A_Level_9700_07_7_Transport_in_plants.pdf', component: 'AS' },
+        { tag: '8', title: 'Transport in mammals', file: 'FagusED_A_Level_9700_08_8_Transport_in_mammals.pdf', component: 'AS' },
+        { tag: '9', title: 'Gas exchange', file: 'FagusED_A_Level_9700_09_9_Gas_exchange.pdf', component: 'AS' },
+        { tag: '10', title: 'Infectious diseases', file: 'FagusED_A_Level_9700_10_10_Infectious_diseases.pdf', component: 'AS' },
+        { tag: '11', title: 'Immunity', file: 'FagusED_A_Level_9700_11_11_Immunity.pdf', component: 'AS' },
+        { tag: '12', title: 'Energy and respiration', file: 'FagusED_A_Level_9700_12_12_Energy_and_respiration.pdf', component: 'A' },
+        { tag: '13', title: 'Photosynthesis', file: 'FagusED_A_Level_9700_13_13_Photosynthesis.pdf', component: 'A' },
+        { tag: '14', title: 'Homeostasis', file: 'FagusED_A_Level_9700_14_14_Homeostasis.pdf', component: 'A' },
+        { tag: '15', title: 'Control and coordination', file: 'FagusED_A_Level_9700_15_15_Control_and_coordination.pdf', component: 'A' },
+        { tag: '16', title: 'Inheritance', file: 'FagusED_A_Level_9700_16_16_Inheritance.pdf', component: 'A' },
+        { tag: '17', title: 'Selection and evolution', file: 'FagusED_A_Level_9700_17_17_Selection_and_evolution.pdf', component: 'A' },
+        { tag: '18', title: 'Classification, biodiversity and conservation', file: 'FagusED_A_Level_9700_18_18_Classification_biodiversity_and_conservation.pdf', component: 'A' },
+        { tag: '19', title: 'Genetic technology', file: 'FagusED_A_Level_9700_19_19_Genetic_technology.pdf', component: 'A' },
+        { tag: 'P3', title: 'Advanced practical skills', file: 'FagusED_A_Level_9700_20_P3_Advanced_practical_skills.pdf', component: 'Practical' },
+        { tag: 'P5', title: 'Planning, analysis and evaluation', file: 'FagusED_A_Level_9700_21_P5_Planning_analysis_and_evaluation.pdf', component: 'Practical' }
+      ]
+    },
+    {
+      slug: 'chemistry-9701', dir: 'guides/a-level/chemistry-9701', label: 'Chemistry (9701)', name: 'Chemistry', code: '9701',
+      topics: [
+        { tag: '1', title: 'Atomic structure', file: 'FagusED_A_Level_9701_01_1_Atomic_structure.pdf', component: 'AS' },
+        { tag: '2', title: 'Atoms, molecules and stoichiometry', file: 'FagusED_A_Level_9701_02_2_Atoms_molecules_and_stoichiometry.pdf', component: 'AS' },
+        { tag: '3', title: 'Chemical bonding', file: 'FagusED_A_Level_9701_03_3_Chemical_bonding.pdf', component: 'AS' },
+        { tag: '4', title: 'States of matter', file: 'FagusED_A_Level_9701_04_4_States_of_matter.pdf', component: 'AS' },
+        { tag: '5', title: 'Chemical energetics', file: 'FagusED_A_Level_9701_05_5_Chemical_energetics.pdf', component: 'AS' },
+        { tag: '6', title: 'Electrochemistry', file: 'FagusED_A_Level_9701_06_6_Electrochemistry.pdf', component: 'AS' },
+        { tag: '7', title: 'Equilibria', file: 'FagusED_A_Level_9701_07_7_Equilibria.pdf', component: 'AS' },
+        { tag: '8', title: 'Reaction kinetics', file: 'FagusED_A_Level_9701_08_8_Reaction_kinetics.pdf', component: 'AS' },
+        { tag: '9', title: 'Periodicity', file: 'FagusED_A_Level_9701_09_9_Periodicity.pdf', component: 'AS' },
+        { tag: '10', title: 'Group 2', file: 'FagusED_A_Level_9701_10_10_Group_2.pdf', component: 'AS' },
+        { tag: '11', title: 'Group 17', file: 'FagusED_A_Level_9701_11_11_Group_17.pdf', component: 'AS' },
+        { tag: '12', title: 'Nitrogen and sulfur', file: 'FagusED_A_Level_9701_12_12_Nitrogen_and_sulfur.pdf', component: 'AS' },
+        { tag: '13', title: 'Introduction to organic chemistry', file: 'FagusED_A_Level_9701_13_13_Introduction_to_organic_chemistry.pdf', component: 'AS' },
+        { tag: '14', title: 'Hydrocarbons', file: 'FagusED_A_Level_9701_14_14_Hydrocarbons.pdf', component: 'AS' },
+        { tag: '15', title: 'Halogen compounds', file: 'FagusED_A_Level_9701_15_15_Halogen_compounds.pdf', component: 'AS' },
+        { tag: '16', title: 'Hydroxy compounds', file: 'FagusED_A_Level_9701_16_16_Hydroxy_compounds.pdf', component: 'AS' },
+        { tag: '17', title: 'Carbonyl compounds', file: 'FagusED_A_Level_9701_17_17_Carbonyl_compounds.pdf', component: 'AS' },
+        { tag: '18', title: 'Carboxylic acids and derivatives', file: 'FagusED_A_Level_9701_18_18_Carboxylic_acids_and_derivatives.pdf', component: 'AS' },
+        { tag: '19', title: 'Nitrogen compounds', file: 'FagusED_A_Level_9701_19_19_Nitrogen_compounds.pdf', component: 'AS' },
+        { tag: '20', title: 'Polymerisation', file: 'FagusED_A_Level_9701_20_20_Polymerisation.pdf', component: 'AS' },
+        { tag: '21', title: 'Organic synthesis', file: 'FagusED_A_Level_9701_21_21_Organic_synthesis.pdf', component: 'AS' },
+        { tag: '22', title: 'Analytical techniques', file: 'FagusED_A_Level_9701_22_22_Analytical_techniques.pdf', component: 'AS' },
+        { tag: '23', title: 'Chemical energetics', file: 'FagusED_A_Level_9701_23_23_Chemical_energetics.pdf', component: 'A' },
+        { tag: '24', title: 'Electrochemistry', file: 'FagusED_A_Level_9701_24_24_Electrochemistry.pdf', component: 'A' },
+        { tag: '25', title: 'Equilibria', file: 'FagusED_A_Level_9701_25_25_Equilibria.pdf', component: 'A' },
+        { tag: '26', title: 'Reaction kinetics', file: 'FagusED_A_Level_9701_26_26_Reaction_kinetics.pdf', component: 'A' },
+        { tag: '27', title: 'Group 2', file: 'FagusED_A_Level_9701_27_27_Group_2.pdf', component: 'A' },
+        { tag: '28', title: 'Transition elements', file: 'FagusED_A_Level_9701_28_28_Transition_elements.pdf', component: 'A' },
+        { tag: '29', title: 'Introduction to organic chemistry', file: 'FagusED_A_Level_9701_29_29_Introduction_to_organic_chemistry.pdf', component: 'A' },
+        { tag: '30', title: 'Hydrocarbons', file: 'FagusED_A_Level_9701_30_30_Hydrocarbons.pdf', component: 'A' },
+        { tag: '31', title: 'Halogen compounds', file: 'FagusED_A_Level_9701_31_31_Halogen_compounds.pdf', component: 'A' },
+        { tag: '32', title: 'Hydroxy compounds', file: 'FagusED_A_Level_9701_32_32_Hydroxy_compounds.pdf', component: 'A' },
+        { tag: '33', title: 'Carboxylic acids and derivatives', file: 'FagusED_A_Level_9701_33_33_Carboxylic_acids_and_derivatives.pdf', component: 'A' },
+        { tag: '34', title: 'Nitrogen compounds', file: 'FagusED_A_Level_9701_34_34_Nitrogen_compounds.pdf', component: 'A' },
+        { tag: '35', title: 'Polymerisation', file: 'FagusED_A_Level_9701_35_35_Polymerisation.pdf', component: 'A' },
+        { tag: '36', title: 'Organic synthesis', file: 'FagusED_A_Level_9701_36_36_Organic_synthesis.pdf', component: 'A' },
+        { tag: '37', title: 'Analytical techniques', file: 'FagusED_A_Level_9701_37_37_Analytical_techniques.pdf', component: 'A' },
+        { tag: 'P3', title: 'Advanced practical skills', file: 'FagusED_A_Level_9701_38_P3_Advanced_practical_skills.pdf', component: 'Practical' },
+        { tag: 'P5', title: 'Planning, analysis and evaluation', file: 'FagusED_A_Level_9701_39_P5_Planning_analysis_and_evaluation.pdf', component: 'Practical' }
+      ]
+    },
+    {
+      slug: 'physics-9702', dir: 'guides/a-level/physics-9702', label: 'Physics (9702)', name: 'Physics', code: '9702',
+      topics: [
+        { tag: '1', title: 'Physical quantities and units', file: 'FagusED_A_Level_9702_01_1_Physical_quantities_and_units.pdf', component: 'AS' },
+        { tag: '2', title: 'Kinematics', file: 'FagusED_A_Level_9702_02_2_Kinematics.pdf', component: 'AS' },
+        { tag: '3', title: 'Dynamics', file: 'FagusED_A_Level_9702_03_3_Dynamics.pdf', component: 'AS' },
+        { tag: '4', title: 'Forces, density and pressure', file: 'FagusED_A_Level_9702_04_4_Forces_density_and_pressure.pdf', component: 'AS' },
+        { tag: '5', title: 'Work, energy and power', file: 'FagusED_A_Level_9702_05_5_Work_energy_and_power.pdf', component: 'AS' },
+        { tag: '6', title: 'Deformation of solids', file: 'FagusED_A_Level_9702_06_6_Deformation_of_solids.pdf', component: 'AS' },
+        { tag: '7', title: 'Waves', file: 'FagusED_A_Level_9702_07_7_Waves.pdf', component: 'AS' },
+        { tag: '8', title: 'Superposition', file: 'FagusED_A_Level_9702_08_8_Superposition.pdf', component: 'AS' },
+        { tag: '9', title: 'Electricity', file: 'FagusED_A_Level_9702_09_9_Electricity.pdf', component: 'AS' },
+        { tag: '10', title: 'D.C. circuits', file: 'FagusED_A_Level_9702_10_10_D_C_circuits.pdf', component: 'AS' },
+        { tag: '11', title: 'Particle physics', file: 'FagusED_A_Level_9702_11_11_Particle_physics.pdf', component: 'AS' },
+        { tag: '12', title: 'Motion in a circle', file: 'FagusED_A_Level_9702_12_12_Motion_in_a_circle.pdf', component: 'A' },
+        { tag: '13', title: 'Gravitational fields', file: 'FagusED_A_Level_9702_13_13_Gravitational_fields.pdf', component: 'A' },
+        { tag: '14', title: 'Temperature', file: 'FagusED_A_Level_9702_14_14_Temperature.pdf', component: 'A' },
+        { tag: '15', title: 'Ideal gases', file: 'FagusED_A_Level_9702_15_15_Ideal_gases.pdf', component: 'A' },
+        { tag: '16', title: 'Thermodynamics', file: 'FagusED_A_Level_9702_16_16_Thermodynamics.pdf', component: 'A' },
+        { tag: '17', title: 'Oscillations', file: 'FagusED_A_Level_9702_17_17_Oscillations.pdf', component: 'A' },
+        { tag: '18', title: 'Electric fields', file: 'FagusED_A_Level_9702_18_18_Electric_fields.pdf', component: 'A' },
+        { tag: '19', title: 'Capacitance', file: 'FagusED_A_Level_9702_19_19_Capacitance.pdf', component: 'A' },
+        { tag: '20', title: 'Magnetic fields', file: 'FagusED_A_Level_9702_20_20_Magnetic_fields.pdf', component: 'A' },
+        { tag: '21', title: 'Alternating currents', file: 'FagusED_A_Level_9702_21_21_Alternating_currents.pdf', component: 'A' },
+        { tag: '22', title: 'Quantum physics', file: 'FagusED_A_Level_9702_22_22_Quantum_physics.pdf', component: 'A' },
+        { tag: '23', title: 'Nuclear physics', file: 'FagusED_A_Level_9702_23_23_Nuclear_physics.pdf', component: 'A' },
+        { tag: '24', title: 'Medical physics', file: 'FagusED_A_Level_9702_24_24_Medical_physics.pdf', component: 'A' },
+        { tag: '25', title: 'Astronomy and cosmology', file: 'FagusED_A_Level_9702_25_25_Astronomy_and_cosmology.pdf', component: 'A' },
+        { tag: 'P3', title: 'Advanced practical skills', file: 'FagusED_A_Level_9702_26_P3_Advanced_practical_skills.pdf', component: 'Practical' },
+        { tag: 'P5', title: 'Planning, analysis and evaluation', file: 'FagusED_A_Level_9702_27_P5_Planning_analysis_and_evaluation.pdf', component: 'Practical' }
+      ]
+    },
+    {
+      slug: 'mathematics-9709', dir: 'guides/a-level/mathematics-9709', label: 'Mathematics (9709)', name: 'Mathematics', code: '9709',
+      topics: [
+        { tag: '1.1', title: 'Quadratics', file: 'FagusED_A_Level_9709_01_1_1_Quadratics.pdf', component: 'Pure Mathematics 1' },
+        { tag: '1.2', title: 'Functions', file: 'FagusED_A_Level_9709_02_1_2_Functions.pdf', component: 'Pure Mathematics 1' },
+        { tag: '1.3', title: 'Coordinate geometry', file: 'FagusED_A_Level_9709_03_1_3_Coordinate_geometry.pdf', component: 'Pure Mathematics 1' },
+        { tag: '1.4', title: 'Circular measure', file: 'FagusED_A_Level_9709_04_1_4_Circular_measure.pdf', component: 'Pure Mathematics 1' },
+        { tag: '1.5', title: 'Trigonometry', file: 'FagusED_A_Level_9709_05_1_5_Trigonometry.pdf', component: 'Pure Mathematics 1' },
+        { tag: '1.6', title: 'Series', file: 'FagusED_A_Level_9709_06_1_6_Series.pdf', component: 'Pure Mathematics 1' },
+        { tag: '1.7', title: 'Differentiation', file: 'FagusED_A_Level_9709_07_1_7_Differentiation.pdf', component: 'Pure Mathematics 1' },
+        { tag: '1.8', title: 'Integration', file: 'FagusED_A_Level_9709_08_1_8_Integration.pdf', component: 'Pure Mathematics 1' },
+        { tag: '2.1', title: 'Algebra', file: 'FagusED_A_Level_9709_09_2_1_Algebra.pdf', component: 'Pure Mathematics 2' },
+        { tag: '2.2', title: 'Logarithmic and exponential functions', file: 'FagusED_A_Level_9709_10_2_2_Logarithmic_and_exponential_functions.pdf', component: 'Pure Mathematics 2' },
+        { tag: '2.3', title: 'Trigonometry', file: 'FagusED_A_Level_9709_11_2_3_Trigonometry.pdf', component: 'Pure Mathematics 2' },
+        { tag: '2.4', title: 'Differentiation', file: 'FagusED_A_Level_9709_12_2_4_Differentiation.pdf', component: 'Pure Mathematics 2' },
+        { tag: '2.5', title: 'Integration', file: 'FagusED_A_Level_9709_13_2_5_Integration.pdf', component: 'Pure Mathematics 2' },
+        { tag: '2.6', title: 'Numerical solution of equations', file: 'FagusED_A_Level_9709_14_2_6_Numerical_solution_of_equations.pdf', component: 'Pure Mathematics 2' },
+        { tag: '3.1', title: 'Algebra', file: 'FagusED_A_Level_9709_15_3_1_Algebra.pdf', component: 'Pure Mathematics 3' },
+        { tag: '3.2', title: 'Logarithmic and exponential functions', file: 'FagusED_A_Level_9709_16_3_2_Logarithmic_and_exponential_functions.pdf', component: 'Pure Mathematics 3' },
+        { tag: '3.3', title: 'Trigonometry', file: 'FagusED_A_Level_9709_17_3_3_Trigonometry.pdf', component: 'Pure Mathematics 3' },
+        { tag: '3.4', title: 'Differentiation', file: 'FagusED_A_Level_9709_18_3_4_Differentiation.pdf', component: 'Pure Mathematics 3' },
+        { tag: '3.5', title: 'Integration', file: 'FagusED_A_Level_9709_19_3_5_Integration.pdf', component: 'Pure Mathematics 3' },
+        { tag: '3.6', title: 'Numerical solution of equations', file: 'FagusED_A_Level_9709_20_3_6_Numerical_solution_of_equations.pdf', component: 'Pure Mathematics 3' },
+        { tag: '3.7', title: 'Vectors', file: 'FagusED_A_Level_9709_21_3_7_Vectors.pdf', component: 'Pure Mathematics 3' },
+        { tag: '3.8', title: 'Differential equations', file: 'FagusED_A_Level_9709_22_3_8_Differential_equations.pdf', component: 'Pure Mathematics 3' },
+        { tag: '3.9', title: 'Complex numbers', file: 'FagusED_A_Level_9709_23_3_9_Complex_numbers.pdf', component: 'Pure Mathematics 3' },
+        { tag: '4.1', title: 'Forces and equilibrium', file: 'FagusED_A_Level_9709_24_4_1_Forces_and_equilibrium.pdf', component: 'Mechanics' },
+        { tag: '4.2', title: 'Kinematics of motion in a straight line', file: 'FagusED_A_Level_9709_25_4_2_Kinematics_of_motion_in_a_straight_line.pdf', component: 'Mechanics' },
+        { tag: '4.3', title: 'Momentum', file: 'FagusED_A_Level_9709_26_4_3_Momentum.pdf', component: 'Mechanics' },
+        { tag: '4.4', title: 'Newton\'s laws of motion', file: 'FagusED_A_Level_9709_27_4_4_Newton_s_laws_of_motion.pdf', component: 'Mechanics' },
+        { tag: '4.5', title: 'Energy, work and power', file: 'FagusED_A_Level_9709_28_4_5_Energy_work_and_power.pdf', component: 'Mechanics' },
+        { tag: '5.1', title: 'Representation of data', file: 'FagusED_A_Level_9709_29_5_1_Representation_of_data.pdf', component: 'Probability and Statistics 1' },
+        { tag: '5.2', title: 'Permutations and combinations', file: 'FagusED_A_Level_9709_30_5_2_Permutations_and_combinations.pdf', component: 'Probability and Statistics 1' },
+        { tag: '5.3', title: 'Probability', file: 'FagusED_A_Level_9709_31_5_3_Probability.pdf', component: 'Probability and Statistics 1' },
+        { tag: '5.4', title: 'Discrete random variables', file: 'FagusED_A_Level_9709_32_5_4_Discrete_random_variables.pdf', component: 'Probability and Statistics 1' },
+        { tag: '5.5', title: 'The normal distribution', file: 'FagusED_A_Level_9709_33_5_5_The_normal_distribution.pdf', component: 'Probability and Statistics 1' },
+        { tag: '6.1', title: 'The Poisson distribution', file: 'FagusED_A_Level_9709_34_6_1_The_Poisson_distribution.pdf', component: 'Probability and Statistics 2' },
+        { tag: '6.2', title: 'Linear combinations of random variables', file: 'FagusED_A_Level_9709_35_6_2_Linear_combinations_of_random_variables.pdf', component: 'Probability and Statistics 2' },
+        { tag: '6.3', title: 'Continuous random variables', file: 'FagusED_A_Level_9709_36_6_3_Continuous_random_variables.pdf', component: 'Probability and Statistics 2' },
+        { tag: '6.4', title: 'Sampling and estimation', file: 'FagusED_A_Level_9709_37_6_4_Sampling_and_estimation.pdf', component: 'Probability and Statistics 2' },
+        { tag: '6.5', title: 'Hypothesis tests', file: 'FagusED_A_Level_9709_38_6_5_Hypothesis_tests.pdf', component: 'Probability and Statistics 2' }
+      ]
+    },
+    {
+      slug: 'further-mathematics-9231', dir: 'guides/a-level/further-mathematics-9231', label: 'Further Mathematics (9231)', name: 'Further_Mathematics', code: '9231',
+      topics: [
+        { tag: '1.1', title: 'Roots of polynomial equations', file: 'FagusED_A_Level_9231_01_1_1_Roots_of_polynomial_equations.pdf', component: 'Further Pure 1' },
+        { tag: '1.2', title: 'Rational functions and graphs', file: 'FagusED_A_Level_9231_02_1_2_Rational_functions_and_graphs.pdf', component: 'Further Pure 1' },
+        { tag: '1.3', title: 'Summation of series', file: 'FagusED_A_Level_9231_03_1_3_Summation_of_series.pdf', component: 'Further Pure 1' },
+        { tag: '1.4', title: 'Matrices', file: 'FagusED_A_Level_9231_04_1_4_Matrices.pdf', component: 'Further Pure 1' },
+        { tag: '1.5', title: 'Polar coordinates', file: 'FagusED_A_Level_9231_05_1_5_Polar_coordinates.pdf', component: 'Further Pure 1' },
+        { tag: '1.6', title: 'Vectors', file: 'FagusED_A_Level_9231_06_1_6_Vectors.pdf', component: 'Further Pure 1' },
+        { tag: '1.7', title: 'Proof by induction', file: 'FagusED_A_Level_9231_07_1_7_Proof_by_induction.pdf', component: 'Further Pure 1' },
+        { tag: '2.1', title: 'Hyperbolic functions', file: 'FagusED_A_Level_9231_08_2_1_Hyperbolic_functions.pdf', component: 'Further Pure 2' },
+        { tag: '2.2', title: 'Matrices', file: 'FagusED_A_Level_9231_09_2_2_Matrices.pdf', component: 'Further Pure 2' },
+        { tag: '2.3', title: 'Differentiation', file: 'FagusED_A_Level_9231_10_2_3_Differentiation.pdf', component: 'Further Pure 2' },
+        { tag: '2.4', title: 'Integration', file: 'FagusED_A_Level_9231_11_2_4_Integration.pdf', component: 'Further Pure 2' },
+        { tag: '2.5', title: 'Complex numbers', file: 'FagusED_A_Level_9231_12_2_5_Complex_numbers.pdf', component: 'Further Pure 2' },
+        { tag: '2.6', title: 'Differential equations', file: 'FagusED_A_Level_9231_13_2_6_Differential_equations.pdf', component: 'Further Pure 2' },
+        { tag: '3.1', title: 'Motion of a projectile', file: 'FagusED_A_Level_9231_14_3_1_Motion_of_a_projectile.pdf', component: 'Further Mechanics' },
+        { tag: '3.2', title: 'Equilibrium of a rigid body', file: 'FagusED_A_Level_9231_15_3_2_Equilibrium_of_a_rigid_body.pdf', component: 'Further Mechanics' },
+        { tag: '3.3', title: 'Circular motion', file: 'FagusED_A_Level_9231_16_3_3_Circular_motion.pdf', component: 'Further Mechanics' },
+        { tag: '3.4', title: 'Hooke\'s law', file: 'FagusED_A_Level_9231_17_3_4_Hooke_s_law.pdf', component: 'Further Mechanics' },
+        { tag: '3.5', title: 'Linear motion under a variable force', file: 'FagusED_A_Level_9231_18_3_5_Linear_motion_under_a_variable_force.pdf', component: 'Further Mechanics' },
+        { tag: '3.6', title: 'Momentum', file: 'FagusED_A_Level_9231_19_3_6_Momentum.pdf', component: 'Further Mechanics' },
+        { tag: '4.1', title: 'Continuous random variables', file: 'FagusED_A_Level_9231_20_4_1_Continuous_random_variables.pdf', component: 'Further Probability and Statistics' },
+        { tag: '4.2', title: 'Inference using normal and t-distributions', file: 'FagusED_A_Level_9231_21_4_2_Inference_using_normal_and_t_distributions.pdf', component: 'Further Probability and Statistics' },
+        { tag: '4.3', title: 'Chi-square tests', file: 'FagusED_A_Level_9231_22_4_3_Chi_square_tests.pdf', component: 'Further Probability and Statistics' },
+        { tag: '4.4', title: 'Non-parametric tests', file: 'FagusED_A_Level_9231_23_4_4_Non_parametric_tests.pdf', component: 'Further Probability and Statistics' },
+        { tag: '4.5', title: 'Probability generating functions', file: 'FagusED_A_Level_9231_24_4_5_Probability_generating_functions.pdf', component: 'Further Probability and Statistics' }
+      ]
+    },
+    {
+      slug: 'english-language-9093', dir: 'guides/a-level/english-language-9093', label: 'English Language (9093)', name: 'English_Language', code: '9093',
+      topics: [
+        { tag: '1.1', title: 'Directed writing and text transformation', file: 'FagusED_A_Level_9093_01_1_1_Directed_writing_and_text_transformation.pdf', component: 'Paper 1 Reading' },
+        { tag: '1.2', title: 'Comparative commentary', file: 'FagusED_A_Level_9093_02_1_2_Comparative_commentary.pdf', component: 'Paper 1 Reading' },
+        { tag: '2.1', title: 'Imaginative writing', file: 'FagusED_A_Level_9093_03_2_1_Imaginative_writing.pdf', component: 'Paper 2 Writing' },
+        { tag: '2.2', title: 'Discursive and persuasive writing', file: 'FagusED_A_Level_9093_04_2_2_Discursive_and_persuasive_writing.pdf', component: 'Paper 2 Writing' },
+        { tag: '3.1', title: 'Language change', file: 'FagusED_A_Level_9093_05_3_1_Language_change.pdf', component: 'Paper 3 Language Analysis' },
+        { tag: '3.2', title: 'Child language acquisition', file: 'FagusED_A_Level_9093_06_3_2_Child_language_acquisition.pdf', component: 'Paper 3 Language Analysis' },
+        { tag: '4.1', title: 'English in the world', file: 'FagusED_A_Level_9093_07_4_1_English_in_the_world.pdf', component: 'Paper 4 Language Topics' },
+        { tag: '4.2', title: 'Language and the self', file: 'FagusED_A_Level_9093_08_4_2_Language_and_the_self.pdf', component: 'Paper 4 Language Topics' }
+      ]
+    },
+    {
+      slug: 'literature-in-english-9695', dir: 'guides/a-level/literature-in-english-9695', label: 'Literature in English (9695)', name: 'Literature_in_English', code: '9695',
+      topics: [
+        { tag: '1.1', title: 'Drama: character and stagecraft', file: 'FagusED_A_Level_9695_01_1_1_Drama_character_and_stagecraft.pdf', component: 'Paper 1 Drama and Poetry' },
+        { tag: '1.2', title: 'Poetry: voice, image and form', file: 'FagusED_A_Level_9695_02_1_2_Poetry_voice_image_and_form.pdf', component: 'Paper 1 Drama and Poetry' },
+        { tag: '2.1', title: 'Prose: narrative methods', file: 'FagusED_A_Level_9695_03_2_1_Prose_narrative_methods.pdf', component: 'Paper 2 Prose and Unseen' },
+        { tag: '2.2', title: 'Unseen close reading', file: 'FagusED_A_Level_9695_04_2_2_Unseen_close_reading.pdf', component: 'Paper 2 Prose and Unseen' },
+        { tag: '3.1', title: 'Shakespeare: language and performance', file: 'FagusED_A_Level_9695_05_3_1_Shakespeare_language_and_performance.pdf', component: 'Paper 3 Shakespeare and Drama' },
+        { tag: '3.2', title: 'Comparative dramatic interpretation', file: 'FagusED_A_Level_9695_06_3_2_Comparative_dramatic_interpretation.pdf', component: 'Paper 3 Shakespeare and Drama' },
+        { tag: '4.1', title: 'Poetry across periods', file: 'FagusED_A_Level_9695_07_4_1_Poetry_across_periods.pdf', component: 'Paper 4 Pre- and Post-1900 Poetry and Prose' },
+        { tag: '4.2', title: 'Prose across periods', file: 'FagusED_A_Level_9695_08_4_2_Prose_across_periods.pdf', component: 'Paper 4 Pre- and Post-1900 Poetry and Prose' }
+      ]
+    }
+  ];
+
   PLAN_NACIONAL = [
     {
       slug: '7mo-basico', es: '7° básico', en: 'Grade 7', dir: 'guides/plan-nacional/7mo-basico',
       subjects: [
-        { slug: 'ciencias', es: 'Ciencias', en: 'Science', file: 'FagusED_Plan_Nacional_7B_Ciencias.pdf' },
-        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_7B_Matematicas.pdf' },
-        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_7B_Ingles.pdf' }
+        { slug: 'ciencias', es: 'Ciencias', en: 'Science', file: 'FagusED_Plan_Nacional_7B_Ciencias.pdf', cards: 15 },
+        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_7B_Matematicas.pdf', cards: 12 },
+        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_7B_Ingles.pdf', cards: 12 }
       ]
     },
     {
       slug: '8vo-basico', es: '8° básico', en: 'Grade 8', dir: 'guides/plan-nacional/8vo-basico',
       subjects: [
-        { slug: 'ciencias', es: 'Ciencias', en: 'Science', file: 'FagusED_Plan_Nacional_8B_Ciencias.pdf' },
-        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_8B_Matematicas.pdf' },
-        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_8B_Ingles.pdf' }
+        { slug: 'ciencias', es: 'Ciencias', en: 'Science', file: 'FagusED_Plan_Nacional_8B_Ciencias.pdf', cards: 12 },
+        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_8B_Matematicas.pdf', cards: 12 },
+        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_8B_Ingles.pdf', cards: 12 }
       ]
     },
     {
       slug: '1ro-medio', es: '1° medio', en: 'Grade 9 (1° medio)', dir: 'guides/plan-nacional/1ro-medio',
       subjects: [
-        { slug: 'biologia', es: 'Biología', en: 'Biology', file: 'FagusED_Plan_Nacional_1M_Biologia.pdf' },
-        { slug: 'fisica', es: 'Física', en: 'Physics', file: 'FagusED_Plan_Nacional_1M_Fisica.pdf' },
-        { slug: 'quimica', es: 'Química', en: 'Chemistry', file: 'FagusED_Plan_Nacional_1M_Quimica.pdf' },
-        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_1M_Matematicas.pdf' },
-        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_1M_Ingles.pdf' }
+        { slug: 'biologia', es: 'Biología', en: 'Biology', file: 'FagusED_Plan_Nacional_1M_Biologia.pdf', cards: 12 },
+        { slug: 'fisica', es: 'Física', en: 'Physics', file: 'FagusED_Plan_Nacional_1M_Fisica.pdf', cards: 12 },
+        { slug: 'quimica', es: 'Química', en: 'Chemistry', file: 'FagusED_Plan_Nacional_1M_Quimica.pdf', cards: 12 },
+        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_1M_Matematicas.pdf', cards: 12 },
+        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_1M_Ingles.pdf', cards: 12 }
       ]
     },
     {
       slug: '2do-medio', es: '2° medio', en: 'Grade 10 (2° medio)', dir: 'guides/plan-nacional/2do-medio',
       subjects: [
-        { slug: 'biologia', es: 'Biología', en: 'Biology', file: 'FagusED_Plan_Nacional_2M_Biologia.pdf' },
-        { slug: 'fisica', es: 'Física', en: 'Physics', file: 'FagusED_Plan_Nacional_2M_Fisica.pdf' },
-        { slug: 'quimica', es: 'Química', en: 'Chemistry', file: 'FagusED_Plan_Nacional_2M_Quimica.pdf' },
-        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_2M_Matematicas.pdf' },
-        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_2M_Ingles.pdf' }
+        { slug: 'biologia', es: 'Biología', en: 'Biology', file: 'FagusED_Plan_Nacional_2M_Biologia.pdf', cards: 12 },
+        { slug: 'fisica', es: 'Física', en: 'Physics', file: 'FagusED_Plan_Nacional_2M_Fisica.pdf', cards: 12 },
+        { slug: 'quimica', es: 'Química', en: 'Chemistry', file: 'FagusED_Plan_Nacional_2M_Quimica.pdf', cards: 12 },
+        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_2M_Matematicas.pdf', cards: 12 },
+        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_2M_Ingles.pdf', cards: 12 }
       ]
     }
   ];
@@ -407,6 +667,8 @@ class Component extends DCLogic {
     { slug: 'paes', es: 'PAES', en: 'PAES' }
   ];
 
+  ALEVEL_COMPONENT_LABEL = { A: 'A Level' };
+
   UI = {
     es: {
       navHome: 'Inicio', navPrograms: 'Programas', navSubjects: 'Asignaturas', navCta: 'Agendar reunión',
@@ -417,7 +679,9 @@ class Component extends DCLogic {
       guidesLabel: 'Guías de estudio',
       guidesTitle: 'Guías',
       guidesBlurb: 'Teoría, ejemplos resueltos y práctica tipo examen en PDF, para Physics, Chemistry, Biology, Co-ordinated Sciences y Mathematics. Descarga directa, sin registro.',
+      alevelGuidesBlurb: 'Guías por syllabus y componente para las siete asignaturas de A-Level que preparamos: Biology, Chemistry, Physics, Mathematics, Further Mathematics, English Language y Literature in English. Descarga directa, sin registro.',
       pnGuidesBlurb: 'Guías del Currículum Nacional para 7° y 8° básico, y 1° y 2° medio, con teoría, ejemplos resueltos y práctica. Descarga directa, sin registro.',
+      pnFlashBlurb: 'Tarjetas de pregunta y respuesta por nivel y asignatura, basadas en las guías del Currículum Nacional. Repasa en el navegador o recorta tarjetas de doble cara.',
       pdfBadge: 'PDF',
       download: 'Descargar',
       flashLabel: 'Flashcards',
@@ -442,7 +706,9 @@ class Component extends DCLogic {
       guidesLabel: 'Study guides',
       guidesTitle: 'Guides',
       guidesBlurb: 'Theory, worked examples and exam-style practice in PDF, for Physics, Chemistry, Biology, Co-ordinated Sciences and Mathematics. Direct download, no sign-up.',
+      alevelGuidesBlurb: 'Guides by syllabus and component for the seven A-Level subjects we cover: Biology, Chemistry, Physics, Mathematics, Further Mathematics, English Language and Literature in English. Direct download, no sign-up.',
       pnGuidesBlurb: 'National Curriculum guides for grades 7 and 8, and grades 9 and 10 (1° and 2° medio), with theory, worked examples and practice. Direct download, no sign-up.',
+      pnFlashBlurb: 'Question-and-answer cards by level and subject, based on the National Curriculum guides. Review in the browser or cut out double-sided cards.',
       pdfBadge: 'PDF',
       download: 'Download',
       flashLabel: 'Flashcards',
@@ -489,6 +755,7 @@ class Component extends DCLogic {
     const program = this.state.program || this.storedProgram() || 'igcse';
     const isIgcse = program === 'igcse';
     const isPlanNacional = program === 'plan-nacional';
+    const isAlevel = program === 'a-level';
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
     const tabStyle = (on) => `border:1px solid ${on ? '#17365B' : '#E7E9EC'};background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`;
     const activeLevel = this.PLAN_NACIONAL.find(l => l.slug === this.state.level) || this.PLAN_NACIONAL[0];
@@ -502,6 +769,13 @@ class Component extends DCLogic {
       downloadName: ['FagusED_PlanNacional', activeLevel.slug.replace(/-/g, '_'), s.slug].join('_') + '.pdf',
       tag: activeLevel[lang],
       title: s[lang]
+    }));
+    const pnFlashcardsHref = 'flashcards.html?program=plan-nacional&lang=' + lang;
+    const pnFlashcardSets = activeLevel.subjects.map(s => ({
+      label: activeLevel[lang] + ' — ' + s[lang],
+      href: 'flashcards/plan-nacional/' + activeLevel.slug + '/FagusED_Plan_Nacional_Flashcards_' + activeLevel.slug.replace(/-/g, '_') + '_' + s.slug + '.pdf',
+      downloadName: ['FagusED_PlanNacional_Flashcards', activeLevel.slug.replace(/-/g, '_'), s.slug].join('_') + '.pdf',
+      stats: `${s.cards} ${t.cardsLabel} · ${Math.round(s.cards / 3)} ${t.topicsLabel}`
     }));
     const subj = this.state.subject;
     const activeRaw = this.SUBJECTS.find(s => s.slug === subj) || this.SUBJECTS[0];
@@ -523,6 +797,22 @@ class Component extends DCLogic {
           topics: withHref.filter(tp => tp.strand === strand)
         }
       : { plain: true, strands: false, topics: withHref };
+    const alevelSubj = this.state.alevelSubject || 'biology-9700';
+    const activeAlevelRaw = this.ALEVEL_SUBJECTS.find(s => s.slug === alevelSubj) || this.ALEVEL_SUBJECTS[0];
+    const alevelWithHref = activeAlevelRaw.topics.map(tp => Object.assign({}, tp, {
+      href: activeAlevelRaw.dir + '/' + tp.file,
+      downloadName: [activeAlevelRaw.name, activeAlevelRaw.code, slugify(tp.tag), slugify(tp.title)].join('_') + '.pdf'
+    }));
+    const alevelComponents = [...new Set(activeAlevelRaw.topics.map(tp => tp.component))];
+    const alevelComponent = alevelComponents.includes(this.state.alevelComponent) ? this.state.alevelComponent : alevelComponents[0];
+    const activeAlevelSubject = {
+      componentTabs: alevelComponents.map(c => ({
+        label: this.ALEVEL_COMPONENT_LABEL[c] || c,
+        onClick: () => this.setState({ alevelComponent: c }),
+        style: tabStyle(alevelComponent === c)
+      })),
+      topics: alevelWithHref.filter(tp => tp.component === alevelComponent)
+    };
     const flashcardSets = this.FLASHCARDS.map(fc => ({
       label: `${fc.name} (${fc.code})`,
       href: 'flashcards/' + fc.file,
@@ -540,12 +830,21 @@ class Component extends DCLogic {
         style: `border:1px solid ${subj === s.slug ? '#17365B' : '#E7E9EC'};background:${subj === s.slug ? '#17365B' : 'transparent'};color:${subj === s.slug ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`
       })),
       activeSubject,
+      alevelSubjectTabs: this.ALEVEL_SUBJECTS.map(s => ({
+        label: s.label,
+        onClick: () => this.setState({ alevelSubject: s.slug, alevelComponent: null }),
+        style: tabStyle(alevelSubj === s.slug)
+      })),
+      activeAlevelSubject,
       flashcardSets,
       isIgcse,
       isPlanNacional,
+      isAlevel,
       levelTabs,
       pnGuides,
-      isEmptyProgram: !isIgcse && !isPlanNacional,
+      pnFlashcardsHref,
+      pnFlashcardSets,
+      isEmptyProgram: !isIgcse && !isPlanNacional && !isAlevel,
       filters: this.PROG.map(p => ({
         label: p[lang],
         onClick: () => this.setState({ program: p.slug }),

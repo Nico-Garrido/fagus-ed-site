@@ -98,13 +98,15 @@
     <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
       <div data-navmob="1" style="flex-direction:column;border-top:1px solid #E7E9EC;background:#FFFFFF;max-height:70vh;overflow-y:auto;padding:8px 0 18px">
         <sc-for list="{{ mobileGroups }}" as="g" hint-placeholder-count="4">
-          <div style="padding:14px 24px 4px">
-            <div style="font-family:Figtree,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#A3ABB6;margin-bottom:6px">{{ g.label }}</div>
-            <div style="display:flex;flex-direction:column">
-              <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
-                <a href="{{ it.href }}" target="{{ it.target }}" rel="noopener" onClick="{{ closeNav }}" style="padding:12px 0;font-size:16px;color:#2E4057;border-bottom:1px solid #F2F3F5" style-hover="color:#17365B">{{ it.label }}</a>
-              </sc-for>
-            </div>
+          <div style="padding:4px 24px;border-bottom:1px solid #F2F3F5">
+            <button onClick="{{ g.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:none;border:0;padding:14px 0;cursor:pointer;font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#2E4057">{{ g.label }}<span style="font-size:18px;color:#A3ABB6">{{ g.arrow }}</span></button>
+            <sc-if value="{{ g.isOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;padding-bottom:10px">
+                <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+                  <a href="{{ it.href }}" target="{{ it.target }}" rel="noopener" onClick="{{ closeNav }}" style="padding:12px 0;font-size:16px;color:#2E4057;border-top:1px solid #F2F3F5" style-hover="color:#17365B">{{ it.label }}</a>
+                </sc-for>
+              </div>
+            </sc-if>
           </div>
         </sc-for>
       </div>
@@ -360,7 +362,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Contenido&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#17365B&quot;,&quot;#2E4057&quot;,&quot;#A3ABB6&quot;],&quot;default&quot;:&quot;#17365B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;},}">
 class Component extends DCLogic {
-  state = { lang: null, tab: 0, faq: 0, menuOpen: false, sent: false, menu: null, subItem: null, navOpen: false, contactName: '', contactEmail: '', contactInterest: '', contactMessage: '', sending: false, sendError: '' };
+  state = { lang: null, tab: 0, faq: 0, menuOpen: false, sent: false, menu: null, subItem: null, navOpen: false, mobileGroup: null, contactName: '', contactEmail: '', contactInterest: '', contactMessage: '', sending: false, sendError: '' };
 
   LINKS = [
     { href: 'https://www.preufagus-ed.cl', ext: true },
@@ -662,13 +664,19 @@ class Component extends DCLogic {
       navOpen: this.state.navOpen,
       navToggleLabel: this.state.navOpen ? (lang === 'en' ? 'Close' : 'Cerrar') : (lang === 'en' ? 'Menu' : 'Menú'),
       toggleNav: () => this.setState({ navOpen: !this.state.navOpen }),
-      closeNav: () => this.setState({ navOpen: false }),
+      closeNav: () => this.setState({ navOpen: false, mobileGroup: null }),
       mobileGroups: [
-        { label: t.navServices, items: c.services.map((s, i) => { const L = this.LINKS[i] || { href: '#contacto' }; return { label: s.title, href: L.href, target: L.ext ? '_blank' : '_self' }; }) },
-        { label: t.navPrograms, items: this.PROGRAMS.map(p => ({ label: p[lang], href: 'programas.html?program=' + p.slug, target: '_self' })) },
-        { label: t.navResources, items: this.RESOURCES.map(r => ({ label: lang === 'en' ? r.en : r.es, href: 'recursos.html#' + r.slug, target: '_self' })) },
-        { label: t.navTeam, items: [{ label: t.teamTitle, href: '#equipo', target: '_self' }, { label: t.navCta, href: '#contacto', target: '_self' }] }
-      ],
+        { key: 'services', label: t.navServices, items: c.services.map((s, i) => { const L = this.LINKS[i] || { href: '#contacto' }; return { label: s.title, href: L.href, target: L.ext ? '_blank' : '_self' }; }) },
+        { key: 'programs', label: t.navPrograms, items: this.PROGRAMS.map(p => ({ label: p[lang], href: 'programas.html?program=' + p.slug, target: '_self' })) },
+        { key: 'resources', label: t.navResources, items: this.RESOURCES.map(r => ({ label: lang === 'en' ? r.en : r.es, href: 'recursos.html#' + r.slug, target: '_self' })) },
+        { key: 'team', label: t.navTeam, items: [{ label: t.teamTitle, href: '#equipo', target: '_self' }, { label: t.navCta, href: '#contacto', target: '_self' }] }
+      ].map(g => ({
+        label: g.label,
+        items: g.items,
+        isOpen: this.state.mobileGroup === g.key,
+        arrow: this.state.mobileGroup === g.key ? '−' : '+',
+        toggle: () => this.setState({ mobileGroup: this.state.mobileGroup === g.key ? null : g.key })
+      })),
       menuOpen: this.state.menuOpen,
       openMenu: () => this.setState({ menuOpen: true }),
       closeMenu: () => this.setState({ menuOpen: false }),
