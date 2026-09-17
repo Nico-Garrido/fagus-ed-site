@@ -74,6 +74,34 @@
         </sc-for>
       </div>
     </div>
+    <sc-if value="{{ activeProgram.hasGroups }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1140px;margin:0 auto;padding:0 24px 76px">
+        <sc-for list="{{ activeProgram.groups }}" as="gr" hint-placeholder-count="2">
+          <div style="margin-top:8px">
+            <sc-if value="{{ gr.label }}" hint-placeholder-val="{{ true }}">
+              <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:19px;letter-spacing:-.01em;margin:36px 0 6px">{{ gr.label }}</h3>
+              <p style="font-size:15px;color:#7F8996;margin:0 0 18px;max-width:70ch">{{ gr.blurb }}</p>
+            </sc-if>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+              <sc-for list="{{ gr.subjects }}" as="sub" hint-placeholder-count="6">
+                <a href="{{ sub.href }}" style="background:#FFFFFF;padding:26px;display:block" style-hover="background:#F9F9F9">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+                    <div style="font-family:Figtree,sans-serif;font-size:16px;font-weight:600;color:#17365B">{{ sub.label }}</div>
+                    <div style="font-family:Figtree,sans-serif;font-size:11px;letter-spacing:.08em;color:#A3ABB6;white-space:nowrap">{{ sub.code }}</div>
+                  </div>
+                  <p style="font-size:14px;line-height:1.55;color:#5A6675;margin:10px 0 0;text-wrap:pretty">{{ sub.desc }}</p>
+                  <ul style="margin:14px 0 0;padding-left:16px;font-size:13.5px;line-height:1.6;color:#2E4057">
+                    <sc-for list="{{ sub.topics }}" as="tp" hint-placeholder-count="4">
+                      <li>{{ tp }}</li>
+                    </sc-for>
+                  </ul>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
   </section>
 
   <section style="background:#17365B;color:#FFFFFF">
@@ -124,11 +152,33 @@ class Component extends DCLogic {
           intro: 'El plan nacional es el currículum definido por el Ministerio de Educación para la enseñanza básica y media en Chile. Organiza las asignaturas por objetivos de aprendizaje y culmina, para quienes postulan a la universidad, en la PAES.',
           intro2: 'Trabajamos tanto el acompañamiento durante el año escolar (contenidos, pruebas, promedio) como la preparación específica para la PAES por eje temático.',
           facts: [
-            { label: 'Etapa', value: '1° básico a 4° medio' },
+            { label: 'Etapa', value: '7° básico a 2° medio' },
             { label: 'Estructura', value: 'Asignaturas obligatorias por nivel, definidas en las Bases Curriculares' },
             { label: 'Evaluación', value: 'Calificaciones 1,0 a 7,0 durante el año; PAES al finalizar 4° medio' },
             { label: 'Prueba de acceso', value: 'PAES: Competencia Lectora, Competencia Matemática M1 y M2, Ciencias e Historia' },
             { label: 'Cómo apoyamos', value: 'Nivelación por asignatura, preparación de pruebas y ensayos PAES con seguimiento de puntaje' }
+          ],
+          levelGroups: [
+            {
+              label: '7° y 8° básico',
+              blurb: 'Ciencias Naturales es una sola asignatura organizada en ejes; Matemáticas e Inglés siguen el currículum de cada nivel.',
+              subjects: [
+                { slug: 'ciencias', label: 'Ciencias', code: '7° y 8° básico', desc: 'Ciencias Naturales organizada en ejes de Biología, Física y Química; desde 1° medio cada eje pasa a ser una asignatura independiente.', topics: ['Materia y sus propiedades', 'Cuerpo humano y salud', 'Fuerzas, energía y movimiento', 'Ecosistemas y medio ambiente'] },
+                { slug: 'matematicas', label: 'Matemáticas', code: 'M1 / M2 PAES', desc: 'Contenidos de enseñanza media y preparación por eje para Competencia Matemática M1 y M2.', topics: ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'] },
+                { slug: 'ingles', label: 'Inglés', code: 'Inglés escolar', desc: 'Apoyo en el inglés del currículum nacional y preparación de certificaciones externas.', topics: ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva y oral'] }
+              ]
+            },
+            {
+              label: '1° y 2° medio',
+              blurb: 'Ciencias se separa en Biología, Física y Química; Matemáticas e Inglés continúan hasta 2° medio.',
+              subjects: [
+                { slug: 'biologia', label: 'Biología', code: 'Ciencias PAES', desc: 'Contenidos de biología de 1° a 4° medio y el eje de Biología de la prueba de Ciencias de la PAES.', topics: ['Célula y procesos metabólicos', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología y organismo-ambiente'] },
+                { slug: 'fisica', label: 'Física', code: 'Ciencias PAES', desc: 'Eje de Física del currículum nacional y su presencia en la prueba de Ciencias.', topics: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'] },
+                { slug: 'quimica', label: 'Química', code: 'Ciencias PAES', desc: 'Eje de Química del currículum nacional y su versión en la prueba de Ciencias.', topics: ['Estructura atómica y enlace', 'Estequiometría y disoluciones', 'Reacciones químicas', 'Química orgánica básica'] },
+                { slug: 'matematicas', label: 'Matemáticas', code: 'M1 / M2 PAES', desc: 'Contenidos de enseñanza media y preparación por eje para Competencia Matemática M1 y M2.', topics: ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'] },
+                { slug: 'ingles', label: 'Inglés', code: 'Inglés escolar', desc: 'Apoyo en el inglés del currículum nacional y preparación de certificaciones externas.', topics: ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva y oral'] }
+              ]
+            }
           ]
         },
         {
@@ -154,6 +204,15 @@ class Component extends DCLogic {
             { label: 'Evaluación', value: 'Exámenes externos en las series de mayo/junio y octubre/noviembre; papers teóricos y prácticos' },
             { label: 'Calificación', value: 'Escala A* a G (y 9-1 en algunas variantes)' },
             { label: 'Cómo apoyamos', value: 'Tutoría por asignatura alineada al syllabus vigente, práctica con past papers y mark schemes' }
+          ],
+          subjectMatrix: [
+            { slug: 'biologia', label: 'Biología', code: '0610', desc: 'Veintiún temas del syllabus de Cambridge, con papers teóricos y componente práctico alternativo.', topics: ['Características de los seres vivos', 'Nutrición y transporte', 'Reproducción y herencia', 'Organismos y su ambiente'] },
+            { slug: 'quimica', label: 'Química', code: '0620', desc: 'Syllabus de Cambridge con niveles Core y Extended, más el paper práctico o alternativo.', topics: ['Partículas y enlace químico', 'Estequiometría', 'Electroquímica y energía', 'Química orgánica e industrial'] },
+            { slug: 'fisica', label: 'Física', code: '0625', desc: 'Seis temas del syllabus de Cambridge, con papers teóricos y práctico alternativo.', topics: ['Movimiento, fuerzas y energía', 'Fenómenos térmicos', 'Ondas y luz', 'Electricidad, magnetismo y física nuclear'] },
+            { slug: 'co-ordinated-sciences', label: 'Co-ordinated Sciences', code: '0654', desc: 'Cubre los mismos ejes que Biology, Chemistry y Physics por separado, en un solo syllabus (Double Award).', topics: ['Eje de Biología', 'Eje de Química', 'Eje de Física', 'Papers teóricos y práctico alternativo'] },
+            { slug: 'matematicas', label: 'Mathematics', code: '0580', desc: 'Mathematics de Cambridge en niveles Core y Extended; también trabajamos Additional Mathematics 0606.', topics: ['Número y álgebra', 'Ecuaciones y funciones', 'Geometría y trigonometría', 'Estadística y probabilidad'] },
+            { slug: 'international-mathematics', label: 'International Mathematics', code: '0607', desc: 'Alternativa de Cambridge a Mathematics 0580, con enfoque más aplicado; solo nivel Extended.', topics: ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Estadística y probabilidad'] },
+            { slug: 'ingles', label: 'English', code: '0500 / 0511', desc: 'First Language English o English as a Second Language, según el colegio.', topics: ['Reading passages y comprensión', 'Directed writing', 'Escritura descriptiva y narrativa', 'Speaking y listening (0511)'] }
           ]
         },
         {
@@ -167,6 +226,13 @@ class Component extends DCLogic {
             { label: 'Calificación', value: 'Escala A* a E' },
             { label: 'Uso', value: 'Requisito de admisión en universidades del Reino Unido y aceptado internacionalmente' },
             { label: 'Cómo apoyamos', value: 'Tutoría por paper, técnica de respuesta extendida y preparación de componentes prácticos' }
+          ],
+          subjectMatrix: [
+            { slug: 'biologia', label: 'Biología', code: '9700', desc: 'AS y A2 con mayor profundidad experimental y análisis de datos en los papers 3 a 5.', topics: ['Estructura celular y biomoléculas', 'Fisiología y transporte', 'Genética molecular y control génico', 'Selección natural y biodiversidad'] },
+            { slug: 'quimica', label: 'Química', code: '9701', desc: 'Química física, inorgánica y orgánica en dos años, con énfasis en mecanismos y análisis.', topics: ['Equilibrio y cinética', 'Termodinámica y electroquímica', 'Química inorgánica de los grupos', 'Mecanismos orgánicos y espectroscopía'] },
+            { slug: 'fisica', label: 'Física', code: '9702', desc: 'AS y A2 con tratamiento formal, incertidumbres experimentales y el paper práctico avanzado.', topics: ['Mecánica y materiales', 'Campos gravitacional, eléctrico y magnético', 'Oscilaciones y ondas', 'Física cuántica y nuclear'] },
+            { slug: 'matematicas', label: 'Mathematics', code: '9709', desc: 'Pure Mathematics más los componentes de Mechanics o Probability & Statistics según la combinación del colegio.', topics: ['Pure 1 y Pure 3', 'Cálculo diferencial e integral', 'Mechanics', 'Probability & Statistics'] },
+            { slug: 'ingles', label: 'English', code: '9093 / 9695', desc: 'English Language o Literature in English, con foco en análisis y respuesta extendida.', topics: ['Análisis de textos', 'Escritura dirigida', 'Poesía, prosa y drama', 'Ensayo comparativo'] }
           ]
         },
         {
@@ -180,6 +246,13 @@ class Component extends DCLogic {
             { label: 'Evaluación', value: 'Exámenes externos más evaluación interna (IA) en cada asignatura' },
             { label: 'Calificación', value: '1 a 7 por asignatura; 45 puntos máximo, 24 mínimo para el diploma' },
             { label: 'Cómo apoyamos', value: 'Tutoría por asignatura y nivel, orientación en la IA y en la Monografía, preparación de exámenes' }
+          ],
+          subjectMatrix: [
+            { slug: 'biologia', label: 'Biología', code: 'SL / HL', desc: 'Currículum por temas más la evaluación interna y el trabajo de conceptos transversales.', topics: ['Unidad y diversidad', 'Forma y función', 'Interacción e interdependencia', 'Continuidad y cambio'] },
+            { slug: 'quimica', label: 'Química', code: 'SL / HL', desc: 'Estructura y reactividad como ejes, con la evaluación interna como componente central.', topics: ['Modelos de estructura', 'Enlace y propiedades', 'Cambio químico y energía', 'Reactividad orgánica'] },
+            { slug: 'fisica', label: 'Física', code: 'SL / HL', desc: 'Temas del programa con la evaluación interna y el trabajo con datos experimentales.', topics: ['Espacio, tiempo y movimiento', 'Partículas y transferencia de energía', 'Campos y ondas', 'Física nuclear y cuántica'] },
+            { slug: 'matematicas', label: 'Mathematics', code: 'AA / AI', desc: 'Analysis and Approaches o Applications and Interpretation, en SL o HL, con exploración matemática (IA).', topics: ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Cálculo y estadística'] },
+            { slug: 'ingles', label: 'English', code: 'Lang A / Lang B', desc: 'Language A: Literature o Language and Literature, y Language B en SL o HL.', topics: ['Análisis textual guiado', 'Ensayo comparativo (Paper 2)', 'Oral individual', 'Producción escrita y HL essay'] }
           ]
         },
         {
@@ -212,11 +285,33 @@ class Component extends DCLogic {
           intro: 'The national curriculum is defined by the Chilean Ministry of Education for primary and secondary school. It organises subjects around learning objectives and, for students applying to university, culminates in the PAES.',
           intro2: 'We support both the school year itself (content, tests, grade average) and specific PAES preparation by topic area.',
           facts: [
-            { label: 'Stage', value: 'Year 1 of primary to the final year of secondary school' },
+            { label: 'Stage', value: 'Grade 7 to grade 10 (7° básico to 2° medio)' },
             { label: 'Structure', value: 'Compulsory subjects per year, set out in the national curriculum framework' },
             { label: 'Assessment', value: 'Grades from 1.0 to 7.0 through the year; PAES at the end of secondary school' },
             { label: 'Entrance exam', value: 'PAES: Reading, Mathematics M1 and M2, Sciences and History' },
             { label: 'How we help', value: 'Subject catch-up, test preparation and PAES mocks with score tracking' }
+          ],
+          levelGroups: [
+            {
+              label: 'Grades 7-8',
+              blurb: 'Natural Sciences is a single subject organised into strands; Mathematics and English follow each grade’s curriculum.',
+              subjects: [
+                { slug: 'ciencias', label: 'Science', code: 'Grades 7-8', desc: 'Natural Sciences organised into Biology, Physics and Chemistry strands; from grade 9 (1° medio) each strand becomes its own subject.', topics: ['Matter and its properties', 'Human body and health', 'Forces, energy and motion', 'Ecosystems and the environment'] },
+                { slug: 'matematicas', label: 'Mathematics', code: 'PAES M1 / M2', desc: 'Secondary-school content and strand-by-strand preparation for Mathematics M1 and M2.', topics: ['Numbers and proportionality', 'Algebra and functions', 'Geometry', 'Probability and statistics'] },
+                { slug: 'ingles', label: 'English', code: 'School English', desc: 'Support with English in the national curriculum and preparation for external certifications.', topics: ['Reading comprehension', 'Grammar and usage', 'Written expression', 'Listening and speaking'] }
+              ]
+            },
+            {
+              label: 'Grades 9-10 (1° and 2° medio)',
+              blurb: 'Science splits into Biology, Physics and Chemistry; Mathematics and English continue through grade 10.',
+              subjects: [
+                { slug: 'biologia', label: 'Biology', code: 'PAES Sciences', desc: 'Secondary-school biology content and the Biology strand of the PAES Sciences test.', topics: ['Cells and metabolic processes', 'Genetics and inheritance', 'Human body systems', 'Ecology and organism-environment'] },
+                { slug: 'fisica', label: 'Physics', code: 'PAES Sciences', desc: 'The Physics strand of the national curriculum and its presence in the Sciences test.', topics: ['Motion and forces', 'Energy and work', 'Waves and sound', 'Electricity and magnetism'] },
+                { slug: 'quimica', label: 'Chemistry', code: 'PAES Sciences', desc: 'The Chemistry strand of the national curriculum and its version in the Sciences test.', topics: ['Atomic structure and bonding', 'Stoichiometry and solutions', 'Chemical reactions', 'Basic organic chemistry'] },
+                { slug: 'matematicas', label: 'Mathematics', code: 'PAES M1 / M2', desc: 'Secondary-school content and strand-by-strand preparation for Mathematics M1 and M2.', topics: ['Numbers and proportionality', 'Algebra and functions', 'Geometry', 'Probability and statistics'] },
+                { slug: 'ingles', label: 'English', code: 'School English', desc: 'Support with English in the national curriculum and preparation for external certifications.', topics: ['Reading comprehension', 'Grammar and usage', 'Written expression', 'Listening and speaking'] }
+              ]
+            }
           ]
         },
         {
@@ -242,6 +337,15 @@ class Component extends DCLogic {
             { label: 'Assessment', value: 'External examinations in the May/June and October/November series; theory and practical papers' },
             { label: 'Grading', value: 'A* to G scale (and 9-1 in some variants)' },
             { label: 'How we help', value: 'Subject tutoring aligned to the current syllabus, with past-paper and mark-scheme practice' }
+          ],
+          subjectMatrix: [
+            { slug: 'biologia', label: 'Biology', code: '0610', desc: 'Twenty-one topics of the Cambridge syllabus, with theory papers and the alternative practical component.', topics: ['Characteristics of living organisms', 'Nutrition and transport', 'Reproduction and inheritance', 'Organisms and their environment'] },
+            { slug: 'quimica', label: 'Chemistry', code: '0620', desc: 'The Cambridge syllabus at Core and Extended level, plus the practical or alternative paper.', topics: ['Particles and chemical bonding', 'Stoichiometry', 'Electrochemistry and energy', 'Organic and industrial chemistry'] },
+            { slug: 'fisica', label: 'Physics', code: '0625', desc: 'Six topics of the Cambridge syllabus, with theory papers and the alternative practical.', topics: ['Motion, forces and energy', 'Thermal physics', 'Waves and light', 'Electricity, magnetism and nuclear physics'] },
+            { slug: 'co-ordinated-sciences', label: 'Co-ordinated Sciences', code: '0654', desc: 'Covers the same strands as separate Biology, Chemistry and Physics, in a single syllabus (Double Award).', topics: ['Biology strand', 'Chemistry strand', 'Physics strand', 'Theory papers and the alternative practical'] },
+            { slug: 'matematicas', label: 'Mathematics', code: '0580', desc: 'Cambridge Mathematics at Core and Extended level; we also cover Additional Mathematics 0606.', topics: ['Number and algebra', 'Equations and functions', 'Geometry and trigonometry', 'Statistics and probability'] },
+            { slug: 'international-mathematics', label: 'International Mathematics', code: '0607', desc: 'Cambridge’s alternative to Mathematics 0580, with a more applied focus; Extended level only.', topics: ['Number and algebra', 'Functions', 'Geometry and trigonometry', 'Statistics and probability'] },
+            { slug: 'ingles', label: 'English', code: '0500 / 0511', desc: 'First Language English or English as a Second Language, depending on the school.', topics: ['Reading passages and comprehension', 'Directed writing', 'Descriptive and narrative writing', 'Speaking and listening (0511)'] }
           ]
         },
         {
@@ -255,6 +359,13 @@ class Component extends DCLogic {
             { label: 'Grading', value: 'A* to E scale' },
             { label: 'Use', value: 'An admission requirement in UK universities and accepted internationally' },
             { label: 'How we help', value: 'Tutoring per paper, extended-response technique and preparation for practical components' }
+          ],
+          subjectMatrix: [
+            { slug: 'biologia', label: 'Biology', code: '9700', desc: 'AS and A2 with greater experimental depth and data analysis in papers 3 to 5.', topics: ['Cell structure and biomolecules', 'Physiology and transport', 'Molecular genetics and gene control', 'Natural selection and biodiversity'] },
+            { slug: 'quimica', label: 'Chemistry', code: '9701', desc: 'Physical, inorganic and organic chemistry over two years, with emphasis on mechanisms and analysis.', topics: ['Equilibrium and kinetics', 'Thermodynamics and electrochemistry', 'Inorganic group chemistry', 'Organic mechanisms and spectroscopy'] },
+            { slug: 'fisica', label: 'Physics', code: '9702', desc: 'AS and A2 with formal treatment, experimental uncertainties and the advanced practical paper.', topics: ['Mechanics and materials', 'Gravitational, electric and magnetic fields', 'Oscillations and waves', 'Quantum and nuclear physics'] },
+            { slug: 'matematicas', label: 'Mathematics', code: '9709', desc: 'Pure Mathematics plus the Mechanics or Probability & Statistics components, depending on the school’s combination.', topics: ['Pure 1 and Pure 3', 'Differential and integral calculus', 'Mechanics', 'Probability & Statistics'] },
+            { slug: 'ingles', label: 'English', code: '9093 / 9695', desc: 'English Language or Literature in English, focused on analysis and extended response.', topics: ['Text analysis', 'Directed writing', 'Poetry, prose and drama', 'Comparative essay'] }
           ]
         },
         {
@@ -268,6 +379,13 @@ class Component extends DCLogic {
             { label: 'Assessment', value: 'External examinations plus internal assessment (IA) in each subject' },
             { label: 'Grading', value: '1 to 7 per subject; 45 points maximum, 24 minimum for the diploma' },
             { label: 'How we help', value: 'Tutoring by subject and level, guidance on the IA and Extended Essay, exam preparation' }
+          ],
+          subjectMatrix: [
+            { slug: 'biologia', label: 'Biology', code: 'SL / HL', desc: 'The thematic curriculum plus the internal assessment and work on cross-cutting concepts.', topics: ['Unity and diversity', 'Form and function', 'Interaction and interdependence', 'Continuity and change'] },
+            { slug: 'quimica', label: 'Chemistry', code: 'SL / HL', desc: 'Structure and reactivity as the main strands, with the internal assessment as a core component.', topics: ['Models of structure', 'Bonding and properties', 'Chemical change and energy', 'Organic reactivity'] },
+            { slug: 'fisica', label: 'Physics', code: 'SL / HL', desc: 'The programme topics with the internal assessment and work on experimental data.', topics: ['Space, time and motion', 'Particles and energy transfer', 'Fields and waves', 'Nuclear and quantum physics'] },
+            { slug: 'matematicas', label: 'Mathematics', code: 'AA / AI', desc: 'Analysis and Approaches or Applications and Interpretation, at SL or HL, with the mathematical exploration (IA).', topics: ['Number and algebra', 'Functions', 'Geometry and trigonometry', 'Calculus and statistics'] },
+            { slug: 'ingles', label: 'English', code: 'Lang A / Lang B', desc: 'Language A: Literature or Language and Literature, and Language B at SL or HL.', topics: ['Guided textual analysis', 'Comparative essay (Paper 2)', 'Individual oral', 'Written production and HL essay'] }
           ]
         },
         {
@@ -326,8 +444,19 @@ class Component extends DCLogic {
         onClick: () => this.setState({ program: p.slug }),
         style: tabStyle(p.slug === program)
       })),
-      activeProgram: { ...activeRaw, askHref: 'agendar.html?s=tutoria&p=' + activeRaw.slug + '&lang=' + lang }
+      activeProgram: this.buildActiveProgram(activeRaw, lang)
     };
+  }
+
+  buildActiveProgram(p, lang) {
+    const withHref = (sub) => ({ ...sub, href: 'asignaturas.html?subject=' + sub.slug + '&program=' + p.slug });
+    let groups = [];
+    if (p.levelGroups) {
+      groups = p.levelGroups.map(g => ({ label: g.label, blurb: g.blurb, subjects: g.subjects.map(withHref) }));
+    } else if (p.subjectMatrix) {
+      groups = [{ label: null, blurb: null, subjects: p.subjectMatrix.map(withHref) }];
+    }
+    return { ...p, askHref: 'agendar.html?s=tutoria&p=' + p.slug + '&lang=' + lang, groups, hasGroups: groups.length > 0 };
   }
 }
 </script>
