@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/favicon.png">
+<title>FagusED</title>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -113,7 +114,7 @@
         <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:20px;margin:0 0 10px;color:#FFFFFF">{{ t.flashInteractiveTitle }}</h3>
         <p style="font-size:15px;line-height:1.6;margin:0;color:#D3D9E2">{{ t.flashInteractiveBody }}</p>
       </div>
-      <a href="flashcards.html" target="_blank" style="flex-shrink:0;background:#FFFFFF;color:#17365B;padding:14px 24px;font-family:Figtree,sans-serif;font-weight:600;font-size:14.5px;text-decoration:none" style-hover="background:#F9F9F9;color:#17365B">{{ t.flashInteractiveCta }} ↗</a>
+      <a href="{{ flashcardsHref }}" target="_blank" style="flex-shrink:0;background:#FFFFFF;color:#17365B;padding:14px 24px;font-family:Figtree,sans-serif;font-weight:600;font-size:14.5px;text-decoration:none" style-hover="background:#F9F9F9;color:#17365B">{{ t.flashInteractiveCta }} ↗</a>
     </div>
 
     <div style="font-family:Figtree,sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#A3ABB6;margin-bottom:18px">{{ t.flashPrintLabel }}</div>
@@ -450,6 +451,7 @@ class Component extends DCLogic {
     }));
     return {
       t, lang,
+      flashcardsHref: 'flashcards.html?lang=' + lang,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
       subjectTabs: this.SUBJECTS.map(s => ({
