@@ -57,6 +57,35 @@
     </div>
   </section>
 
+  <sc-if value="{{ isPlanNacional }}" hint-placeholder-val="{{ false }}">
+  <section id="guias-plan-nacional" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:64px 24px">
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.guidesLabel }}</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px">
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.guidesTitle }}</h2>
+        <p style="font-size:16px;color:#7F8996;max-width:44ch;margin:0;line-height:1.6">{{ t.pnGuidesBlurb }}</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+        <sc-for list="{{ levelTabs }}" as="lv" hint-placeholder-count="4">
+          <button onClick="{{ lv.onClick }}" style="{{ lv.style }}">{{ lv.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px">
+        <sc-for list="{{ pnSubjectTabs }}" as="ps" hint-placeholder-count="5">
+          <button onClick="{{ ps.onClick }}" style="{{ ps.style }}">{{ ps.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px">
+        <a href="{{ pnGuide.href }}" download="{{ pnGuide.downloadName }}" style="background:#FFFFFF;border:1px solid #E7E9EC;padding:24px;display:flex;flex-direction:column;min-height:150px;max-width:340px;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(23,54,91,.35)">
+          <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A3ABB6">{{ pnGuide.tag }}</div>
+          <h3 style="font-family:Figtree,sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin:12px 0 0;color:#17365B;text-wrap:pretty">{{ pnGuide.title }}</h3>
+          <div style="margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:#7F8996">{{ t.pdfBadge }}<span style="font-family:Figtree,sans-serif;font-weight:600;color:#17365B">{{ t.download }} ↓</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
   <sc-if value="{{ isIgcse }}" hint-placeholder-val="{{ true }}">
   <section id="guias-igcse" style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
     <div style="max-width:1140px;margin:0 auto;padding:64px 24px">
@@ -164,7 +193,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { program: null, subject: 'physics-0625', strand: 'B', lang: null };
+  state = { program: null, subject: 'physics-0625', strand: 'B', level: null, pnSubject: null, lang: null };
 
   STRAND_LABEL = {
     B: { es: 'Biología', en: 'Biology' },
@@ -324,6 +353,45 @@ class Component extends DCLogic {
     }
   ];
 
+  PLAN_NACIONAL = [
+    {
+      slug: '7mo-basico', es: '7° básico', en: 'Grade 7', dir: 'guides/plan-nacional/7mo-basico',
+      subjects: [
+        { slug: 'ciencias', es: 'Ciencias', en: 'Science', file: 'FagusED_Plan_Nacional_7B_Ciencias.pdf' },
+        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_7B_Matematicas.pdf' },
+        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_7B_Ingles.pdf' }
+      ]
+    },
+    {
+      slug: '8vo-basico', es: '8° básico', en: 'Grade 8', dir: 'guides/plan-nacional/8vo-basico',
+      subjects: [
+        { slug: 'ciencias', es: 'Ciencias', en: 'Science', file: 'FagusED_Plan_Nacional_8B_Ciencias.pdf' },
+        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_8B_Matematicas.pdf' },
+        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_8B_Ingles.pdf' }
+      ]
+    },
+    {
+      slug: '1ro-medio', es: '1° medio', en: 'Grade 9 (1° medio)', dir: 'guides/plan-nacional/1ro-medio',
+      subjects: [
+        { slug: 'biologia', es: 'Biología', en: 'Biology', file: 'FagusED_Plan_Nacional_1M_Biologia.pdf' },
+        { slug: 'fisica', es: 'Física', en: 'Physics', file: 'FagusED_Plan_Nacional_1M_Fisica.pdf' },
+        { slug: 'quimica', es: 'Química', en: 'Chemistry', file: 'FagusED_Plan_Nacional_1M_Quimica.pdf' },
+        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_1M_Matematicas.pdf' },
+        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_1M_Ingles.pdf' }
+      ]
+    },
+    {
+      slug: '2do-medio', es: '2° medio', en: 'Grade 10 (2° medio)', dir: 'guides/plan-nacional/2do-medio',
+      subjects: [
+        { slug: 'biologia', es: 'Biología', en: 'Biology', file: 'FagusED_Plan_Nacional_2M_Biologia.pdf' },
+        { slug: 'fisica', es: 'Física', en: 'Physics', file: 'FagusED_Plan_Nacional_2M_Fisica.pdf' },
+        { slug: 'quimica', es: 'Química', en: 'Chemistry', file: 'FagusED_Plan_Nacional_2M_Quimica.pdf' },
+        { slug: 'matematicas', es: 'Matemáticas', en: 'Mathematics', file: 'FagusED_Plan_Nacional_2M_Matematicas.pdf' },
+        { slug: 'ingles', es: 'Inglés', en: 'English', file: 'FagusED_Plan_Nacional_2M_Ingles.pdf' }
+      ]
+    }
+  ];
+
   FLASHCARDS = [
     { name: 'Physics', code: '0625', cards: 50, topics: 6, file: 'FagusED_IGCSE_Flashcards_Physics_0625_Compact.pdf' },
     { name: 'Chemistry', code: '0620', cards: 84, topics: 12, file: 'FagusED_IGCSE_Flashcards_Chemistry_0620_Compact.pdf' },
@@ -353,6 +421,7 @@ class Component extends DCLogic {
       guidesLabel: 'Guías de estudio',
       guidesTitle: 'Guías',
       guidesBlurb: 'Teoría, ejemplos resueltos y práctica tipo examen en PDF, para Physics, Chemistry, Biology, Co-ordinated Sciences y Mathematics. Descarga directa, sin registro.',
+      pnGuidesBlurb: 'Guías del Currículum Nacional para 7° y 8° básico, y 1° y 2° medio, con teoría, ejemplos resueltos y práctica. Descarga directa, sin registro.',
       pdfBadge: 'PDF',
       download: 'Descargar',
       flashLabel: 'Flashcards',
@@ -377,6 +446,7 @@ class Component extends DCLogic {
       guidesLabel: 'Study guides',
       guidesTitle: 'Guides',
       guidesBlurb: 'Theory, worked examples and exam-style practice in PDF, for Physics, Chemistry, Biology, Co-ordinated Sciences and Mathematics. Direct download, no sign-up.',
+      pnGuidesBlurb: 'National Curriculum guides for grades 7 and 8, and grades 9 and 10 (1° and 2° medio), with theory, worked examples and practice. Direct download, no sign-up.',
       pdfBadge: 'PDF',
       download: 'Download',
       flashLabel: 'Flashcards',
@@ -422,7 +492,27 @@ class Component extends DCLogic {
     const t = this.UI[lang];
     const program = this.state.program || this.storedProgram() || 'igcse';
     const isIgcse = program === 'igcse';
+    const isPlanNacional = program === 'plan-nacional';
     const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
+    const tabStyle = (on) => `border:1px solid ${on ? '#17365B' : '#E7E9EC'};background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#2E4057'};padding:10px 16px;font-family:Figtree,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s ease`;
+    const activeLevel = this.PLAN_NACIONAL.find(l => l.slug === this.state.level) || this.PLAN_NACIONAL[0];
+    const activePnSubject = activeLevel.subjects.find(s => s.slug === this.state.pnSubject) || activeLevel.subjects[0];
+    const levelTabs = this.PLAN_NACIONAL.map(l => ({
+      label: l[lang],
+      onClick: () => this.setState({ level: l.slug, pnSubject: null }),
+      style: tabStyle(activeLevel.slug === l.slug)
+    }));
+    const pnSubjectTabs = activeLevel.subjects.map(s => ({
+      label: s[lang],
+      onClick: () => this.setState({ pnSubject: s.slug }),
+      style: tabStyle(activePnSubject.slug === s.slug)
+    }));
+    const pnGuide = {
+      href: activeLevel.dir + '/' + activePnSubject.file,
+      downloadName: ['FagusED_PlanNacional', activeLevel.slug.replace(/-/g, '_'), activePnSubject.slug].join('_') + '.pdf',
+      tag: activeLevel[lang],
+      title: activePnSubject[lang]
+    };
     const subj = this.state.subject;
     const activeRaw = this.SUBJECTS.find(s => s.slug === subj) || this.SUBJECTS[0];
     const slugify = (s) => s.replace(/,/g, '').trim().replace(/\s+/g, '_');
@@ -462,7 +552,11 @@ class Component extends DCLogic {
       activeSubject,
       flashcardSets,
       isIgcse,
-      isEmptyProgram: !isIgcse,
+      isPlanNacional,
+      levelTabs,
+      pnSubjectTabs,
+      pnGuide,
+      isEmptyProgram: !isIgcse && !isPlanNacional,
       filters: this.PROG.map(p => ({
         label: p[lang],
         onClick: () => this.setState({ program: p.slug }),
