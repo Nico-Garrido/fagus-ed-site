@@ -26,6 +26,14 @@ const EXTRA_LABELS = {
   colegios: { es: 'Proceso o necesidad a optimizar', en: 'Process or need to optimise' }
 };
 
+// Overrides used when the request comes from the FagusED TimeTable app's own
+// "Solicitar acceso" popup, rather than the general fagus-ed.cl contact flow —
+// same "colegios" kind/duration, but the visitor is unambiguously asking
+// about that product specifically, and gives their school's name, not a
+// generic "process to optimise".
+const TIMETABLE_SOURCE_EVENT_TITLE = { es: 'Interés en FagusED TimeTable · Fagus Ed', en: 'Interest in FagusED TimeTable · Fagus Ed' };
+const TIMETABLE_SOURCE_EXTRA_LABEL = { es: 'Colegio', en: 'School' };
+
 function isValidEmail(v) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 }
@@ -45,7 +53,7 @@ export default async function handler(req, res) {
       body = {};
     }
   }
-  const { kind, date, time, name, email, phone, extra, notes, lang } = body || {};
+  const { kind, date, time, name, email, phone, extra, notes, lang, source } = body || {};
   const language = lang === 'en' ? 'en' : 'es';
 
   if (!kind || !DURATION[kind]) return res.status(400).json({ error: 'Invalid or missing kind' });
@@ -77,8 +85,13 @@ export default async function handler(req, res) {
       return res.status(409).json({ error: 'slot_taken' });
     }
 
-    const title = (EVENT_TITLES[kind] && EVENT_TITLES[kind][language]) || EVENT_TITLES.familias[language];
-    const extraLabel = (EXTRA_LABELS[kind] && EXTRA_LABELS[kind][language]) || '';
+    const fromTimetableApp = source === 'timetable' && kind === 'colegios';
+    const title = fromTimetableApp
+      ? TIMETABLE_SOURCE_EVENT_TITLE[language]
+      : (EVENT_TITLES[kind] && EVENT_TITLES[kind][language]) || EVENT_TITLES.familias[language];
+    const extraLabel = fromTimetableApp
+      ? TIMETABLE_SOURCE_EXTRA_LABEL[language]
+      : (EXTRA_LABELS[kind] && EXTRA_LABELS[kind][language]) || '';
     const descLines = [
       language === 'en' ? 'Request sent from the Fagus Ed website.' : 'Solicitud enviada desde el sitio de Fagus Ed.',
       (language === 'en' ? 'Name: ' : 'Nombre: ') + name,
