@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<title>FagusED</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Source+Sans+3:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; color: #17365B; font-family: "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #17365B; text-decoration: none; }
+  a:hover { color: #2E4057; }
+  video { border-radius: 0; }
+  @keyframes fu { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden">
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:0 24px;min-height:74px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <img src="assets/fagus-mark.png" alt="" style="height:36px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:17px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:22px;font-size:15px;color:#2E4057">
+        <a href="index.html" style="color:#2E4057">{{ t.navHome }}</a>
+        <a href="programas.html" style="color:#2E4057">{{ t.navPrograms }}</a>
+        <a href="material.html" style="color:#2E4057">{{ t.navMaterial }}</a>
+      </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+        <div style="display:flex;align-items:center;border:1px solid #E7E9EC;font-size:12px;font-family:Figtree,sans-serif;letter-spacing:.06em">
+          <button onClick="{{ setEs }}" style="{{ esBtn }}">ES</button>
+          <button onClick="{{ setEn }}" style="{{ enBtn }}">EN</button>
+        </div>
+        <a href="agendar.html?s=colegios" style="background:#17365B;color:#FFFFFF;padding:11px 18px;font-size:14px;font-weight:600;font-family:Figtree,sans-serif" style-hover="background:#2E4057;color:#FFFFFF">{{ t.navCta }}</a>
+      </div>
+    </div>
+  </header>
+
+  <section style="max-width:1140px;margin:0 auto;padding:76px 24px 40px">
+    <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:20px;animation:fu .8s cubic-bezier(.2,.8,.2,1) both">{{ t.kicker }}</div>
+    <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:22ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.title }}</h1>
+    <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:62ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">{{ t.intro }}</p>
+  </section>
+
+  <!-- 01 Reportes -->
+  <section style="background:#F9F9F9;border-top:1px solid #E7E9EC;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:56px 24px">
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.f1.num }}</div>
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.f1.title }}</h2>
+      <p style="font-size:17px;line-height:1.65;color:#5A6675;max-width:68ch;margin:18px 0 32px;text-wrap:pretty">{{ t.f1.body }}</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+        <sc-for list="{{ t.f1.points }}" as="pt" hint-placeholder-count="3">
+          <div style="background:#FFFFFF;padding:22px 24px">
+            <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:15px;color:#17365B">{{ pt.title }}</div>
+            <p style="font-size:14px;line-height:1.6;color:#7F8996;margin:8px 0 0;text-wrap:pretty">{{ pt.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Horarios -->
+  <section style="background:#17365B;color:#FFFFFF">
+    <div style="max-width:1140px;margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:minmax(280px,1fr) minmax(300px,1.15fr);gap:44px;align-items:center">
+      <div>
+        <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#93A2B8;margin-bottom:14px">{{ t.f2.num }}</div>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-.02em;margin:0">{{ t.f2.title }}</h2>
+        <p style="font-size:17px;line-height:1.65;color:#C9D0DA;margin:18px 0 26px;text-wrap:pretty">{{ t.f2.body }}</p>
+        <div style="display:grid;gap:14px;margin-bottom:30px">
+          <sc-for list="{{ t.f2.points }}" as="pt" hint-placeholder-count="3">
+            <div style="border-left:2px solid #3A526F;padding-left:14px">
+              <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:14px;color:#FFFFFF">{{ pt.title }}</div>
+              <div style="font-size:14px;line-height:1.55;color:#93A2B8;margin-top:4px">{{ pt.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <a href="https://timetable.fagus-ed.cl" target="_blank" rel="noopener" style="display:inline-block;background:#FFFFFF;color:#17365B;padding:14px 24px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9;color:#17365B">{{ t.f2.cta }}</a>
+      </div>
+      <div>
+        <video style="width:100%;display:block;background:#0B1B2E" src="{{ videoSrc }}" controls="controls" preload="metadata"></video>
+        <div style="font-size:13px;color:#93A2B8;margin-top:10px">{{ t.f2.videoNote }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Asistencia -->
+  <section style="border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:56px 24px">
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.f3.num }}</div>
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.f3.title }}</h2>
+      <p style="font-size:17px;line-height:1.65;color:#5A6675;max-width:68ch;margin:18px 0 32px;text-wrap:pretty">{{ t.f3.body }}</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+        <sc-for list="{{ t.f3.points }}" as="pt" hint-placeholder-count="3">
+          <div style="background:#FFFFFF;padding:22px 24px">
+            <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:15px;color:#17365B">{{ pt.title }}</div>
+            <p style="font-size:14px;line-height:1.6;color:#7F8996;margin:8px 0 0;text-wrap:pretty">{{ pt.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Calificaciones -->
+  <section style="background:#F9F9F9;border-bottom:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:56px 24px">
+      <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.f4.num }}</div>
+      <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-.02em;margin:0;max-width:26ch">{{ t.f4.title }}</h2>
+      <p style="font-size:17px;line-height:1.65;color:#5A6675;max-width:68ch;margin:18px 0 32px;text-wrap:pretty">{{ t.f4.body }}</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:2px;background:#E7E9EC;border:1px solid #E7E9EC">
+        <sc-for list="{{ t.f4.points }}" as="pt" hint-placeholder-count="3">
+          <div style="background:#FFFFFF;padding:22px 24px">
+            <div style="font-family:Figtree,sans-serif;font-weight:600;font-size:15px;color:#17365B">{{ pt.title }}</div>
+            <p style="font-size:14px;line-height:1.6;color:#7F8996;margin:8px 0 0;text-wrap:pretty">{{ pt.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#FFFFFF">
+    <div style="max-width:1140px;margin:0 auto;padding:72px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px">
+      <div>
+        <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.015em;color:#17365B">{{ t.ctaTitle }}</h2>
+        <p style="font-size:17px;line-height:1.6;color:#5A6675;margin:14px 0 0;max-width:56ch">{{ t.ctaBody }}</p>
+      </div>
+      <a href="agendar.html?s=colegios" style="background:#17365B;color:#FFFFFF;padding:15px 26px;font-family:Figtree,sans-serif;font-weight:600;font-size:15px" style-hover="background:#2E4057;color:#FFFFFF">{{ t.ctaButton }}</a>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid #E7E9EC">
+    <div style="max-width:1140px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+      <div>
+      <a href="index.html" style="display:flex;align-items:center;gap:12px">
+        <img src="assets/fagus-mark.png" alt="" style="height:30px;width:auto;display:block;mix-blend-mode:multiply">
+        <img src="assets/fagus-wordmark.png" alt="Fagus Ed" style="height:14px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <div style="font-size:15px;color:#7F8996;margin-top:10px">{{ t.footerTagline }}</div>
+      </div>
+      <div style="text-align:right;font-size:14px;color:#A3ABB6;line-height:1.6">
+        <div>© 2026 FagusED</div>
+        <div>Santiago, Chile.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { lang: null };
+
+  D = {
+    es: {
+      navHome: 'Inicio', navPrograms: 'Programas', navMaterial: 'Material', navCta: 'Agendar reunión',
+      kicker: 'Soluciones para colegios',
+      title: 'Software a medida para la gestión académica del colegio',
+      intro: 'Automatizamos las tareas administrativas que más tiempo consumen a los equipos docentes y directivos: reportes, horarios, asistencia y calificaciones, en un flujo de trabajo simple.',
+      f1: {
+        num: '01 · Reportes',
+        title: 'Generación automática de reportes',
+        body: 'El sistema construye los informes académicos a partir de la información ya cargada, sin trabajo manual adicional para los profesores.',
+        points: [
+          { title: 'Informes por asignatura y curso', body: 'Se generan a partir de notas y asistencia ya registradas.' },
+          { title: 'Exportables en PDF', body: 'Listos para compartir con dirección académica o apoderados.' },
+          { title: 'Envío automático', body: 'Se pueden despachar en fechas y periodicidad definidas por el colegio.' }
+        ]
+      },
+      f2: {
+        num: '02 · Horarios',
+        title: 'Creación de horarios en minutos, no semanas',
+        body: 'Nuestra plataforma de horarios arma la carga académica del colegio de forma automática, respetando disponibilidad de profesores, salas y bloques, con ajuste manual cuando se necesita.',
+        points: [
+          { title: 'Generación automática', body: 'Considera restricciones de profesores, cursos y asignaturas.' },
+          { title: 'Edición manual con arrastrar y soltar', body: 'Ajustes finos sin perder las validaciones del sistema.' },
+          { title: 'Multi-colegio y bilingüe', body: 'Interfaz en español e inglés, con la identidad del colegio.' }
+        ],
+        cta: 'Ve FagusED TimeTable ↗',
+        videoNote: 'Video demostrativo de la plataforma de horarios.'
+      },
+      f3: {
+        num: '03 · Asistencia',
+        title: 'Registro de asistencia digital',
+        body: 'Los profesores marcan la asistencia en segundos desde cualquier dispositivo, y el colegio mantiene un registro centralizado y siempre actualizado.',
+        points: [
+          { title: 'Marcado rápido por curso', body: 'Pensado para hacerse en el primer minuto de la clase.' },
+          { title: 'Historial centralizado', body: 'Disponible para dirección académica en cualquier momento.' },
+          { title: 'Base para reportes', body: 'La asistencia alimenta automáticamente los informes a apoderados.' }
+        ]
+      },
+      f4: {
+        num: '04 · Calificaciones',
+        title: 'Registro de calificaciones centralizado',
+        body: 'Un solo lugar para que cada profesor ingrese sus calificaciones, con cálculo automático de promedios y trazabilidad completa por curso y asignatura.',
+        points: [
+          { title: 'Ingreso por asignatura', body: 'Cada profesor gestiona sus propias evaluaciones y ponderaciones.' },
+          { title: 'Promedios automáticos', body: 'Cálculo en tiempo real, sin planillas paralelas.' },
+          { title: 'Trazabilidad completa', body: 'Historial de cambios por curso, asignatura y periodo.' }
+        ]
+      },
+      ctaTitle: 'Conversemos sobre tu colegio',
+      ctaBody: 'Cuéntanos el tamaño del colegio y los procesos que hoy toman más tiempo, y te mostramos cómo automatizarlos.',
+      ctaButton: 'Agendar reunión',
+      footerTagline: 'Educación que abre caminos'
+    },
+    en: {
+      navHome: 'Home', navPrograms: 'Programmes', navMaterial: 'Material', navCta: 'Book a meeting',
+      kicker: 'Solutions for schools',
+      title: 'Custom software for school academic management',
+      intro: 'We automate the administrative tasks that take up the most time for teaching and leadership teams: reports, timetables, attendance and grades, in one simple workflow.',
+      f1: {
+        num: '01 · Reports',
+        title: 'Automatic report generation',
+        body: 'The system builds academic reports from data that has already been entered, with no extra manual work for teachers.',
+        points: [
+          { title: 'Reports by subject and class', body: 'Generated from grades and attendance already on record.' },
+          { title: 'Exportable as PDF', body: 'Ready to share with academic leadership or families.' },
+          { title: 'Automatic delivery', body: 'Can be sent on dates and a schedule defined by the school.' }
+        ]
+      },
+      f2: {
+        num: '02 · Timetables',
+        title: 'Timetables built in minutes, not weeks',
+        body: 'Our timetable platform builds the school’s academic schedule automatically, respecting teacher, room and block availability, with manual adjustment whenever needed.',
+        points: [
+          { title: 'Automatic generation', body: 'Accounts for teacher, class and subject constraints.' },
+          { title: 'Manual drag-and-drop editing', body: 'Fine-tune the schedule without losing the system’s validations.' },
+          { title: 'Multi-school and bilingual', body: 'Spanish and English interface, with the school’s own branding.' }
+        ],
+        cta: 'See FagusED TimeTable ↗',
+        videoNote: 'Demo video of the timetable platform.'
+      },
+      f3: {
+        num: '03 · Attendance',
+        title: 'Digital attendance tracking',
+        body: 'Teachers mark attendance in seconds from any device, and the school keeps a centralised, always up-to-date record.',
+        points: [
+          { title: 'Fast per-class marking', body: 'Designed to be done in the first minute of class.' },
+          { title: 'Centralised history', body: 'Available to academic leadership at any time.' },
+          { title: 'Feeds reports', body: 'Attendance automatically feeds into family reports.' }
+        ]
+      },
+      f4: {
+        num: '04 · Grades',
+        title: 'Centralised grade tracking',
+        body: 'One place for every teacher to enter grades, with automatic average calculation and full traceability by class and subject.',
+        points: [
+          { title: 'Entry by subject', body: 'Each teacher manages their own assessments and weightings.' },
+          { title: 'Automatic averages', body: 'Real-time calculation, no parallel spreadsheets.' },
+          { title: 'Full traceability', body: 'Change history by class, subject and term.' }
+        ]
+      },
+      ctaTitle: 'Let’s talk about your school',
+      ctaBody: 'Tell us your school’s size and which processes take the most time today, and we’ll show you how to automate them.',
+      ctaButton: 'Book a meeting',
+      footerTagline: 'Education that opens doors.'
+    }
+  };
+
+  storedLang() {
+    try {
+      const q = (location.search.match(/[?&]lang=(es|en)/) || [])[1];
+      if (q) return q;
+      const s = localStorage.getItem('fagus-lang');
+      if (s === 'es' || s === 'en') return s;
+    } catch (e) {}
+    return null;
+  }
+  pickLang(l) {
+    try { localStorage.setItem('fagus-lang', l); } catch (e) {}
+    this.setState({ lang: l });
+  }
+
+  renderVals() {
+    const lang = this.state.lang || this.storedLang() || 'es';
+    const t = this.D[lang];
+    const langBtn = (on) => `background:${on ? '#17365B' : 'transparent'};color:${on ? '#FFFFFF' : '#7F8996'};border:0;padding:7px 11px;cursor:pointer;letter-spacing:.06em`;
+    return {
+      t, lang,
+      esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
+      setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
+      videoSrc: lang === 'es' ? 'assets/videos/fagused-timetable-marketing-es.mp4' : 'assets/videos/fagused-timetable-marketing-en.mp4'
+    };
+  }
+}
+</script>
+</body>
+</html>
