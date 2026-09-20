@@ -4,6 +4,7 @@
 // link and the visitor as an attendee) on the Fagus Ed Google Calendar.
 
 import { zonedTimeToUtc, freeBusy, createEvent } from './_lib/google.js';
+import { handlePreflight } from './_lib/cors.js';
 
 const TIMEZONE = 'America/Santiago';
 const DURATION = { familias: 30, vocacional: 30, admision: 30, tutoria: 30, colegios: 30 };
@@ -30,6 +31,7 @@ function isValidEmail(v) {
 }
 
 export default async function handler(req, res) {
+  if (handlePreflight(req, res)) return;
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });

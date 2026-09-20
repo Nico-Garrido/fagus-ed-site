@@ -84,7 +84,7 @@
             </div>
           </sc-for>
         </div>
-        <a href="https://timetable.fagus-ed.cl" target="_blank" rel="noopener" style="display:inline-block;background:#FFFFFF;color:#17365B;padding:14px 24px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9;color:#17365B">{{ t.f2.cta }}</a>
+        <a href="{{ platformHref }}" target="_blank" rel="noopener" style="display:inline-block;background:#FFFFFF;color:#17365B;padding:14px 24px;font-family:Figtree,sans-serif;font-weight:600;font-size:14px" style-hover="background:#F9F9F9;color:#17365B">{{ t.f2.cta }}</a>
       </div>
       <div>
         <video style="width:100%;display:block;background:#0B1B2E" src="{{ videoSrc }}" controls="controls" preload="metadata"></video>
@@ -287,7 +287,8 @@ class Component extends DCLogic {
       t, lang,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
-      videoSrc: lang === 'es' ? 'assets/videos/fagused-timetable-marketing-es.mp4' : 'assets/videos/fagused-timetable-marketing-en.mp4'
+      videoSrc: lang === 'es' ? 'assets/videos/fagused-timetable-marketing-es.mp4' : 'assets/videos/fagused-timetable-marketing-en.mp4',
+      platformHref: 'https://timetable.fagus-ed.cl/?lang=' + lang
     };
   }
 }

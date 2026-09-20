@@ -3,6 +3,8 @@
 // to the Fagus Ed inbox. Requires a RESEND_API_KEY environment variable to
 // be set in the Vercel project (Settings -> Environment Variables).
 
+import { handlePreflight } from './_lib/cors.js';
+
 const TO_EMAIL = 'contacto@fagus-ed.cl';
 const FROM_EMAIL = 'Fagus Ed Web <web@fagus-ed.cl>'; // must be on a domain verified in Resend
 
@@ -16,6 +18,7 @@ function escapeHtml(str) {
 }
 
 export default async function handler(req, res) {
+  if (handlePreflight(req, res)) return;
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
