@@ -103,12 +103,15 @@ export default async function handler(req, res) {
 
     // With Domain-Wide Delegation (the service account impersonates
     // contacto@fagus-ed.cl), we can invite the visitor as an attendee and
-    // auto-generate a Google Meet link.
+    // auto-generate a Google Meet link. Explicit `organizer.displayName`
+    // makes the native Google invite email show "Invitation from FagusED"
+    // instead of a generic/unknown sender.
     const event = await createEvent(calendarId, {
       summary: title,
       description: descLines.join('\n'),
       start: { dateTime: start.toISOString(), timeZone: 'UTC' },
       end: { dateTime: end.toISOString(), timeZone: 'UTC' },
+      organizer: { email: calendarId, displayName: 'FagusED' },
       attendees: [{ email }],
       conferenceData: {
         createRequest: {
@@ -128,8 +131,14 @@ export default async function handler(req, res) {
     // Google already emails the attendee a native Calendar invite; this is a
     // friendlier, branded confirmation on top of that (and a safety net in
     // case the native invite is delayed or filtered).
-    await sendConfirmationEmail({ language, name, email, title, start, duration, meetLink }).catch((e) =>
-      console.error('confirmation email failed (event was still created):', e)
+    await sendVisitorConfirmationEmail({ language, name, email, title, start, duration, meetLink }).catch((e) =>
+      console.error('visitor confirmation email failed (event was still created):', e)
+    );
+    // Google never emails an event's own organizer an "invitation" — that's
+    // by design, not a bug — so contacto@fagus-ed.cl needs its own explicit
+    // notification rather than depending on the native Calendar invite.
+    await sendAdminNotificationEmail({ name, email, extra, extraLabel, title, start, duration, meetLink }).catch((e) =>
+      console.error('admin notification email failed (event was still created):', e)
     );
 
     return res.status(200).json({ ok: true, meetLink });
@@ -149,13 +158,24 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
-async function sendConfirmationEmail({ language, name, email, title, start, duration, meetLink }) {
+async function sendEmail({ to, subject, text, html }) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.error('Missing RESEND_API_KEY — skipping confirmation email');
+    console.error('Missing RESEND_API_KEY — skipping email:', subject);
     return;
   }
+  const resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: FROM_EMAIL, to, reply_to: ADMIN_EMAIL, subject, text, html })
+  });
+  if (!resp.ok) {
+    const errText = await resp.text().catch(() => '');
+    throw new Error('Resend API error: ' + resp.status + ' ' + errText);
+  }
+}
 
+async function sendVisitorConfirmationEmail({ language, name, email, title, start, duration, meetLink }) {
   const whenText = start.toLocaleString(language === 'en' ? 'en-US' : 'es-CL', {
     timeZone: TIMEZONE,
     weekday: 'long',
@@ -165,8 +185,7 @@ async function sendConfirmationEmail({ language, name, email, title, start, dura
     minute: '2-digit'
   });
 
-  const subject =
-    (language === 'en' ? 'Meeting confirmed: ' : 'Reunión confirmada: ') + title;
+  const subject = (language === 'en' ? 'Meeting confirmed: ' : 'Reunión confirmada: ') + title;
   const lines =
     language === 'en'
       ? [
@@ -195,21 +214,38 @@ async function sendConfirmationEmail({ language, name, email, title, start, dura
     .map((l) => `<p>${escapeHtml(l)}</p>`)
     .join('');
 
-  const resp = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from: FROM_EMAIL,
-      to: [email],
-      bcc: [ADMIN_EMAIL],
-      reply_to: ADMIN_EMAIL,
-      subject,
-      text,
-      html
-    })
+  await sendEmail({ to: [email], subject, text, html });
+}
+
+// Google never sends an "invitation" email to an event's own organizer —
+// contacto@fagus-ed.cl is that organizer, so it needs its own notification
+// rather than depending on (or BCC'ing) the visitor's native Calendar invite.
+async function sendAdminNotificationEmail({ name, email, extra, extraLabel, title, start, duration, meetLink }) {
+  const whenText = start.toLocaleString('es-CL', {
+    timeZone: TIMEZONE,
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    hour: '2-digit',
+    minute: '2-digit'
   });
-  if (!resp.ok) {
-    const errText = await resp.text().catch(() => '');
-    throw new Error('Resend API error: ' + resp.status + ' ' + errText);
-  }
+
+  const subject = 'Nueva reunión agendada: ' + title;
+  const lines = [
+    `Se agendó una nueva reunión (${duration} min) para el ${whenText} (hora de Chile).`,
+    '',
+    `Nombre: ${name}`,
+    `Email: ${email}`,
+    extra ? `${extraLabel || 'Detalle'}: ${extra}` : '',
+    meetLink ? `Enlace de la videollamada: ${meetLink}` : '',
+    '',
+    'Ya quedó agregada al calendario — este correo es solo un aviso.'
+  ];
+  const text = lines.filter((l) => l !== '').join('\n');
+  const html = lines
+    .filter((l) => l !== '')
+    .map((l) => `<p>${escapeHtml(l)}</p>`)
+    .join('');
+
+  await sendEmail({ to: [ADMIN_EMAIL], subject, text, html });
 }
