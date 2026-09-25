@@ -380,6 +380,7 @@ class Component extends DCLogic {
 
   PROGRAMS = [
     { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
+    { slug: 'lower-secondary', es: 'Lower Secondary', en: 'Lower Secondary' },
     { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
     { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
     { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' },
@@ -387,6 +388,7 @@ class Component extends DCLogic {
   ];
   RESOURCES = [
     { slug: 'plan-nacional', es: 'Plan Nacional', en: 'National Curriculum' },
+    { slug: 'lower-secondary', es: 'Lower Secondary', en: 'Lower Secondary' },
     { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
     { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
     { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' },
@@ -538,8 +540,9 @@ class Component extends DCLogic {
         { num: '03', title: 'Plan de trabajo', body: 'Definimos objetivos, frecuencia de sesiones, material y fechas clave del calendario.' },
         { num: '04', title: 'Seguimiento', body: 'Reportes periódicos de avance y ajustes al plan según resultados.' }
       ],
-      tabs: ['Lower Secondary', 'IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
+      tabs: ['Plan Nacional', 'Lower Secondary', 'IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
       tabData: [
+        { heading: "Plan Nacional", body: "El plan nacional es el currículum definido por el Ministerio de Educación para la enseñanza básica y media en Chile. Organiza las asignaturas por objetivos de aprendizaje y, para quienes postulan a la universidad, culmina en la PAES.", rows: [{ k: "Entidad", v: "Ministerio de Educación de Chile" }, { k: "Etapa", v: "7° básico a 4° medio" }, { k: "Asignaturas", v: "Ciencias, Matemáticas e Inglés; Ciencias se separa en Biología, Física y Química desde 1° medio" }, { k: "Para qué sirve", v: "Continuidad en el sistema escolar chileno y base directa para la PAES" }] },
         { heading: "Lower Secondary", body: "Cambridge Lower Secondary cubre las etapas 7, 8 y 9, equivalentes aproximadamente a 6°, 7° y 8° básico. Ciencias es una sola asignatura organizada en ejes de Biología, Química y Física, y trabajamos cada eje por separado, junto con Mathematics e English.", rows: [{ k: "Entidad", v: "Cambridge (CAIE)" }, { k: "Etapa", v: "Stages 7 a 9, aprox. 6° a 8° básico" }, { k: "Asignaturas", v: "English 1111 o ESL 1110, Mathematics 1112 y Science 1113" }, { k: "Para qué sirve", v: "Base directa para IGCSE, con Checkpoint al cerrar la etapa 9" }] },
         { heading: "IGCSE", body: "El IGCSE (International General Certificate of Secondary Education) es la certificación internacional de educación media de Cambridge. Se cursa habitualmente entre los 14 y los 16 años y se evalúa asignatura por asignatura con exámenes externos.", rows: [{ k: "Entidad", v: "Cambridge (CAIE)" }, { k: "Etapa", v: "14 a 16 años, equivalente a I y II medio" }, { k: "Estructura", v: "Certificación independiente por asignatura" }, { k: "Para qué sirve", v: "Base para A Level, IB Diploma o continuidad escolar en Chile" }] },
         { heading: "A-Level", body: "Los A Level son la etapa final del sistema británico: dos años de especialización en tres o cuatro asignaturas estudiadas en profundidad. Sus calificaciones son el principal antecedente de admisión en universidades del Reino Unido y de varios otros países.", rows: [{ k: "Entidad", v: "Juntas examinadoras británicas (Cambridge, Edexcel, AQA)" }, { k: "Etapa", v: "16 a 18 años, en dos etapas: AS y A2" }, { k: "Estructura", v: "Tres o cuatro asignaturas en profundidad" }, { k: "Para qué sirve", v: "Admisión universitaria en el Reino Unido, Europa y otros destinos" }] },
@@ -604,8 +607,9 @@ class Component extends DCLogic {
         { num: '03', title: 'Work plan', body: 'We set objectives, session frequency, material and the key dates in the calendar.' },
         { num: '04', title: 'Follow-up', body: 'Regular progress reports and adjustments to the plan based on results.' }
       ],
-      tabs: ['Lower Secondary', 'IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
+      tabs: ['Plan Nacional', 'Lower Secondary', 'IGCSE', 'A-Level', 'IB Diploma', 'PAES'],
       tabData: [
+        { heading: "Plan Nacional", body: "The national curriculum is defined by Chile's Ministry of Education for primary and secondary school. It organises subjects around learning objectives and, for university applicants, leads into the PAES.", rows: [{ k: "Awarding body", v: "Chilean Ministry of Education" }, { k: "Stage", v: "Grade 7 through to the final year of school" }, { k: "Subjects", v: "Science, Mathematics and English; Science splits into Biology, Physics and Chemistry from grade 9" }, { k: "What it is for", v: "Continuity within the Chilean school system and a direct base for the PAES" }] },
         { heading: "Lower Secondary", body: "Cambridge Lower Secondary covers stages 7, 8 and 9, for students aged roughly 11 to 14. Science is a single subject organised into Biology, Chemistry and Physics strands, and we work each strand separately, alongside Mathematics and English.", rows: [{ k: "Awarding body", v: "Cambridge (CAIE)" }, { k: "Stage", v: "Stages 7 to 9, ages 11 to 14" }, { k: "Subjects", v: "English 1111 or ESL 1110, Mathematics 1112 and Science 1113" }, { k: "What it is for", v: "A direct base for IGCSE, with Checkpoint at the end of stage 9" }] },
         { heading: "IGCSE", body: "The IGCSE (International General Certificate of Secondary Education) is Cambridge’s international secondary qualification. It is usually taken between ages 14 and 16 and is assessed subject by subject through external examinations.", rows: [{ k: "Awarding body", v: "Cambridge (CAIE)" }, { k: "Stage", v: "Ages 14 to 16" }, { k: "Structure", v: "A separate qualification for each subject" }, { k: "What it is for", v: "A base for A Level, the IB Diploma or continuing school in Chile" }] },
         { heading: "A-Level", body: "A Levels are the final stage of the British system: two years of specialisation in three or four subjects studied in depth. The grades are the main basis for admission to universities in the UK and several other countries.", rows: [{ k: "Awarding body", v: "British exam boards (Cambridge, Edexcel, AQA)" }, { k: "Stage", v: "Ages 16 to 18, in two stages: AS and A2" }, { k: "Structure", v: "Three or four subjects studied in depth" }, { k: "What it is for", v: "University admission in the UK, Europe and other destinations" }] },
