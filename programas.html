@@ -50,7 +50,7 @@
     <h1 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;max-width:20ch;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .08s both">{{ t.title }}</h1>
     <p style="font-size:19px;line-height:1.6;color:#5A6675;max-width:60ch;margin:24px 0 0;text-wrap:pretty;animation:fu .9s cubic-bezier(.2,.8,.2,1) .16s both">{{ t.intro }}</p>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:36px">
-      <sc-for list="{{ programTabs }}" as="n" hint-placeholder-count="5">
+      <sc-for list="{{ programTabs }}" as="n" hint-placeholder-count="6">
         <button onClick="{{ n.onClick }}" style="{{ n.style }}">{{ n.label }}</button>
       </sc-for>
     </div>
@@ -459,7 +459,7 @@ class Component extends DCLogic {
       t, lang,
       esBtn: langBtn(lang === 'es'), enBtn: langBtn(lang === 'en'),
       setEs: () => this.pickLang('es'), setEn: () => this.pickLang('en'),
-      programTabs: t.programs.filter(p => p.slug !== 'lower-secondary').map(p => ({
+      programTabs: t.programs.map(p => ({
         label: p.title,
         onClick: () => this.setState({ program: p.slug }),
         style: tabStyle(p.slug === program)
