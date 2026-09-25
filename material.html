@@ -132,7 +132,8 @@ class Component extends DCLogic {
     { slug: 'lower-secondary', es: 'Lower Secondary', en: 'Lower Secondary' },
     { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
     { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
-    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' }
+    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' },
+    { slug: 'paes', es: 'PAES', en: 'PAES' }
   ];
   SUBJ = [
     { slug: 'biologia', es: 'Biología', en: 'Biology' },
@@ -177,35 +178,40 @@ class Component extends DCLogic {
       'lower-secondary': { es: ['Células y organismos', 'Estructura y función de los seres vivos', 'Fotosíntesis y respiración', 'Ecosistemas, variación y herencia'], en: ['Cells and organisms', 'Structure and function of living things', 'Photosynthesis and respiration', 'Ecosystems, variation and inheritance'] },
       'igcse': { es: ['Características de los seres vivos', 'Nutrición y transporte', 'Reproducción y herencia', 'Organismos y ambiente'], en: ['Characteristics of living organisms', 'Nutrition and transport', 'Reproduction and inheritance', 'Organisms and environment'] },
       'a-level': { es: ['Estructura celular y biomoléculas', 'Fisiología y transporte', 'Genética molecular', 'Selección natural y biodiversidad'], en: ['Cell structure and biomolecules', 'Physiology and transport', 'Molecular genetics', 'Natural selection and biodiversity'] },
-      'ib-dp': { es: ['Unidad y diversidad', 'Forma y función', 'Interacción e interdependencia', 'Continuidad y cambio'], en: ['Unity and diversity', 'Form and function', 'Interaction and interdependence', 'Continuity and change'] }
+      'ib-dp': { es: ['Unidad y diversidad', 'Forma y función', 'Interacción e interdependencia', 'Continuidad y cambio'], en: ['Unity and diversity', 'Form and function', 'Interaction and interdependence', 'Continuity and change'] },
+      'paes': { es: ['Célula y procesos metabólicos', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología y organismo-ambiente'], en: ['Cells and metabolic processes', 'Genetics and inheritance', 'Human body systems', 'Ecology and organism-environment'] }
     },
     quimica: {
       'plan-nacional': { es: ['Estructura atómica y enlace', 'Estequiometría', 'Reacciones químicas', 'Química orgánica básica'], en: ['Atomic structure and bonding', 'Stoichiometry', 'Chemical reactions', 'Basic organic chemistry'] },
       'lower-secondary': { es: ['Estados de la materia y modelo de partículas', 'Elementos, compuestos y mezclas', 'Átomos y tabla periódica', 'Reacciones, ácidos y bases'], en: ['States of matter and the particle model', 'Elements, compounds and mixtures', 'Atoms and the periodic table', 'Reactions, acids and bases'] },
       'igcse': { es: ['Partículas y enlace', 'Estequiometría', 'Electroquímica y energía', 'Química orgánica'], en: ['Particles and bonding', 'Stoichiometry', 'Electrochemistry and energy', 'Organic chemistry'] },
       'a-level': { es: ['Equilibrio y cinética', 'Termodinámica y electroquímica', 'Química inorgánica de grupos', 'Mecanismos orgánicos'], en: ['Equilibrium and kinetics', 'Thermodynamics and electrochemistry', 'Inorganic group chemistry', 'Organic mechanisms'] },
-      'ib-dp': { es: ['Modelos de estructura', 'Enlace y propiedades', 'Cambio químico y energía', 'Reactividad orgánica'], en: ['Models of structure', 'Bonding and properties', 'Chemical change and energy', 'Organic reactivity'] }
+      'ib-dp': { es: ['Modelos de estructura', 'Enlace y propiedades', 'Cambio químico y energía', 'Reactividad orgánica'], en: ['Models of structure', 'Bonding and properties', 'Chemical change and energy', 'Organic reactivity'] },
+      'paes': { es: ['Estructura atómica y enlace', 'Estequiometría y disoluciones', 'Reacciones químicas', 'Química orgánica básica'], en: ['Atomic structure and bonding', 'Stoichiometry and solutions', 'Chemical reactions', 'Basic organic chemistry'] }
     },
     fisica: {
       'plan-nacional': { es: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'], en: ['Motion and forces', 'Energy and work', 'Waves and sound', 'Electricity and magnetism'] },
       'lower-secondary': { es: ['Fuerzas y movimiento', 'Energía y sus transferencias', 'Luz y sonido', 'Electricidad, magnetismo y Tierra y Espacio'], en: ['Forces and motion', 'Energy and energy transfers', 'Light and sound', 'Electricity, magnetism and Earth and Space'] },
       'igcse': { es: ['Movimiento, fuerzas y energía', 'Fenómenos térmicos', 'Ondas y luz', 'Electricidad y física nuclear'], en: ['Motion, forces and energy', 'Thermal physics', 'Waves and light', 'Electricity and nuclear physics'] },
       'a-level': { es: ['Mecánica y materiales', 'Campos gravitacional y eléctrico', 'Oscilaciones y ondas', 'Física cuántica y nuclear'], en: ['Mechanics and materials', 'Gravitational and electric fields', 'Oscillations and waves', 'Quantum and nuclear physics'] },
-      'ib-dp': { es: ['Espacio, tiempo y movimiento', 'Partículas y energía', 'Campos y ondas', 'Física nuclear y cuántica'], en: ['Space, time and motion', 'Particles and energy', 'Fields and waves', 'Nuclear and quantum physics'] }
+      'ib-dp': { es: ['Espacio, tiempo y movimiento', 'Partículas y energía', 'Campos y ondas', 'Física nuclear y cuántica'], en: ['Space, time and motion', 'Particles and energy', 'Fields and waves', 'Nuclear and quantum physics'] },
+      'paes': { es: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'], en: ['Motion and forces', 'Energy and work', 'Waves and sound', 'Electricity and magnetism'] }
     },
     matematicas: {
       'plan-nacional': { es: ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'], en: ['Numbers and proportionality', 'Algebra and functions', 'Geometry', 'Probability and statistics'] },
       'lower-secondary': { es: ['Número', 'Álgebra', 'Geometría y medida', 'Estadística y probabilidad'], en: ['Number', 'Algebra', 'Geometry and measure', 'Statistics and probability'] },
       'igcse': { es: ['Número y álgebra', 'Ecuaciones y funciones', 'Geometría y trigonometría', 'Estadística y probabilidad'], en: ['Number and algebra', 'Equations and functions', 'Geometry and trigonometry', 'Statistics and probability'] },
       'a-level': { es: ['Pure 1', 'Pure 3', 'Mechanics', 'Probability & Statistics'], en: ['Pure 1', 'Pure 3', 'Mechanics', 'Probability & Statistics'] },
-      'ib-dp': { es: ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Cálculo y estadística'], en: ['Number and algebra', 'Functions', 'Geometry and trigonometry', 'Calculus and statistics'] }
+      'ib-dp': { es: ['Número y álgebra', 'Funciones', 'Geometría y trigonometría', 'Cálculo y estadística'], en: ['Number and algebra', 'Functions', 'Geometry and trigonometry', 'Calculus and statistics'] },
+      'paes': { es: ['Números y proporcionalidad (M1)', 'Álgebra y funciones (M1/M2)', 'Geometría (M1/M2)', 'Probabilidad y estadística (M1/M2)'], en: ['Numbers and proportionality (M1)', 'Algebra and functions (M1/M2)', 'Geometry (M1/M2)', 'Probability and statistics (M1/M2)'] }
     },
     ingles: {
       'plan-nacional': { es: ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva'], en: ['Reading comprehension', 'Grammar and usage', 'Written expression', 'Listening comprehension'] },
       'lower-secondary': { es: ['Lectura y comprensión de textos', 'Escritura y uso del lenguaje', 'Speaking y listening', 'Preparación IELTS, FCE y CAE'], en: ['Reading and text comprehension', 'Writing and language use', 'Speaking and listening', 'IELTS, FCE and CAE preparation'] },
       'igcse': { es: ['Reading passages', 'Directed writing', 'Escritura narrativa y descriptiva', 'Speaking y listening'], en: ['Reading passages', 'Directed writing', 'Narrative and descriptive writing', 'Speaking and listening'] },
       'a-level': { es: ['Análisis de textos', 'Escritura dirigida', 'Poesía, prosa y drama', 'Ensayo comparativo'], en: ['Text analysis', 'Directed writing', 'Poetry, prose and drama', 'Comparative essay'] },
-      'ib-dp': { es: ['Análisis textual guiado', 'Ensayo comparativo (Paper 2)', 'Oral individual', 'HL essay'], en: ['Guided textual analysis', 'Comparative essay (Paper 2)', 'Individual oral', 'HL essay'] }
+      'ib-dp': { es: ['Análisis textual guiado', 'Ensayo comparativo (Paper 2)', 'Oral individual', 'HL essay'], en: ['Guided textual analysis', 'Comparative essay (Paper 2)', 'Individual oral', 'HL essay'] },
+      'paes': { es: ['Comprensión lectora', 'Gramática y uso', 'Expresión escrita', 'Comprensión auditiva'], en: ['Reading comprehension', 'Grammar and usage', 'Written expression', 'Listening comprehension'] }
     }
   };
 
@@ -214,7 +220,8 @@ class Component extends DCLogic {
     'lower-secondary': { es: ['Checkpoint 2024 · Paper 1', 'Checkpoint 2024 · Paper 2', 'Checkpoint 2023 · Paper 1', 'Checkpoint 2023 · Paper 2'], en: ['Checkpoint 2024 · Paper 1', 'Checkpoint 2024 · Paper 2', 'Checkpoint 2023 · Paper 1', 'Checkpoint 2023 · Paper 2'] },
     'igcse': { es: ['Mayo/Junio 2024 · Paper 2', 'Mayo/Junio 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 6'], en: ['May/June 2024 · Paper 2', 'May/June 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 6'] },
     'a-level': { es: ['Mayo/Junio 2024 · Paper 1', 'Mayo/Junio 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 5'], en: ['May/June 2024 · Paper 1', 'May/June 2024 · Paper 4', 'Oct/Nov 2023 · Paper 2', 'Oct/Nov 2023 · Paper 5'] },
-    'ib-dp': { es: ['Mayo 2024 · Paper 1', 'Mayo 2024 · Paper 2', 'Noviembre 2023 · Paper 1', 'Noviembre 2023 · Paper 3'], en: ['May 2024 · Paper 1', 'May 2024 · Paper 2', 'November 2023 · Paper 1', 'November 2023 · Paper 3'] }
+    'ib-dp': { es: ['Mayo 2024 · Paper 1', 'Mayo 2024 · Paper 2', 'Noviembre 2023 · Paper 1', 'Noviembre 2023 · Paper 3'], en: ['May 2024 · Paper 1', 'May 2024 · Paper 2', 'November 2023 · Paper 1', 'November 2023 · Paper 3'] },
+    'paes': { es: ['Ensayo PAES 2024 · Forma A', 'Ensayo PAES 2023 · Forma B', 'Ensayo PAES 2022 · Forma A'], en: ['PAES mock 2024 · Form A', 'PAES mock 2023 · Form B', 'PAES mock 2022 · Form A'] }
   };
 
   storedLang() {
