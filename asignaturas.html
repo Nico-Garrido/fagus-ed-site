@@ -121,7 +121,8 @@ class Component extends DCLogic {
     { slug: 'lower-secondary', es: 'Lower Secondary', en: 'Lower Secondary' },
     { slug: 'igcse', es: 'IGCSE', en: 'IGCSE' },
     { slug: 'a-level', es: 'A-Level', en: 'A-Level' },
-    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' }
+    { slug: 'ib-dp', es: 'IB DP', en: 'IB DP' },
+    { slug: 'paes', es: 'PAES', en: 'PAES' }
   ];
 
   UI = {
@@ -170,6 +171,11 @@ class Component extends DCLogic {
           desc: { es: 'Contenidos de biología de 1° a 4° medio y el eje de Biología de la prueba de Ciencias de la PAES.', en: 'Secondary-school biology content and the Biology strand of the PAES Sciences test.' },
           topics: { es: ['Célula y procesos metabólicos', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología y organismo-ambiente'], en: ['Cells and metabolic processes', 'Genetics and inheritance', 'Human body systems', 'Ecology and organism-environment'] }
         },
+        'paes': {
+          code: { es: 'Ciencias PAES', en: 'PAES Sciences' },
+          desc: { es: 'Eje de Biología de la prueba de Ciencias de la PAES: célula, genética, sistemas del cuerpo humano y ecología.', en: 'The Biology strand of the PAES Sciences test: cells, genetics, human body systems and ecology.' },
+          topics: { es: ['Célula y procesos metabólicos', 'Genética y herencia', 'Sistemas del cuerpo humano', 'Ecología y organismo-ambiente'], en: ['Cells and metabolic processes', 'Genetics and inheritance', 'Human body systems', 'Ecology and organism-environment'] }
+        },
         'lower-secondary': {
           code: { es: 'Science 1113 · eje Biología', en: 'Science 1113 · Biology strand' },
           desc: { es: 'En Lower Secondary las ciencias son una sola asignatura; aquí trabajamos el eje de Biología de las etapas 7 a 9 y su parte en el Checkpoint.', en: 'In Lower Secondary science is a single subject; here we work the Biology strand of stages 7 to 9 and its part of the Checkpoint.' },
@@ -201,6 +207,11 @@ class Component extends DCLogic {
           desc: { es: 'Eje de Química del currículum nacional y su versión en la prueba de Ciencias.', en: 'The Chemistry strand of the national curriculum and its version in the Sciences test.' },
           topics: { es: ['Estructura atómica y enlace', 'Estequiometría y disoluciones', 'Reacciones químicas', 'Química orgánica básica'], en: ['Atomic structure and bonding', 'Stoichiometry and solutions', 'Chemical reactions', 'Basic organic chemistry'] }
         },
+        'paes': {
+          code: { es: 'Ciencias PAES', en: 'PAES Sciences' },
+          desc: { es: 'Eje de Química de la prueba de Ciencias de la PAES: estructura atómica, estequiometría y reacciones.', en: 'The Chemistry strand of the PAES Sciences test: atomic structure, stoichiometry and reactions.' },
+          topics: { es: ['Estructura atómica y enlace', 'Estequiometría y disoluciones', 'Reacciones químicas', 'Química orgánica básica'], en: ['Atomic structure and bonding', 'Stoichiometry and solutions', 'Chemical reactions', 'Basic organic chemistry'] }
+        },
         'lower-secondary': {
           code: { es: 'Science 1113 · eje Química', en: 'Science 1113 · Chemistry strand' },
           desc: { es: 'Eje de Química del currículum de ciencias de Lower Secondary, base directa de los primeros temas de IGCSE.', en: 'The Chemistry strand of the Lower Secondary science curriculum, a direct base for the first IGCSE topics.' },
@@ -230,6 +241,11 @@ class Component extends DCLogic {
         'plan-nacional': {
           code: { es: 'Ciencias PAES', en: 'PAES Sciences' },
           desc: { es: 'Eje de Física del currículum nacional y su presencia en la prueba de Ciencias.', en: 'The Physics strand of the national curriculum and its presence in the Sciences test.' },
+          topics: { es: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'], en: ['Motion and forces', 'Energy and work', 'Waves and sound', 'Electricity and magnetism'] }
+        },
+        'paes': {
+          code: { es: 'Ciencias PAES', en: 'PAES Sciences' },
+          desc: { es: 'Eje de Física de la prueba de Ciencias de la PAES: movimiento, energía, ondas y electricidad.', en: 'The Physics strand of the PAES Sciences test: motion, energy, waves and electricity.' },
           topics: { es: ['Movimiento y fuerzas', 'Energía y trabajo', 'Ondas y sonido', 'Electricidad y magnetismo'], en: ['Motion and forces', 'Energy and work', 'Waves and sound', 'Electricity and magnetism'] }
         },
         'lower-secondary': {
@@ -273,6 +289,11 @@ class Component extends DCLogic {
           code: { es: 'M1 / M2 PAES', en: 'PAES M1 / M2' },
           desc: { es: 'Contenidos de enseñanza media y preparación por eje para Competencia Matemática M1 y M2.', en: 'Secondary-school content and strand-by-strand preparation for Mathematics M1 and M2.' },
           topics: { es: ['Números y proporcionalidad', 'Álgebra y funciones', 'Geometría', 'Probabilidad y estadística'], en: ['Numbers and proportionality', 'Algebra and functions', 'Geometry', 'Probability and statistics'] }
+        },
+        'paes': {
+          code: { es: 'M1 / M2', en: 'M1 / M2' },
+          desc: { es: 'Competencia Matemática M1 (obligatoria) y M2 (electiva) de la PAES, por eje temático.', en: 'PAES Mathematics Competency M1 (mandatory) and M2 (elective), by topic strand.' },
+          topics: { es: ['Números y proporcionalidad (M1)', 'Álgebra y funciones (M1/M2)', 'Geometría (M1/M2)', 'Probabilidad y estadística (M1/M2)'], en: ['Numbers and proportionality (M1)', 'Algebra and functions (M1/M2)', 'Geometry (M1/M2)', 'Probability and statistics (M1/M2)'] }
         },
         'lower-secondary': {
           code: { es: 'Mathematics 1112', en: 'Mathematics 1112' },
