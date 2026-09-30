@@ -27,6 +27,8 @@
   @media (prefers-reduced-motion: reduce) { *, [data-reveal] { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; } }
   [data-navdesk] { display: flex; }
   [data-navmob] { display: none; }
+  [data-teamgrid] { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 560px) { [data-teamgrid] { grid-template-columns: 1fr; } }
   @media (max-width: 940px) {
     [data-navdesk] { display: none !important; }
     [data-navmob] { display: flex !important; }
@@ -256,7 +258,7 @@
     <div style="font-family:Figtree,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A3ABB6;margin-bottom:14px">{{ t.teamLabel }}</div>
     <h2 style="font-family:Figtree,sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 26px;max-width:24ch;text-wrap:pretty">{{ t.teamTitle }}</h2>
     <p style="font-size:18px;line-height:1.65;color:#5A6675;margin:0 0 52px;max-width:74ch;text-wrap:pretty">{{ t.teamIntro }}</p>
-    <div data-stagger="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:40px">
+    <div data-stagger="1" data-teamgrid="1" style="display:grid;gap:40px">
       <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
         <div>
           <sc-if value="{{ m.hasPhoto }}" hint-placeholder-val="{{ false }}">
